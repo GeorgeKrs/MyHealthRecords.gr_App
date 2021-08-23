@@ -1,0 +1,17 @@
+.label {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.inputValues {
+  border-radius: 14px;
+  padding: 4px;
+  width: 100%;
+}
+
+.inputValues:focus {
+  outline: none;
+  background-color: var(--color-ice);
+  transition: background-color 500ms ease;
+  font-weight: bold;
+}

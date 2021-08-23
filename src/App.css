@@ -1,38 +1,64 @@
-.App {
-  text-align: center;
+/* colors */
+:root {
+  --color-blue: #1dcdfe;
+  --color-green: #21d0b2;
+  --color-lightGreen: #34f5c5;
+  --color-grey: #2f455c;
+  --color-grey-darker: #1d2b39;
+  --color-white: #fbfeff;
+  --color-ice: #c7f3ff;
+  --color-ice-light: #e3f9ff;
+
+  /* bootstrap colors */
+  --bs-background: #fbf9f6;
+  --bs-light-primary: #e4fff4;
+  --bs-active-primary: #19b674;
+  --bs-primary: #20d489;
+  --bs-light-success: #f1faff;
+  --bs-active-success: #0098da;
+  --bs-light-info: #f6f1fc;
+  --bs-active-info: #41058e;
+  --bs-info: #5710b2;
+  --bs-light-warning: #fff8dd;
+  --bs-active-warning: #f1bc00;
+  --bs-light-danger: #ffeff3;
+  --bs-active-danger: #d9214e;
+  --bs-light-dark: #eff2f5;
+  --bs-active-dark: #131628;
+  --bs-gray-100: #f5f8fa;
+  --bs-gray-200: #eff2f5;
+  --bs-gray-300: #e4e6ef;
+  --bs-gray-400: #b5b5c3;
+  --bs-gray-500: #a1a5b7;
+  --bs-gray-600: #7e8299;
+  --bs-gray-700: #5e6278;
+  --bs-gray-800: #3f4254;
+  --bs-gray-900: #181c32;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* btn css */
+.btn-primary {
+  background-color: var(--color-grey) !important;
+  color: var(--color-ice-light) !important;
+  border-color: var(--color-ice) !important;
+  border-radius: 12px !important;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: var(--color-grey-darker) !important;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.btn-primary:active {
+  box-shadow: var(--color-ice-light) !important;
 }
 
-.App-link {
-  color: #61dafb;
+.btn-primary:focus {
+  box-shadow: var(--color-ice-light) !important;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
+@media (min-width: 1199.98px) {
+  #SignUp_Background {
+    height: 100vh !important;
   }
 }

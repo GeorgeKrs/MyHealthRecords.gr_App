@@ -1,10 +1,11 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import "./screens/SignUpScreen";
+import SignUpScreen from "./screens/SignUpScreen";
 
 function App() {
   return (
-    <div className="App">
-      
+    <div className="">
+      <SignUpScreen />
     </div>
   );
 }
