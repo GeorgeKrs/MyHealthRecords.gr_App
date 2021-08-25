@@ -11,7 +11,7 @@
 
 .inputValues:focus {
   outline: none;
-  background-color: var(--color-ice);
+  background-color: var(--color-ice-light);
   transition: background-color 500ms ease;
   font-weight: bold;
 }

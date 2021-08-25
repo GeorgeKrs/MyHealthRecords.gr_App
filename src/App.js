@@ -1,11 +1,14 @@
 import "./App.css";
-import "./screens/SignUpScreen";
+import LoginScreen from "./screens/LoginScreen";
 import SignUpScreen from "./screens/SignUpScreen";
+import MainScreen from "./screens/MainScreen";
 
 function App() {
   return (
     <div className="">
-      <SignUpScreen />
+      {/* <SignUpScreen /> */}
+      {/* <LoginScreen  /> */}
+      <MainScreen />
     </div>
   );
 }
