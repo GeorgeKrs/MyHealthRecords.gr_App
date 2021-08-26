@@ -1,37 +1,6 @@
-/* colors */
-:root {
-  --color-blue: #1dcdfe;
-  --color-green: #21d0b2;
-  --color-lightGreen: #34f5c5;
-  --color-grey: #2f455c;
-  --color-grey-darker: #1d2b39;
-  --color-white: #fbfeff;
-  --color-ice: #c7f3ff;
-  --color-ice-light: #e3f9ff;
-
-  /* bootstrap colors */
-  --bs-blue: #0d6efd;
-  --bs-indigo: #6610f2;
-  --bs-purple: #6f42c1;
-  --bs-pink: #d63384;
-  --bs-red: #dc3545;
-  --bs-orange: #fd7e14;
-  --bs-yellow: #ffc107;
-  --bs-green: #198754;
-  --bs-teal: #20c997;
-  --bs-cyan: #0dcaf0;
-  --bs-white: #fff;
-  --bs-gray: #6c757d;
-  --bs-gray-dark: #343a40;
-  --bs-primary: #0d6efd;
-  --bs-secondary: #6c757d;
-  --bs-success: #198754;
-  --bs-info: #0dcaf0;
-  --bs-warning: #ffc107;
-  --bs-danger: #dc3545;
-  --bs-light: #f8f9fa;
-  --bs-dark: #212529;
-}
+@import "/src/styles/colors.css";
+@import "/src/styles/icons.css";
+@import "/src/styles/buttons.css";
 
 /* input css */
 .label {
@@ -52,20 +21,4 @@
   font-weight: bold;
 }
 
-/* btn css */
-.btn-primary {
-  background-color: var(--color-white) !important;
-  color: #000 !important;
-  border-color: #000 !important;
-  border-radius: 12px !important;
-}
 
-.btn-primary:hover,
-.btn-primary:focus {
-  background-color: var(--bs-gray) !important;
-}
-
-.btn-primary:active {
-  background-color: var(--bs-dark) !important;
-  box-shadow: none !important;
-}

@@ -1,29 +1,34 @@
-import NavbarIcon from "../general/NavbarIcon";
+import Navbar from "../navbars/Navbar";
 
 const MainScreen = () => {
-    return (
-        <div className="row p-4">
-            <div className="d-flex flex-column col-lg-1 align-items-center">
-                <div className="mt-4 p-2">
-                    logo
-                </div>
-                <div className="mt-5 p-2">
-                    font 1
-                </div>
-                <div className="mt-4 p-2">
-                    font 2
-                </div>
-                <div className="mt-4 p-2">
-                    font 3
-                </div>
-                <div className="mt-4 p-2">
-                    font 4
-                </div>
-                
-            </div>
-
-        </div>
-    );
+  return (
+    <div
+      style={{ backgroundColor: "var(--color-ice-light)" }}
+      className="d-flex"
+    >
+      <div
+        style={{
+          backgroundColor: "var(--color-ice)",
+          height: "100vh",
+        }}
+        className="d-flex flex-column"
+      >
+        <Navbar
+          FontIconClass={[
+            "VITALS",
+            "VITALS_R",
+            "PDF",
+            "PDF_R",
+            "ALLERGIES",
+            "METRICS",
+            "CAL",
+            "SETTINGS",
+            "EXIT",
+          ]}
+        ></Navbar>
+      </div>
+    </div>
+  );
 };
 
 export default MainScreen;
