@@ -8,7 +8,7 @@ const LoginForm = () => {
       <input type="password" className="inputValues"></input>
 
       <div className="mt-5">
-        <button type="button" className="btn btn-primary">
+        <button type="button" className="btn btn-outline-primary">
           Είσοδος
         </button>
       </div>

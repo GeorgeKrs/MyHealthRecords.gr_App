@@ -99,7 +99,7 @@ const VitalsForm = () => {
         </div>
 
         <div className="mt-5">
-          <button type="submit" className="btn btn-primary">
+          <button type="submit" className="btn btn-outline-primary">
             Καταχώρηση
           </button>
         </div>

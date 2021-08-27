@@ -42,7 +42,7 @@ const SignUpForm = () => {
       </div>
 
       <div className="mt-5">
-        <button type="button" className="btn btn-primary">
+        <button type="button" className="btn btn-outline-primary">
           Εγγραφή
         </button>
       </div>
