@@ -1,5 +1,5 @@
 import "./screens.css";
-import LoginForm from "../Login_SignUp_Forms/LoginForm";
+import LoginForm from "../Forms/LoginForm";
 
 const LoginScreen = () => {
   return (
