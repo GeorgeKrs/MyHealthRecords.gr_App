@@ -1,14 +1,9 @@
+import "./screens.css";
 import SignUpForm from "../Login_SignUp_Forms/SignUpForm";
 
 const SignUpScreen = () => {
   return (
-    <div
-      id="SignUp_Background"
-      style={{
-        // background: "linear-gradient(#0d6efd, #fbfeff)"
-        backgroundColor: "var(--bs-cyan)",
-      }}
-    >
+    <div className="outer-SignUpDiv">
       <div className="container pt-5">
         <h2 className="text-center">
           <b>My Health Records App.gr</b>

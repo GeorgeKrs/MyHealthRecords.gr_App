@@ -1,14 +1,9 @@
+import "./screens.css";
 import LoginForm from "../Login_SignUp_Forms/LoginForm";
 
 const LoginScreen = () => {
   return (
-    <div
-      style={{
-        backgroundColor: "var(--color-green)",
-        height: "100vh",
-        padding: "14vh",
-      }}
-    >
+    <div className="outer-LoginDiv">
       <div className="container pt-4">
         <h2 className="text-center">
           <b>My Health Records App.gr</b>

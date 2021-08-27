@@ -1,31 +1,28 @@
+import "./screens.css";
 import Navbar from "../navbars/Navbar";
+import VitalsScreen from "./NavbarScreens/VitalsScreen";
 
 const MainScreen = () => {
   return (
-    <div
-      style={{ backgroundColor: "var(--color-ice-light)" }}
-      className="d-flex"
-    >
-      <div
-        style={{
-          backgroundColor: "var(--color-ice)",
-          height: "100vh",
-        }}
-        className="d-flex flex-column"
-      >
-        <Navbar
-          FontIconClass={[
-            "VITALS",
-            "VITALS_R",
-            "PDF",
-            "PDF_R",
-            "ALLERGIES",
-            "METRICS",
-            "CAL",
-            "SETTINGS",
-            "EXIT",
-          ]}
-        ></Navbar>
+    <div>
+      <div className="d-flex outer-MainDiv">
+        <div className="inner-MainDiv">
+          <Navbar
+            FontIconClass={[
+              "VITALS",
+              "VITALS_R",
+              "PDF",
+              "PDF_R",
+              "ALLERGIES",
+              "METRICS",
+              "CAL",
+              "SETTINGS",
+              "EXIT",
+            ]}
+          ></Navbar>
+        </div>
+
+        <VitalsScreen />
       </div>
     </div>
   );

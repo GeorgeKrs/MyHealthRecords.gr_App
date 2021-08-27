@@ -8,8 +8,8 @@ import MainScreen from "./screens/MainScreen";
 function App() {
   return (
     <div className="">
-      {/* <SignUpScreen /> */}
-      {/* <LoginScreen /> */}
+      {/* <SignUpScreen />
+      <LoginScreen /> */}
       <MainScreen />
     </div>
   );

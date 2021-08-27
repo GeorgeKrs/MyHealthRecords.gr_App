@@ -1,0 +1,25 @@
+/* LoginScreen */
+.outer-LoginDiv {
+  background-color: var(--color-green);
+  min-height: 100vh;
+  padding: 14vh;
+}
+
+/* MainScreen */
+.outer-MainDiv {
+  background-color: var(--color-ice-light);
+}
+
+.inner-MainDiv {
+  background-color: var(--color-ice);
+  min-height: 100vh;
+}
+
+.outer-SignUpDiv {
+  background-color: var(--bs-cyan);
+}
+
+/* VitalsScreen */
+.outer-VitalsDiv {
+  background-color: var(--color-green);
+}

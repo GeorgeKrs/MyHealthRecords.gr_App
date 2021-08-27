@@ -12,13 +12,12 @@
   border-radius: 14px;
   padding: 4px;
   width: 100%;
+  border-color: gray !important;
 }
 
 .inputValues:focus {
   outline: none;
+  border-color: var(--color-grey-darker) !important;
   background-color: var(--color-ice-light);
   transition: background-color 500ms ease;
-  font-weight: bold;
 }
-
-

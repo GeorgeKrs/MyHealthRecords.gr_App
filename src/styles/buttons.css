@@ -9,9 +9,9 @@
 .btn-primary:hover,
 .btn-primary:focus {
   background-color: var(--bs-gray) !important;
+  box-shadow: none !important;
 }
 
 .btn-primary:active {
   background-color: var(--bs-dark) !important;
-  box-shadow: none !important;
 }
