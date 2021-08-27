@@ -1,6 +1,7 @@
 import "./screens.css";
 import Navbar from "../navbars/Navbar";
-import VitalsScreen from "./NavbarScreens/VitalsScreen";
+import VitalsTab from "./NavbarTabs/VitalsTab";
+import PDFTab from "./NavbarTabs/PDFTab";
 
 const MainScreen = () => {
   return (
@@ -21,8 +22,8 @@ const MainScreen = () => {
             ]}
           ></Navbar>
         </div>
-
-        <VitalsScreen />
+        <PDFTab />
+        {/* <VitalsTab /> */}
       </div>
     </div>
   );

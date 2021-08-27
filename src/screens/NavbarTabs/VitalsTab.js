@@ -1,9 +1,8 @@
-import "../screens.css";
 import TablePressure from "../../general/TablePressure";
 import TableTemperature from "../../general/TableTemperature";
 import VitalsForm from "../../Forms/VitalsForm";
 
-const VitalsScreen = () => {
+const VitalsTab = () => {
   return (
     <div className="p-2 outer-VitalsDiv w-100 d-flex flex-column align-items-center">
       <div className="mt-4">
@@ -28,4 +27,4 @@ const VitalsScreen = () => {
   );
 };
 
-export default VitalsScreen;
+export default VitalsTab;
