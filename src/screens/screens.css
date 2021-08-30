@@ -6,11 +6,12 @@
 }
 
 /* MainScreen */
-.outer-MainDiv {
+.outer-maindiv {
   background-color: var(--color-ice-light);
+  overflow: hidden;
 }
 
-.inner-MainDiv {
+.inner-maindiv {
   background-color: var(--color-ice);
   min-height: 100vh;
 }
@@ -21,5 +22,5 @@
 
 /* VitalsScreen */
 .outer-VitalsDiv {
-  background-color: var(--color-green);
+  background-color: var(--color-ice-light);
 }

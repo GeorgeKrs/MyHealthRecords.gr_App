@@ -7,11 +7,13 @@ const PDFForm = () => {
         <div className="row">
           <div className="col-sm-12 col-lg-6 mt-4">
             <label className="label">Επιλογή Ειδικότητας</label>
-            <select class="inputValues">
+            <select className="inputValues">
               <option>Ειδικότητες Ιατρών</option>
 
               {DoctorsSpecs.map((doctor, index) => (
-                <option value={index}>{doctor}</option>
+                <option key={index} value={index}>
+                  {doctor}
+                </option>
               ))}
             </select>
           </div>

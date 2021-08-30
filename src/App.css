@@ -21,3 +21,12 @@
   background-color: var(--color-ice-light);
   transition: background-color 500ms ease;
 }
+
+/* font awesome icons */
+.icons-custom {
+  color: red;
+}
+
+.icons-custom:hover {
+  color: purple;
+}

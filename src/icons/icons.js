@@ -1,16 +1,37 @@
-import { faBook } from "@fortawesome/solid-svg-icons";
+import {
+  faHeartbeat,
+  faFileMedicalAlt,
+  faFileMedical,
+  faBookMedical,
+  faAllergies,
+  faUserCog,
+  faChartBar,
+  faCalendarAlt,
+  faSignOutAlt,
+} from "@fortawesome/free-solid-svg-icons";
 
-const icons = {
-  VITALS_MEASUREMENT: "fas fa-file-medical-alt",
-  VITALS_MEASUREMENT_RECORD: "fas fa-notes-medical",
-  PDF_NEW_TEST: "fas fa-file-medical",
-  PDF_RECORD: "fas fa-book-medical",
-  ALLERGIES: "fas fa-allergies",
-  USER_SETTINGS: "fas fa-user-cog",
-  METRICS: "fas fa-chart-bar",
-  CALENDAR: "fas fa-calendar-alt",
-  PET: "fas fa-paw",
-  SIGN_OUT: "fas fa-sign-out-alt",
-};
+// const ICONS = [
+//   { id: "Vitals_icon", icon: faHeartbeat },
+//   { id: "VitalsR_icon", icon: faFileMedicalAlt },
+//   { id: "PDF_icon", icon: faFileMedical },
+//   { id: "PDFR_icon", icon: faBookMedical },
+//   { id: "All_icon", icon: faAllergies },
+//   { id: "Settings_icon", icon: faUserCog },
+//   { id: "Metrics_icon", icon: faChartBar },
+//   { id: "Cal_icon", icon: faCalendarAlt },
+//   { id: "SignOut_icon", icon: faSignOutAlt },
+// ];
 
-export default icons;
+const ICONS = [
+  faHeartbeat,
+  faFileMedicalAlt,
+  faFileMedical,
+  faBookMedical,
+  faAllergies,
+  faUserCog,
+  faChartBar,
+  faCalendarAlt,
+  faSignOutAlt,
+];
+
+export default ICONS;

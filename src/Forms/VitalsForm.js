@@ -2,14 +2,6 @@ import { useState } from "react";
 import DoctorsSpecs from "../general/DoctorsSpecs";
 
 const VitalsForm = () => {
-  // const [enteredVitalsSystolic, setEnteredVitalsSystolic] = useState();
-  // const [enteredVitalsDiastolic, setEnteredVitalsDiastolic] = useState();
-  // const [enteredVitalsPulses, setEnteredVitalsPulses] = useState();
-  // const [enteredVitalsTemperature, setEnteredVitalsTemperature] = useState();
-  // const [enteredVitalsBloodOxygen, setEnteredVitalsBloodOxygen] = useState();
-  // const [enteredVitalsWeight, setEnteredVitalsWeight] = useState();
-  // const [enteredVitalsComments, setEnteredVitalsComments] = useState();
-
   const FormHandler = (event) => {
     event.preventDefault();
 
