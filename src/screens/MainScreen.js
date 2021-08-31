@@ -10,44 +10,20 @@ const MainScreen = () => {
     <div className="d-flex outer-maindiv">
       <div className="inner-maindiv">
         <div className="p-3 d-flex flex-shrink-1 flex-column text-center mb-3 h-100">
-          {ICONS.map((icon, index, arr) => {
-            if (arr.length - 1 === index) {
-              return (
-                <div className="mt-auto p-3 mt-2">
-                  <FontAwesomeIcon
-                    className="icons-custom"
-                    icon={icon}
-                    id={index.toString()}
-                    size="lg"
-                  />
-                </div>
-              );
-            } else {
-              return (
-                <div className="p-3 mt-2">
-                  <FontAwesomeIcon
-                    className="icons-custom"
-                    icon={icon}
-                    id={index.toString()}
-                    size="lg"
-                  />
-                </div>
-              );
-            }
-          })}
-
-          {/* {Object.keys(ICONS).map(function (faHeartbeat, id) {
-            console.log(id);
-            console.log(faHeartbeat);
-            <div className="p-3 mt-2">
+          {ICONS.map((menu_icon, index, arr) => (
+            <div
+              key={menu_icon.id}
+              className={
+                arr.length - 1 === index ? "mt-auto p-3 mt-2" : "p-3 mt-2"
+              }
+            >
               <FontAwesomeIcon
                 className="icons-custom"
-                icon={faHeartbeat}
-                id={id}
+                icon={menu_icon.icon}
                 size="lg"
               />
-            </div>;
-          })} */}
+            </div>
+          ))}
         </div>
       </div>
       <PDFTab />
