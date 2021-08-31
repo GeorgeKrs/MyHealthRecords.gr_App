@@ -1,6 +1,6 @@
 const SignUpForm = () => {
   return (
-    <div className="pt-5 mb-4">
+    <div className="pt-5 mb-4 form-custom">
       <div className="row">
         <div className="col-sm-12 col-lg-6 mt-4">
           <label className="label">Όνομα</label>
@@ -41,7 +41,7 @@ const SignUpForm = () => {
         </div>
       </div>
 
-      <div className="mt-5">
+      <div className="mt-5 mb-4">
         <button type="button" className="btn btn-outline-primary">
           Εγγραφή
         </button>

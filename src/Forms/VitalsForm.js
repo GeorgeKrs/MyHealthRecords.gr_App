@@ -9,7 +9,7 @@ const VitalsForm = () => {
   };
   return (
     <div className="pt-5 mb-4">
-      <form onSubmit={FormHandler}>
+      <form className="form-custom" onSubmit={FormHandler}>
         <div className="row">
           <div className="col-sm-12 col-lg-6 mt-4">
             <label className="label">Συστολική Πίεση (mmHg)</label>

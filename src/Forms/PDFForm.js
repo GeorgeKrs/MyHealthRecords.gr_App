@@ -1,9 +1,10 @@
+import "./form.css";
 import DoctorsSpecs from "../general/DoctorsSpecs";
 
 const PDFForm = () => {
   return (
     <div className="pt-5 mb-4">
-      <form>
+      <form className="form-custom">
         <div className="row">
           <div className="col-sm-12 col-lg-6 mt-4">
             <label className="label">Επιλογή Ειδικότητας</label>

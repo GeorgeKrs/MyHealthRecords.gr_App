@@ -14,7 +14,7 @@ const MainScreen = () => {
             <div
               key={menu_icon.id}
               className={
-                arr.length - 1 === index ? "mt-auto p-3 mt-2" : "p-3 mt-2"
+                arr.length - 2 === index ? "mt-auto p-3 mt-2" : "p-3 mt-2"
               }
             >
               <FontAwesomeIcon
@@ -26,8 +26,8 @@ const MainScreen = () => {
           ))}
         </div>
       </div>
-      <PDFTab />
-      {/* <VitalsTab /> */}
+      {/* <PDFTab /> */}
+      <VitalsTab />
     </div>
   );
 };
