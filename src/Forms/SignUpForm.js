@@ -1,49 +1,133 @@
+import { useState, useEffect } from "react";
+
 const SignUpForm = () => {
+  const [firstname, setName] = useState("");
+  const [lastname, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordVerif, setPasswordVerif] = useState("");
+  const [AMKA, setAMKA] = useState("");
+  const [AFM, setAFM] = useState("");
+  const [phone, setPhone] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 1000);
+
+  useEffect(() => {
+    window.addEventListener(
+      "resize",
+      () => {
+        const ismobile = window.innerWidth < 1000;
+        if (ismobile !== isMobile) setIsMobile(ismobile);
+      },
+      false
+    );
+  }, [isMobile]);
+
+  const FormHandler = () => {
+    setLoading(true);
+
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  };
+
   return (
     <div className="pt-5 mb-4 form-custom">
       <div className="row">
         <div className="col-sm-12 col-lg-6 mt-4">
           <label className="label">Όνομα</label>
-          <input type="text" className="inputValues"></input>
+          <input
+            type="text"
+            className="inputValues"
+            onChange={(e) => setName(e.target.value)}
+          />
         </div>
         <div className="col-sm-12 col-lg-6 mt-4">
           <label className="label">Επώνυμο</label>
-          <input type="text" className="inputValues"></input>
+          <input
+            type="text"
+            className="inputValues"
+            onChange={(e) => setLastName(e.target.value)}
+          />
         </div>
       </div>
 
       <div className="row">
         <div className="col-sm-12 col-lg-6 mt-4">
           <label className="label">Email</label>
-          <input type="email" className="inputValues"></input>
+          <input
+            type="email"
+            className="inputValues"
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </div>
         <div className="col-sm-12 col-lg-6 mt-4">
           <label className="label">Κωδικός</label>
-          <input type="password" className="inputValues"></input>
+          <input
+            type="password"
+            className="inputValues"
+            onChange={(e) => setPassword(e.target.value)}
+          />
         </div>
       </div>
 
       <div className="row">
+        <div className="col-sm-12 col-lg-6 mt-4">
+          <label className="label">Κωδικός (Επαλήθευση)</label>
+          <input
+            type="password"
+            className="inputValues"
+            onChange={(e) => setPasswordVerif(e.target.value)}
+          />
+        </div>
         <div className="col-sm-12 col-lg-6 mt-4">
           <label className="label">ΑΜΚΑ (Προαιρετικό)</label>
-          <input type="text" className="inputValues"></input>
-        </div>
-        <div className="col-sm-12 col-lg-6 mt-4">
-          <label className="label">ΑΦΜ (Προαιρετικό)</label>
-          <input type="text" className="inputValues"></input>
+          <input
+            type="text"
+            className="inputValues"
+            onChange={(e) => setAMKA(e.target.value)}
+          />
         </div>
       </div>
 
       <div className="row">
         <div className="col-sm-12 col-lg-6 mt-4">
+          <label className="label">ΑΦΜ (Προαιρετικό)</label>
+          <input
+            type="text"
+            className="inputValues"
+            onChange={(e) => setAFM(e.target.value)}
+          />
+        </div>
+        <div className="col-sm-12 col-lg-6 mt-4">
           <label className="label">Κινητό (Προαιρετικό)</label>
-          <input type="text" className="inputValues"></input>
+          <input
+            type="text"
+            className="inputValues"
+            onChange={(e) => setPhone(e.target.value)}
+          />
         </div>
       </div>
 
       <div className="mt-5 mb-4">
-        <button type="button" className="btn btn-outline-primary">
-          Εγγραφή
+        <button
+          type="button"
+          className={
+            isMobile
+              ? "btn btn-outline-primary w-100"
+              : "btn btn-outline-primary w-25"
+          }
+          onClick={FormHandler}
+          disabled={loading ? true : false}
+        >
+          {loading && (
+            <span
+              className="spinner-border spinner-border-sm me-2"
+              role="status"
+            ></span>
+          )}
+          <span>{loading ? "Περιμένετε..." : "Εγγραφή"}</span>
         </button>
       </div>
     </div>

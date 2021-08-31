@@ -6,10 +6,12 @@ const SignUpScreen = () => {
     <div className="outer-SignUpDiv">
       <div className="container pt-5">
         <h2 className="text-center">
-          <b>My Health Records App.gr</b>
+          <u>
+            <b>My Health Records App.gr</b>
+          </u>
         </h2>
         <div className="row pt-2 justify-content-center">
-          <div className="col-sm-12 col-lg-7">
+          <div className="col-sm-12 col-lg-7 h-100">
             <SignUpForm />
           </div>
         </div>

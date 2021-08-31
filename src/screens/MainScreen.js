@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import "./screens.css";
 import VitalsTab from "../screens/tabs/VitalsTab";
 import PDFTab from "../screens/tabs/PDFTab";
@@ -8,7 +9,7 @@ import ICONS from "../icons/icons";
 const MainScreen = () => {
   return (
     <div className="d-flex outer-maindiv">
-      <div className="inner-maindiv">
+      <div className="inner-maindiv d-none d-sm-block">
         <div className="p-3 d-flex flex-shrink-1 flex-column text-center mb-3 h-100">
           {ICONS.map((menu_icon, index, arr) => (
             <div

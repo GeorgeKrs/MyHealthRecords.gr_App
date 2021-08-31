@@ -1,25 +1,55 @@
-import { useState } from "react";
-import DoctorsSpecs from "../general/DoctorsSpecs";
+import { useState, useEffect } from "react";
 
 const VitalsForm = () => {
-  const FormHandler = (event) => {
-    event.preventDefault();
+  const [systolic, setSystolic] = useState("");
+  const [diastolic, setDiastolic] = useState("");
+  const [pulses, setPulses] = useState("");
+  const [temperature, setTemperature] = useState("");
+  const [oxygen, setOxygen] = useState("");
+  const [weight, setWeight] = useState("");
+  const [comments, setComments] = useState("");
+  const [loading, setLoading] = useState(false);
 
-    console.log(DoctorsSpecs);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 1000);
+
+  useEffect(() => {
+    window.addEventListener(
+      "resize",
+      () => {
+        const ismobile = window.innerWidth < 1000;
+        if (ismobile !== isMobile) setIsMobile(ismobile);
+      },
+      false
+    );
+  }, [isMobile]);
+
+  const FormHandler = () => {
+    setLoading(true);
+    console.log(systolic);
+    console.log(diastolic);
+    console.log(pulses);
+    console.log(temperature);
+    console.log(oxygen);
+    console.log(weight);
+    console.log(comments);
+
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
   };
+
   return (
     <div className="pt-5 mb-4">
-      <form className="form-custom" onSubmit={FormHandler}>
+      <div className="form-custom">
         <div className="row">
           <div className="col-sm-12 col-lg-6 mt-4">
             <label className="label">Συστολική Πίεση (mmHg)</label>
             <input
-              // value={enteredVitalsSystolic}
-              // onChange={VitalsSystolicChangeHandler}
               type="number"
               className="inputValues"
               placeholder="Μεγάλη Πίεση"
-            ></input>
+              onChange={(e) => setSystolic(e.target.value)}
+            />
           </div>
           <div className="col-sm-12 col-lg-6 mt-4">
             <label className="label">Διαστολική Πίεση (mmHg)</label>
@@ -27,9 +57,8 @@ const VitalsForm = () => {
               type="number"
               className="inputValues"
               placeholder="Μικρή Πίεση"
-              // value={enteredVitalsSystolic}
-              // onChange={VitalsSystolicChangeHandler}
-            ></input>
+              onChange={(e) => setDiastolic(e.target.value)}
+            />
           </div>
         </div>
 
@@ -39,9 +68,8 @@ const VitalsForm = () => {
             <input
               type="number"
               className="inputValues"
-              // value={enteredVitalsSystolic}
-              // onChange={VitalsSystolicChangeHandler}
-            ></input>
+              onChange={(e) => setPulses(e.target.value)}
+            />
           </div>
           <div className="col-sm-12 col-lg-6 mt-4">
             <label className="label">Θερμοκρασία (&#176;C)</label>
@@ -49,9 +77,8 @@ const VitalsForm = () => {
               type="number"
               step="0.1"
               className="inputValues"
-              // value={enteredVitalsSystolic}
-              // onChange={VitalsSystolicChangeHandler}
-            ></input>
+              onChange={(e) => setTemperature(e.target.value)}
+            />
           </div>
         </div>
 
@@ -62,9 +89,8 @@ const VitalsForm = () => {
               type="number"
               step="0.1"
               className="inputValues"
-              // value={enteredVitalsSystolic}
-              // onChange={VitalsSystolicChangeHandler}
-            ></input>
+              onChange={(e) => setOxygen(e.target.value)}
+            />
           </div>
           <div className="col-sm-12 col-lg-6 mt-4">
             <label className="label">Βάρος (Κιλά)</label>
@@ -72,9 +98,8 @@ const VitalsForm = () => {
               type="number"
               step="0.1"
               className="inputValues"
-              // value={enteredVitalsSystolic}
-              // onChange={VitalsSystolicChangeHandler}
-            ></input>
+              onChange={(e) => setWeight(e.target.value)}
+            />
           </div>
         </div>
 
@@ -84,18 +109,32 @@ const VitalsForm = () => {
             <textarea
               className="inputValues"
               rows="4"
-              // value={enteredVitalsSystolic}
-              // onChange={VitalsSystolicChangeHandler}
+              onChange={(e) => setComments(e.target.value)}
             ></textarea>
           </div>
         </div>
 
         <div className="mt-5">
-          <button type="submit" className="btn btn-outline-primary">
-            Καταχώρηση
+          <button
+            type="button"
+            className={
+              isMobile
+                ? "btn btn-outline-primary w-100"
+                : "btn btn-outline-primary w-25"
+            }
+            onClick={FormHandler}
+            disabled={loading ? true : false}
+          >
+            {loading && (
+              <span
+                className="spinner-border spinner-border-sm me-2"
+                role="status"
+              ></span>
+            )}
+            <span>{loading ? "Περιμένετε..." : "Καταχώρηση"}</span>
           </button>
         </div>
-      </form>
+      </div>
     </div>
   );
 };

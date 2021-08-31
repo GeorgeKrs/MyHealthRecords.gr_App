@@ -6,7 +6,11 @@ const VitalsTab = () => {
   return (
     <div className="p-2 outer-VitalsDiv w-100 d-flex flex-column align-items-center">
       <div className="mt-4">
-        <h3>Μέτρηση Ζωτικών Λειτουργιών</h3>
+        <u>
+          <b>
+            <h3>Μέτρηση Ζωτικών Λειτουργιών</h3>
+          </b>
+        </u>
       </div>
 
       <VitalsForm />
