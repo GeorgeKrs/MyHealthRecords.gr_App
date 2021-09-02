@@ -1,6 +1,7 @@
 .form-custom {
   background-color: var(--bs-gray-300);
   padding: 1rem;
+  margin: 1.5rem;
   border-radius: 1rem;
   box-shadow: 0.3rem 0.3rem 0.1rem var(--bs-gray-900);
 }
