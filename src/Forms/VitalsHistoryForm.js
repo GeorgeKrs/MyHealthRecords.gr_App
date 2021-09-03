@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { MONTHS, DAYS } from "../general/DateFile";
+import { MONTHS, DAYS, YEARS } from "../general/DateFile";
 
 const VitalsHistoryForm = () => {
   const [fromYear, setFromYear] = useState("");
@@ -77,11 +77,17 @@ const VitalsHistoryForm = () => {
           </div>
           <div className="col-sm-12 col-lg-4 mt-3">
             <label className="label">Έτος</label>
-            <input
-              type="number"
+            <select
               className="inputValues"
               onChange={(e) => setFromYear(e.target.value)}
-            />
+            >
+              <option className="text-secondary">Επιλογή Χρονολογίας</option>
+              {YEARS.map((listObj) => (
+                <option key={listObj.year} value={listObj.year_value}>
+                  {listObj.year}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
         <div className="row mt-5">
@@ -116,11 +122,17 @@ const VitalsHistoryForm = () => {
           </div>
           <div className="col-sm-12 col-lg-4 mt-3">
             <label className="label">Έτος</label>
-            <input
-              type="number"
+            <select
               className="inputValues"
               onChange={(e) => setToYear(e.target.value)}
-            />
+            >
+              <option className="text-secondary">Επιλογή Χρονολογίας</option>
+              {YEARS.map((listObj) => (
+                <option key={listObj.year} value={listObj.year_value}>
+                  {listObj.year}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
 
