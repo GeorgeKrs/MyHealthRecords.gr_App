@@ -9,6 +9,8 @@ const SignUpForm = () => {
   const [AMKA, setAMKA] = useState("");
   const [AFM, setAFM] = useState("");
   const [phone, setPhone] = useState("");
+
+  const [conditions, setConditions] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const [isMobile, setIsMobile] = useState(window.innerWidth < 1000);
@@ -110,25 +112,37 @@ const SignUpForm = () => {
         </div>
       </div>
 
-      <div className="mt-5 mb-4">
-        <button
-          type="button"
-          className={
-            isMobile
-              ? "btn btn-outline-primary w-100"
-              : "btn btn-outline-primary w-25"
-          }
-          onClick={FormHandler}
-          disabled={loading ? true : false}
-        >
-          {loading && (
-            <span
-              className="spinner-border spinner-border-sm me-2"
-              role="status"
-            ></span>
-          )}
-          <span>{loading ? "Περιμένετε..." : "Εγγραφή"}</span>
-        </button>
+      <div className="mt-3 mb-4">
+        <div className="form-check">
+          <input
+            className="form-check-input"
+            type="checkbox"
+            onChange={(e) => setConditions(e.target.value)}
+          />
+          <label style={{ fontSize: "12px" }}>
+            Συμφωνώ με τους όρους χρήσης και τις προϋποθέσεις
+          </label>
+        </div>
+        <div className="mt-4">
+          <button
+            type="button"
+            className={
+              isMobile
+                ? "btn btn-outline-primary w-100"
+                : "btn btn-outline-primary w-25"
+            }
+            onClick={FormHandler}
+            disabled={loading ? true : false}
+          >
+            {loading && (
+              <span
+                className="spinner-border spinner-border-sm me-2"
+                role="status"
+              ></span>
+            )}
+            <span>{loading ? "Περιμένετε..." : "Εγγραφή"}</span>
+          </button>
+        </div>
       </div>
     </div>
   );
