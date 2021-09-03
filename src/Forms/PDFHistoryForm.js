@@ -1,13 +1,15 @@
 import { useState, useEffect } from "react";
 import { MONTHS, DAYS } from "../general/DateFile";
+import DoctorsSpecs from "../general/DoctorsSpecs";
 
-const VitalsHistoryForm = () => {
+const PDFHistoryForm = () => {
   const [fromYear, setFromYear] = useState("");
   const [fromMonth, setFromMonth] = useState("");
   const [fromDay, setFromDay] = useState("");
   const [toYear, setToYear] = useState("");
   const [toMonth, setToMonth] = useState("");
   const [toDay, setToDay] = useState("");
+  const [doctorSpec, setDoctorSpec] = useState("");
   const [loading, setLoading] = useState(false);
 
   const [viewModal, setViewModal] = useState(false);
@@ -35,6 +37,7 @@ const VitalsHistoryForm = () => {
     console.log(toYear);
     console.log(toMonth);
     console.log(toDay);
+    console.log(doctorSpec);
 
     setTimeout(() => {
       setLoading(false);
@@ -44,7 +47,7 @@ const VitalsHistoryForm = () => {
   return (
     <div className="pt-5 mb-4">
       <div className="form-custom">
-        <div className="row">
+        <div className="row mt-4">
           <h5>Από:</h5>
 
           <div className="col-sm-12 col-lg-4 mt-3">
@@ -124,6 +127,22 @@ const VitalsHistoryForm = () => {
           </div>
         </div>
 
+        <div className="row mt-5">
+          <h5>Επιλέξτε ειδικότητα Ιατρού:</h5>
+          <div className="col-lg-4 col-sm-12 mt-3">
+            <select
+              className="inputValues"
+              onChange={(e) => setDoctorSpec(e.target.value)}
+            >
+              <option>Όλες οι ειδικότητες</option>
+              {DoctorsSpecs.map((doctor, index) => (
+                <option key={index} value={index}>
+                  {doctor}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
         <div className="mt-5">
           <button
             type="button"
@@ -149,4 +168,4 @@ const VitalsHistoryForm = () => {
   );
 };
 
-export default VitalsHistoryForm;
+export default PDFHistoryForm;

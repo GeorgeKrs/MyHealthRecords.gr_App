@@ -3,6 +3,7 @@ import "./screens.css";
 import VitalsTab from "../screens/tabs/VitalsTab";
 import PDFTab from "../screens/tabs/PDFTab";
 import VitalsHistoryTab from "./tabs/VitalsHistoryTab";
+import PDFHistoryTab from "./tabs/PDFHistoryTab";
 // font icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ICONS from "../icons/icons";
@@ -28,9 +29,10 @@ const MainScreen = () => {
           ))}
         </div>
       </div>
-      {/* <PDFTab /> */}
-      {/* <VitalsTab /> */}
+      <PDFTab />
+      {/* <VitalsTab />
       <VitalsHistoryTab />
+      <PDFHistoryTab /> */}
     </div>
   );
 };
