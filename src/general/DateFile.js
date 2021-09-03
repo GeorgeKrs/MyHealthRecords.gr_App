@@ -47,4 +47,33 @@ const DAYS = [
   { day_value: 31, day: "31" },
 ];
 
-export { MONTHS, DAYS };
+const YEARS = [
+  { year_value: 2025, year: "2025" },
+  { year_value: 2024, year: "2024" },
+  { year_value: 2023, year: "2023" },
+  { year_value: 2022, year: "2022" },
+  { year_value: 2021, year: "2021" },
+  { year_value: 2020, year: "2020" },
+  { year_value: 2019, year: "2019" },
+  { year_value: 2018, year: "2018" },
+  { year_value: 2017, year: "2017" },
+  { year_value: 2016, year: "2016" },
+  { year_value: 2015, year: "2015" },
+  { year_value: 2014, year: "2014" },
+  { year_value: 2013, year: "2013" },
+  { year_value: 2012, year: "2012" },
+  { year_value: 2011, year: "2011" },
+  { year_value: 2010, year: "2010" },
+  { year_value: 2009, year: "2009" },
+  { year_value: 2008, year: "2008" },
+  { year_value: 2007, year: "2007" },
+  { year_value: 2006, year: "2006" },
+  { year_value: 2005, year: "2005" },
+  { year_value: 2004, year: "2004" },
+  { year_value: 2003, year: "2003" },
+  { year_value: 2002, year: "2002" },
+  { year_value: 2001, year: "2001" },
+  { year_value: 2000, year: "2000" },
+];
+
+export { MONTHS, DAYS, YEARS };

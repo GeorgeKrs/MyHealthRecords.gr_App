@@ -5,3 +5,23 @@
   border-radius: 1rem;
   box-shadow: 0.3rem 0.3rem 0.1rem var(--bs-gray-900);
 }
+
+/* input css */
+.label {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.inputValues {
+  border-radius: 14px;
+  padding: 4px;
+  width: 100%;
+  border-color: gray !important;
+}
+
+.inputValues:focus {
+  outline: none;
+  border-color: var(--color-grey-darker) !important;
+  background-color: var(--color-ice-light);
+  transition: background-color 500ms ease;
+}

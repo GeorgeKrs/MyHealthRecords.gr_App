@@ -2,26 +2,6 @@
 @import "/src/styles/icons.css";
 @import "/src/styles/buttons.css";
 
-/* input css */
-.label {
-  font-size: 14px;
-  font-weight: bold;
-}
-
-.inputValues {
-  border-radius: 14px;
-  padding: 4px;
-  width: 100%;
-  border-color: gray !important;
-}
-
-.inputValues:focus {
-  outline: none;
-  border-color: var(--color-grey-darker) !important;
-  background-color: var(--color-ice-light);
-  transition: background-color 500ms ease;
-}
-
 /* font awesome icons */
 .icons-custom {
   color: red;
@@ -30,3 +10,4 @@
 .icons-custom:hover {
   color: purple;
 }
+

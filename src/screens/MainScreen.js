@@ -29,10 +29,10 @@ const MainScreen = () => {
           ))}
         </div>
       </div>
-      <PDFTab />
-      {/* <VitalsTab />
-      <VitalsHistoryTab />
-      <PDFHistoryTab /> */}
+      {/* <PDFTab /> */}
+      {/* <VitalsTab /> */}
+      {/* <VitalsHistoryTab /> */}
+      <PDFHistoryTab />
     </div>
   );
 };
