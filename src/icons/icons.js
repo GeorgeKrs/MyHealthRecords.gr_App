@@ -6,9 +6,9 @@ import {
   faAllergies,
   faUserCog,
   faChartBar,
+  faPaw,
   faCalendarAlt,
   faSignOutAlt,
-  faPaw,
 } from "@fortawesome/free-solid-svg-icons";
 
 const ICONS = [

@@ -15,7 +15,7 @@ const VitalsTab = () => {
 
       <VitalsForm />
 
-      <div className="mt-5 p-2">
+      {/* <div className="mt-5 p-2">
         <h4>
           Πίνακες με ενδεικτικές φυσιολογικές τιμές για τις πιέσεις (Συστολική,
           Διαστολική) και τη Θερμοκρασία.
@@ -26,7 +26,7 @@ const VitalsTab = () => {
         <div className="mt-5">
           <TableTemperature />
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

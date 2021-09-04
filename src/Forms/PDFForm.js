@@ -58,7 +58,7 @@ const PDFForm = () => {
         </div>
         <div className="row">
           <div className="col-sm-12 col-lg-12 mt-4">
-            <label className="label">Σχόλια Μέτρησης:</label>
+            <label className="label">Σχόλια Εξετάσεων:</label>
             <textarea
               className="inputValues"
               rows="4"

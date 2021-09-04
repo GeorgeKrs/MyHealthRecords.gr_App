@@ -6,8 +6,10 @@ const VitalsForm = () => {
   const [pulses, setPulses] = useState("");
   const [temperature, setTemperature] = useState("");
   const [oxygen, setOxygen] = useState("");
+  const [sugar, setSugar] = useState("");
   const [weight, setWeight] = useState("");
   const [comments, setComments] = useState("");
+
   const [loading, setLoading] = useState(false);
 
   const [isMobile, setIsMobile] = useState(window.innerWidth < 1000);
@@ -90,6 +92,18 @@ const VitalsForm = () => {
               step="0.1"
               className="inputValues"
               onChange={(e) => setOxygen(e.target.value)}
+            />
+          </div>
+          <div className="col-sm-12 col-lg-6 mt-4"></div>
+        </div>
+
+        <div className="row">
+          <div className="col-sm-12 col-lg-6 mt-4">
+            <label className="label">Σάκχαρο (mg/dL)</label>
+            <input
+              type="number"
+              className="inputValues"
+              onChange={(e) => setSugar(e.target.value)}
             />
           </div>
           <div className="col-sm-12 col-lg-6 mt-4">
