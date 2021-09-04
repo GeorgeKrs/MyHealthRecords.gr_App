@@ -8,7 +8,7 @@ const VitalsTab = () => {
       <div className="mt-4">
         <u>
           <b>
-            <h3>Μέτρηση Ζωτικών Λειτουργιών</h3>
+            <h4 className="text-center">Μέτρηση Ζωτικών Λειτουργιών</h4>
           </b>
         </u>
       </div>

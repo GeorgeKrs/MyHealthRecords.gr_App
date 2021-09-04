@@ -6,7 +6,7 @@ const PDFTab = () => {
       <div className="mt-4">
         <u>
           <b>
-            <h3>Αποθήκευση νέων εξετάσεων</h3>
+            <h4 className="text-center">Αποθήκευση νέων εξετάσεων</h4>
           </b>
         </u>
       </div>

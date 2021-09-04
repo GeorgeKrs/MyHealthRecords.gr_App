@@ -6,7 +6,7 @@ const VitalsHistoryTab = () => {
       <div className="mt-4">
         <u>
           <b>
-            <h3>Ιστορικό Ζωτικών Λειτουργιών</h3>
+            <h4 className="text-center">Ιστορικό Ζωτικών Λειτουργιών</h4>
           </b>
         </u>
       </div>

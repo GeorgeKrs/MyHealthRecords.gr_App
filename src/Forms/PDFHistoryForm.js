@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { MONTHS, DAYS, YEARS } from "../general/DateFile";
 import DoctorsSpecs from "../general/DoctorsSpecs";
 
@@ -13,19 +13,6 @@ const PDFHistoryForm = () => {
   const [loading, setLoading] = useState(false);
 
   const [viewModal, setViewModal] = useState(false);
-
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 1000);
-
-  useEffect(() => {
-    window.addEventListener(
-      "resize",
-      () => {
-        const ismobile = window.innerWidth < 1000;
-        if (ismobile !== isMobile) setIsMobile(ismobile);
-      },
-      false
-    );
-  }, [isMobile]);
 
   const FormHandler = () => {
     setLoading(true);
@@ -45,7 +32,7 @@ const PDFHistoryForm = () => {
   };
 
   return (
-    <div className="pt-5 mb-4">
+    <div className="pt-4 mb-4">
       <div className="form-custom">
         <div className="row mt-4">
           <h5>Από:</h5>
@@ -159,11 +146,7 @@ const PDFHistoryForm = () => {
         <div className="mt-5">
           <button
             type="button"
-            className={
-              isMobile
-                ? "btn btn-outline-primary w-100"
-                : "btn btn-outline-primary w-25"
-            }
+            className="btn btn-outline-primary"
             onClick={FormHandler}
             disabled={loading ? true : false}
           >
