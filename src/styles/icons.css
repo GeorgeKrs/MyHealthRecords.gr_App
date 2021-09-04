@@ -1,14 +1,17 @@
 /* font awesome icons */
-
 .fontIcon-custom {
   background-color: var(--color-ice-light);
   border-radius: 25px;
 }
 
 .icons-custom {
-  color: red;
+  color: var(--bs-light);
+}
+
+.icon-custom-active {
+  color: var(--bs-dark) !important;
 }
 
 .icons-custom:hover {
-  color: purple;
+  color: var(--bs-dark);
 }

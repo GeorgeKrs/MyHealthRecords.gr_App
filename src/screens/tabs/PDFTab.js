@@ -2,7 +2,7 @@ import PDFForm from "../../Forms/PDFForm";
 
 const PDFTab = () => {
   return (
-    <div className="p-2 outer-VitalsDiv w-100 d-flex flex-column align-items-center">
+    <div className="p-2 outer-tabsDiv w-100 d-flex flex-column align-items-center">
       <div className="mt-4">
         <u>
           <b>

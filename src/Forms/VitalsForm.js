@@ -133,7 +133,7 @@ const VitalsForm = () => {
           </button>
         </div>
       </div>
-    </div>
+    </div> 
   );
 };
 

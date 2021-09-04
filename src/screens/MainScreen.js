@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 // importing tooltip
 import Tooltip from "../general/Tooltip";
 // importing screens & tabs
@@ -13,9 +13,11 @@ import ICONS from "../icons/icons";
 
 const MainScreen = () => {
   const [tab, setTab] = useState("1");
+  const [activeTab, setActiveTab] = useState("1");
 
   const tabSelectorHandler = (tabId) => {
     setTab(tabId);
+    setActiveTab(tabId);
   };
 
   return (
@@ -26,13 +28,18 @@ const MainScreen = () => {
             <div
               key={menu_icon.id}
               className={
-                arr.length - 2 === index ? "mt-auto p-3 mt-2" : "p-3 mt-2"
+                arr.length - 2 === index ? "mt-auto p-3 mt-2 " : "p-3 mt-2"
               }
             >
               <Tooltip content={menu_icon.description}>
                 <FontAwesomeIcon
                   id={menu_icon.id}
-                  className="icons-custom"
+                  // className="icons-custom"
+                  className={
+                    activeTab === menu_icon.id
+                      ? "icons-custom-active"
+                      : "icons-custom"
+                  }
                   icon={menu_icon.icon}
                   size="lg"
                   onClick={tabSelectorHandler.bind(this, menu_icon.id)}

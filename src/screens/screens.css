@@ -1,3 +1,9 @@
+/* SignUpScreen */
+.outer-SignUpDiv {
+  background-color: var(--bs-cyan);
+  min-height: 100vh;
+}
+
 /* LoginScreen */
 .outer-LoginDiv {
   background-color: var(--color-green);
@@ -7,22 +13,17 @@
 
 /* MainScreen */
 .outer-maindiv {
-  background-color: var(--color-ice-light);
+  /* background-color: var(--color-ice-light); */
   overflow: hidden;
 }
 
 .inner-maindiv {
-  background-color: var(--color-ice);
+  background-color: var(--bs-danger);
   min-height: 100vh;
 }
 
-.outer-SignUpDiv {
-  background-color: var(--bs-cyan);
-  min-height: 100vh;
-}
-
-/* VitalsScreen */
-.outer-VitalsDiv {
-  background-color: var(--color-ice-light);
+/* Tabs */
+.outer-tabsDiv {
+  background-color: var(--bs-light);
   min-height: 100vh;
 }
