@@ -1,4 +1,7 @@
 import { useState, useEffect } from "react";
+// importing tooltip
+import Tooltip from "../general/Tooltip";
+// importing screens & tabs
 import "./screens.css";
 import VitalsTab from "../screens/tabs/VitalsTab";
 import PDFTab from "../screens/tabs/PDFTab";
@@ -20,18 +23,21 @@ const MainScreen = () => {
                 arr.length - 2 === index ? "mt-auto p-3 mt-2" : "p-3 mt-2"
               }
             >
-              <FontAwesomeIcon
-                className="icons-custom"
-                icon={menu_icon.icon}
-                size="lg"
-              />
+              <Tooltip content={menu_icon.description}>
+                <FontAwesomeIcon
+                  className="icons-custom"
+                  icon={menu_icon.icon}
+                  size="lg"
+                />
+              </Tooltip>
             </div>
           ))}
         </div>
       </div>
-      {/* <PDFTab /> */}
+
+      <PDFTab />
       {/* <VitalsTab /> */}
-      <VitalsHistoryTab />
+      {/* <VitalsHistoryTab /> */}
       {/* <PDFHistoryTab /> */}
     </div>
   );
