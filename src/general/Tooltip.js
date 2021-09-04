@@ -5,13 +5,10 @@ const Tooltip = (props) => {
   const [active, setActive] = useState(false);
 
   const showTip = () => {
-    timeout = setTimeout(() => {
-      setActive(true);
-    }, 400);
+    setActive(true);
   };
 
   const hideTip = () => {
-    clearInterval(timeout);
     setActive(false);
   };
 

@@ -19,12 +19,13 @@ const VitalsForm = () => {
     console.log(pulses);
     console.log(temperature);
     console.log(oxygen);
+    console.log(sugar);
     console.log(weight);
     console.log(comments);
 
     setTimeout(() => {
       setLoading(false);
-    }, 2000);
+    }, 1000);
   };
 
   return (

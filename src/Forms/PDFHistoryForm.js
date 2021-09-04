@@ -136,7 +136,7 @@ const PDFHistoryForm = () => {
             >
               <option>Όλες οι ειδικότητες</option>
               {DoctorsSpecs.map((doctor, index) => (
-                <option key={index} value={index}>
+                <option key={index} value={doctor}>
                   {doctor}
                 </option>
               ))}

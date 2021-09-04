@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 const SignUpForm = () => {
   const [firstname, setName] = useState("");
@@ -12,19 +12,6 @@ const SignUpForm = () => {
 
   const [conditions, setConditions] = useState(false);
   const [loading, setLoading] = useState(false);
-
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 1000);
-
-  useEffect(() => {
-    window.addEventListener(
-      "resize",
-      () => {
-        const ismobile = window.innerWidth < 1000;
-        if (ismobile !== isMobile) setIsMobile(ismobile);
-      },
-      false
-    );
-  }, [isMobile]);
 
   const FormHandler = () => {
     setLoading(true);
@@ -126,11 +113,7 @@ const SignUpForm = () => {
         <div className="mt-4">
           <button
             type="button"
-            className={
-              isMobile
-                ? "btn btn-outline-primary w-100"
-                : "btn btn-outline-primary w-25"
-            }
+            className="btn btn-outline-primary w-100"
             onClick={FormHandler}
             disabled={loading ? true : false}
           >

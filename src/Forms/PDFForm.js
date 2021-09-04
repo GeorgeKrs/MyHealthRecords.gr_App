@@ -11,9 +11,13 @@ const PDFForm = () => {
   const FormHandler = () => {
     setLoading(true);
 
+    console.log(doctorSpec);
+    console.log(file);
+    console.log(comments);
+
     setTimeout(() => {
       setLoading(false);
-    }, 2000);
+    }, 1000);
   };
   return (
     <div className="pt-4 mb-4">
@@ -27,7 +31,7 @@ const PDFForm = () => {
             >
               <option>Ειδικότητες Ιατρών</option>
               {DoctorsSpecs.map((doctor, index) => (
-                <option key={index} value={index}>
+                <option key={index} value={doctor}>
                   {doctor}
                 </option>
               ))}

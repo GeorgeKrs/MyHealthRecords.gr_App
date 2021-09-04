@@ -13,42 +13,42 @@ import {
 
 const ICONS = [
   {
-    id: "Vitals_icon",
+    id: "1",
     icon: faFileMedicalAlt,
     description: "Καταχώρηση Μέτρησης Ζωτικών Λειτουργιών",
   },
   {
-    id: "VitalsR_icon",
+    id: "2",
     icon: faHeartbeat,
     description: "Ιστορικό Ζωτικών Λειτουργιών",
   },
   {
-    id: "PDF_icon",
+    id: "3",
     icon: faFileMedical,
     description: "Καταχώρηση Εξέτασης",
   },
   {
-    id: "PDFR_icon",
+    id: "4",
     icon: faBookMedical,
     description: "Ιστορικό Καταχωρημένων Εξετάσεων",
   },
   {
-    id: "All_icon",
+    id: "5",
     icon: faAllergies,
     description: "Αλλεργίες",
   },
   {
-    id: "Metrics_icon",
+    id: "6",
     icon: faChartBar,
     description: "Στατιστικά Μετρήσεων Ζωτικών Λειτουργιών",
   },
   {
-    id: "Settings_icon",
+    id: "7",
     icon: faUserCog,
     description: "Ρυθμίσεις Χρήστη",
   },
   {
-    id: "SignOut_icon",
+    id: "8",
     icon: faSignOutAlt,
     description: "Έξοδος",
   },

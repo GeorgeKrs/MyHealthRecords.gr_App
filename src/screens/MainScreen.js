@@ -12,6 +12,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ICONS from "../icons/icons";
 
 const MainScreen = () => {
+  const [tab, setTab] = useState("1");
+
+  const tabSelectorHandler = (tabId) => {
+    setTab(tabId);
+  };
+
   return (
     <div className="d-flex outer-maindiv">
       <div className="inner-maindiv d-none d-sm-block">
@@ -25,20 +31,21 @@ const MainScreen = () => {
             >
               <Tooltip content={menu_icon.description}>
                 <FontAwesomeIcon
+                  id={menu_icon.id}
                   className="icons-custom"
                   icon={menu_icon.icon}
                   size="lg"
+                  onClick={tabSelectorHandler.bind(this, menu_icon.id)}
                 />
               </Tooltip>
             </div>
           ))}
         </div>
       </div>
-
-      {/* <VitalsTab /> */}
-      <VitalsHistoryTab />
-      {/* <PDFTab /> */}
-      {/* <PDFHistoryTab /> */}
+      {(tab === "1" && <VitalsTab />) ||
+        (tab === "2" && <VitalsHistoryTab />) ||
+        (tab === "3" && <PDFTab />) ||
+        (tab === "4" && <PDFHistoryTab />)}
     </div>
   );
 };
