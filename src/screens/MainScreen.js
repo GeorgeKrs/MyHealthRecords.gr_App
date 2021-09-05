@@ -4,9 +4,10 @@ import Tooltip from "../general/Tooltip";
 // importing screens & tabs
 import "./screens.css";
 import VitalsTab from "../screens/tabs/VitalsTab";
-import PDFTab from "../screens/tabs/PDFTab";
 import VitalsHistoryTab from "./tabs/VitalsHistoryTab";
+import PDFTab from "../screens/tabs/PDFTab";
 import PDFHistoryTab from "./tabs/PDFHistoryTab";
+import AllergiesTab from "./tabs/AllergiesTab";
 // font icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ICONS from "../icons/icons";
@@ -52,7 +53,8 @@ const MainScreen = () => {
       {(tab === "1" && <VitalsTab />) ||
         (tab === "2" && <VitalsHistoryTab />) ||
         (tab === "3" && <PDFTab />) ||
-        (tab === "4" && <PDFHistoryTab />)}
+        (tab === "4" && <PDFHistoryTab />) ||
+        (tab === "5" && <AllergiesTab />)}
     </div>
   );
 };

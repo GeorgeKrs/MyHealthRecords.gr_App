@@ -1,16 +1,10 @@
 import PDFHistoryForm from "../../Forms/PDFHistoryForm";
+import TabTitles from "../../general/TabTitles";
 
 const VitalsHistoryTab = () => {
   return (
     <div className="p-2 outer-tabsDiv w-100 d-flex flex-column align-items-center">
-      <div className="mt-4">
-        <u>
-          <b>
-            <h4 className="text-center">Ιστορικό Αποτελεσμάτων Εξετάσεων</h4>
-          </b>
-        </u>
-      </div>
-
+      <TabTitles title={"Ιστορικό Αποτελεσμάτων Εξετάσεων"} />
       <PDFHistoryForm />
     </div>
   );

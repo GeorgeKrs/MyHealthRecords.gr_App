@@ -1,18 +1,12 @@
 import TablePressure from "../../general/TablePressure";
 import TableTemperature from "../../general/TableTemperature";
 import VitalsForm from "../../Forms/VitalsForm";
+import TabTitles from "../../general/TabTitles";
 
 const VitalsTab = () => {
   return (
     <div className="p-2 outer-tabsDiv w-100 d-flex flex-column align-items-center">
-      <div className="mt-4">
-        <u>
-          <b>
-            <h4 className="text-center">Μέτρηση Ζωτικών Λειτουργιών</h4>
-          </b>
-        </u>
-      </div>
-
+      <TabTitles title={"Μέτρηση Ζωτικών Λειτουργιών"} />
       <VitalsForm />
 
       {/* <div className="mt-5 p-2">

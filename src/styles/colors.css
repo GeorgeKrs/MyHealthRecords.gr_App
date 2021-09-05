@@ -65,16 +65,4 @@
   --bs-gray-700: #363f55;
   --bs-gray-800: #1b1f3b;
   --bs-gray-900: #11152a;
-  /* Danger */
-  --bs-danger: #ea3b3b;
-  --bs-danger-500: #f76d6d;
-  --bs-danger-100: #fef0f0;
-  /* Warning */
-  --bs-warning: #f0af23;
-  --bs-warning-500: #f0af23;
-  --bs-warning-100: #fffbf1;
-  /* Success */
-  --bs-success: #27c281;
-  --bs-success-500: #61e9b0;
-  --bs-success-100: #effdf7;
 }
