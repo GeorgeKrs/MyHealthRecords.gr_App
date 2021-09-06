@@ -59,7 +59,10 @@ const CheckBoxes = (props) => {
         ></textarea>
         <div className="pt-2 d-inline-flex text-center">
           <div className="">
-            <Tooltip content={ICONS_ALLERGIES_TAB[0].description}>
+            <Tooltip
+              direction={"bottom"}
+              content={ICONS_ALLERGIES_TAB[0].description}
+            >
               <button
                 type="button"
                 className="btn btn-sm btn-primary"

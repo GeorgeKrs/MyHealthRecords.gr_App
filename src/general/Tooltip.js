@@ -1,7 +1,6 @@
 import { useState } from "react";
 
 const Tooltip = (props) => {
-  let timeout;
   const [active, setActive] = useState(false);
 
   const showTip = () => {
@@ -22,7 +21,7 @@ const Tooltip = (props) => {
       {/* Wrapping */}
       {props.children}
       {active && (
-        <div className={`Tooltip-Tip ${"right"}`}>
+        <div className={`Tooltip-Tip ${props.direction || "right"}`}>
           {/* Content */}
           {props.content}
         </div>
