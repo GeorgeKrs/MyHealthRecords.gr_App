@@ -1,18 +1,7 @@
-import { useState } from "react";
 import CheckBoxes from "../general/CheckBoxes";
 import "./form.css";
 
 const AllergiesForm = () => {
-  const [loading, setLoading] = useState(false);
-
-  const FormHandler = () => {
-    setLoading(true);
-
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-  };
-
   return (
     <div className="pt-4 mb-4">
       <div className="form-custom">
@@ -55,23 +44,6 @@ const AllergiesForm = () => {
           allergyDescription={"τις αλλεργίες σας σε άλλα"}
           boxid={"6"}
         />
-
-        <div className="mt-5">
-          {/* <button
-            type="button"
-            className="btn btn-outline-primary"
-            onClick={FormHandler}
-            disabled={loading ? true : false}
-          >
-            {loading && (
-              <span
-                className="spinner-border spinner-border-sm me-2"
-                role="status"
-              ></span>
-            )}
-            <span>{loading ? "Περιμένετε..." : "Αποθήκευση"}</span>
-          </button> */}
-        </div>
       </div>
     </div>
   );
