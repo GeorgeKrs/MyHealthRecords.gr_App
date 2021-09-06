@@ -21,6 +21,9 @@ const AllergiesForm = () => {
             Παρακαλώ επιλέξτε τις κατηγορίες των αλλεργιών που αντιμετωπίζετε.
           </b>
         </p>
+        <p className="mb-4 blockquote-footer">
+          <b>Οι περιγραφές από κάτω είναι προαιρετικές.</b>
+        </p>
 
         <CheckBoxes
           label={"Τροφικές αλλεργίες"}
@@ -48,14 +51,9 @@ const AllergiesForm = () => {
           boxid={"5"}
         />
         <CheckBoxes
-          label={"Αλλεργικά Σοκ"}
-          allergyDescription={"τα αλλεργικά σας Σοκ"}
-          boxid={"6"}
-        />
-        <CheckBoxes
           label={"Άλλες αλλεργίες"}
           allergyDescription={"τις αλλεργίες σας σε άλλα"}
-          boxid={"7"}
+          boxid={"6"}
         />
 
         <div className="mt-5">
