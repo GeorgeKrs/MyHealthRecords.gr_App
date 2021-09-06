@@ -59,7 +59,7 @@ const AllergiesForm = () => {
         />
 
         <div className="mt-5">
-          <button
+          {/* <button
             type="button"
             className="btn btn-outline-primary"
             onClick={FormHandler}
@@ -72,7 +72,7 @@ const AllergiesForm = () => {
               ></span>
             )}
             <span>{loading ? "Περιμένετε..." : "Αποθήκευση"}</span>
-          </button>
+          </button> */}
         </div>
       </div>
     </div>

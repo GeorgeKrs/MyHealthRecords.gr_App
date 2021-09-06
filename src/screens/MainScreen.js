@@ -10,7 +10,7 @@ import PDFHistoryTab from "./tabs/PDFHistoryTab";
 import AllergiesTab from "./tabs/AllergiesTab";
 // font icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import ICONS from "../icons/icons";
+import { ICONS } from "../icons/icons";
 
 const MainScreen = () => {
   const [tab, setTab] = useState("1");
@@ -35,7 +35,6 @@ const MainScreen = () => {
               <Tooltip content={menu_icon.description}>
                 <FontAwesomeIcon
                   id={menu_icon.id}
-                  // className="icons-custom"
                   className={
                     activeTab === menu_icon.id
                       ? "icons-custom-active"

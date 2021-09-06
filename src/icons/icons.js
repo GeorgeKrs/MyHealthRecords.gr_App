@@ -9,6 +9,8 @@ import {
   faPaw,
   faCalendarAlt,
   faSignOutAlt,
+  faSave,
+  faUserEdit,
 } from "@fortawesome/free-solid-svg-icons";
 
 const ICONS = [
@@ -54,4 +56,17 @@ const ICONS = [
   },
 ];
 
-export default ICONS;
+const ICONS_ALLERGIES_TAB = [
+  {
+    id: "1",
+    icon: faSave,
+    description: "Αποθήκευση",
+  },
+  {
+    id: "2",
+    icon: faUserEdit,
+    description: "Επεξεργασία",
+  },
+];
+
+export { ICONS, ICONS_ALLERGIES_TAB };
