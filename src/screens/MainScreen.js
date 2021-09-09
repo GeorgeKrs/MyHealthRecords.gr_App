@@ -8,7 +8,6 @@ import VitalsHistoryTab from "./tabs/VitalsHistoryTab";
 import PDFTab from "../screens/tabs/PDFTab";
 import PDFHistoryTab from "./tabs/PDFHistoryTab";
 import AllergiesTab from "./tabs/AllergiesTab";
-import MetricsTab from "./tabs/MetricsTab";
 // font icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ICONS } from "../icons/icons";
@@ -54,8 +53,7 @@ const MainScreen = () => {
         (tab === "2" && <VitalsHistoryTab />) ||
         (tab === "3" && <PDFTab />) ||
         (tab === "4" && <PDFHistoryTab />) ||
-        (tab === "5" && <AllergiesTab />) ||
-        (tab === "6" && <MetricsTab />)}
+        (tab === "5" && <AllergiesTab />)}
     </div>
   );
 };
