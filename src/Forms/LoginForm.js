@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { auth, signInWithEmailAndPassword } from "../utils/firebase";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -6,14 +7,19 @@ const LoginForm = () => {
   const [loading, setLoading] = useState(false);
 
   const FormHandler = () => {
-    console.log(email);
-    console.log(password);
-
-    setLoading(true);
-
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        setLoading(false);
+        const userCred = userCredential.user;
+        console.log(userCred);
+      })
+      .catch((error) => {
+        setLoading(false);
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode);
+        console.log(errorMessage);
+      });
   };
 
   return (
