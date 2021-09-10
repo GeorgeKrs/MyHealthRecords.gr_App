@@ -36,7 +36,7 @@ const SignUpForm = () => {
     if (!emailValidation) {
       setError((errors) => ({
         ...errors,
-        erEmail: "Παρακαλώ πληκτρολογήστε ένα έγκυρο email.",
+        erEmail: "Μη έγκυρο email.",
         isValid: false,
       }));
     } else {
@@ -82,8 +82,7 @@ const SignUpForm = () => {
     ) {
       setError((errors) => ({
         ...errors,
-        erPassword:
-          "Ο κωδικός δε μπορεί να έχει λιγότερους από 4 χαρακτήρες και πρέπει να ταιριάζει με το πεδίο επιβεβαίωσης.",
+        erPassword: "Λανθασμένος κωδικός.",
         isValid: false,
       }));
     } else {
@@ -97,8 +96,7 @@ const SignUpForm = () => {
     if (!conditions) {
       setError((errors) => ({
         ...errors,
-        erConditions:
-          "Πρέπει να αποδεχτείτε τους όρους & τις προϋποθέσεις για να συνεχίσετε.",
+        erConditions: "Πρέπει να αποδεχτείτε τους όρους & προϋποθέσεις.",
         isValid: false,
       }));
     } else {
