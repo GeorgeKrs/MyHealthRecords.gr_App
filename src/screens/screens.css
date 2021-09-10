@@ -1,6 +1,6 @@
 /* SignUpScreen */
 .outer-SignUpDiv {
-  background-color: var(--bs-cyan);
+  background-color: var(--bs-primary-500);
   min-height: 100vh;
 }
 

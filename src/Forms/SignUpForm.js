@@ -1,119 +1,133 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import ErrorMsg from "../general/ErrorMsg";
+// firebase import
 import { auth, createUserWithEmailAndPassword } from "../utils/firebase";
 
 const SignUpForm = () => {
+  const [email, setEmail] = useState("");
   const [firstname, setName] = useState("");
   const [lastname, setLastName] = useState("");
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordVerif, setPasswordVerif] = useState("");
   const [AMKA, setAMKA] = useState("");
   const [AFM, setAFM] = useState("");
   const [phone, setPhone] = useState("");
-
   const [conditions, setConditions] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   const [errors, setError] = useState([
-    { erFirstName: false },
-    { erLastName: false },
-    { erEmail: false },
-    { erPassword: false },
-    { erPasswordVerif: false },
-    { erAMKA: false },
-    { erAFM: false },
-    { erPhone: false },
-    { erConditions: false },
+    { erEmail: "" },
+    { erFirstName: "" },
+    { erLastName: "" },
+    { erPassword: "" },
+    { erConditions: "" },
+    { isValid: true },
   ]);
 
+  const [loading, setLoading] = useState(false);
+
+  const re =
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
   const FormHandler = () => {
-    const re =
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    setLoading(true);
+    console.log(email);
     const emailValidation = re.test(String(email).toLowerCase());
 
     if (!emailValidation) {
       setError((errors) => ({
         ...errors,
-        erEmail: true,
+        erEmail: "Παρακαλώ πληκτρολογήστε ένα έγκυρο email.",
+        isValid: false,
+      }));
+    } else {
+      setError((errors) => ({
+        ...errors,
+        erEmail: "",
+        isValid: true,
       }));
     }
 
-    if (firstname.length === 0) {
+    if (firstname.trim().length < 4) {
       setError((errors) => ({
         ...errors,
-        erFirstName: true,
+        erFirstName: "Το όνομα δε μπορεί να έχει λιγότερους από 4 χαρακτήρες.",
+        isValid: false,
+      }));
+    } else {
+      setError((errors) => ({
+        ...errors,
+        erFirstName: "",
+        isValid: true,
       }));
     }
 
-    if (lastname.length === 0) {
+    if (lastname.trim().length < 4) {
       setError((errors) => ({
         ...errors,
-        erLastName: true,
+        erLastName: "Το επώνυμο δε μπορεί να έχει λιγότερους από 4 χαρακτήρες.",
+        isValid: false,
+      }));
+    } else {
+      setError((errors) => ({
+        ...errors,
+        erLastName: "",
+        isValid: true,
       }));
     }
 
-    if (password !== passwordVerif || password.length === 0) {
+    if (
+      password.trim() !== passwordVerif.trim() ||
+      password.trim().length == 0 ||
+      password.trim().length < 4
+    ) {
       setError((errors) => ({
         ...errors,
-        erPassword: true,
+        erPassword:
+          "Ο κωδικός δε μπορεί να έχει λιγότερους από 4 χαρακτήρες και πρέπει να ταιριάζει με το πεδίο επιβεβαίωσης.",
+        isValid: false,
       }));
-    }
-
-    if (AMKA.length !== 11) {
+    } else {
       setError((errors) => ({
         ...errors,
-        erAMKA: true,
-      }));
-    }
-
-    if (AFM.length !== 9) {
-      setError((errors) => ({
-        ...errors,
-        erAFM: true,
-      }));
-    }
-
-    if (phone.length !== 10) {
-      setError((errors) => ({
-        ...errors,
-        erPhone: true,
+        erPassword: "",
+        isValid: true,
       }));
     }
 
     if (!conditions) {
       setError((errors) => ({
         ...errors,
-        erConditions: true,
+        erConditions:
+          "Πρέπει να αποδεχτείτε τους όρους & τις προϋποθέσεις για να συνεχίσετε.",
+        isValid: false,
+      }));
+    } else {
+      setError((errors) => ({
+        ...errors,
+        erConditions: "",
+        isValid: true,
       }));
     }
 
-    console.log(errors);
-
-    // setLoading(true);
-    // createUserWithEmailAndPassword(auth, email, password)
-    //   .then((userCredential) => {
-    //     setLoading(false);
-    //     const userCred = userCredential.user;
-    //     console.log(userCred);
-    //   })
-    //   .catch((error) => {
-    //     setLoading(false);
-    //     const errorCode = error.code;
-    //     const errorMessage = error.message;
-    //     console.log(errorCode);
-    //     console.log(errorMessage);
-    //   });
-    // console.log(firstname);
-    // console.log(lastname);
-    // console.log(email);
-    // console.log(password);
-    // console.log(passwordVerif);
-    // console.log(AMKA);
-    // console.log(AFM);
-    // console.log(phone);
-    // console.log(conditions);
+    console.log(errors.isValid);
+    if (errors.isValid === true) {
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          setLoading(false);
+          const userCred = userCredential.user;
+          console.log(userCred);
+        })
+        .catch((error) => {
+          setLoading(false);
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorCode);
+          console.log(errorMessage);
+        });
+    } else {
+      setLoading(false);
+    }
   };
-
   return (
     <div className="pt-5 mb-4 form-custom">
       <div className="row">
@@ -125,14 +139,21 @@ const SignUpForm = () => {
             value={firstname}
             onChange={(e) => setName(e.target.value)}
           />
+          {errors.erFirstName ? (
+            <ErrorMsg ErrorMsg={errors.erFirstName}></ErrorMsg>
+          ) : null}
         </div>
         <div className="col-sm-12 col-lg-6 mt-4">
           <label className="label">Επώνυμο</label>
           <input
             type="text"
             className="inputValues"
+            value={lastname}
             onChange={(e) => setLastName(e.target.value)}
           />
+          {errors.erLastName ? (
+            <ErrorMsg ErrorMsg={errors.erLastName}></ErrorMsg>
+          ) : null}
         </div>
       </div>
 
@@ -142,9 +163,12 @@ const SignUpForm = () => {
           <input
             type="email"
             className="inputValues"
-            value={lastname}
+            value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
+          {errors.erEmail ? (
+            <ErrorMsg ErrorMsg={errors.erEmail}></ErrorMsg>
+          ) : null}
         </div>
         <div className="col-sm-12 col-lg-6 mt-4">
           <label className="label">Κωδικός</label>
@@ -154,6 +178,9 @@ const SignUpForm = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+          {errors.erPassword ? (
+            <ErrorMsg ErrorMsg={errors.erPassword}></ErrorMsg>
+          ) : null}
         </div>
       </div>
 
@@ -166,6 +193,9 @@ const SignUpForm = () => {
             value={passwordVerif}
             onChange={(e) => setPasswordVerif(e.target.value)}
           />
+          {errors.erPassword ? (
+            <ErrorMsg ErrorMsg={errors.erPassword}></ErrorMsg>
+          ) : null}
         </div>
         <div className="col-sm-12 col-lg-6 mt-4">
           <label className="label">ΑΜΚΑ (Προαιρετικό)</label>
@@ -175,6 +205,9 @@ const SignUpForm = () => {
             value={AMKA}
             onChange={(e) => setAMKA(e.target.value)}
           />
+          {errors.erAMKA ? (
+            <ErrorMsg ErrorMsg={errors.erAMKA}></ErrorMsg>
+          ) : null}
         </div>
       </div>
 
@@ -187,6 +220,7 @@ const SignUpForm = () => {
             value={AFM}
             onChange={(e) => setAFM(e.target.value)}
           />
+          {errors.erAFM ? <ErrorMsg ErrorMsg={errors.erAFM}></ErrorMsg> : null}
         </div>
         <div className="col-sm-12 col-lg-6 mt-4">
           <label className="label">Κινητό (Προαιρετικό)</label>
@@ -196,6 +230,9 @@ const SignUpForm = () => {
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
           />
+          {errors.erPhone ? (
+            <ErrorMsg ErrorMsg={errors.erPhone}></ErrorMsg>
+          ) : null}
         </div>
       </div>
 
@@ -211,6 +248,9 @@ const SignUpForm = () => {
             Συμφωνώ με τους όρους χρήσης και τις προϋποθέσεις
           </label>
         </div>
+        {errors.erConditions ? (
+          <ErrorMsg ErrorMsg={errors.erConditions}></ErrorMsg>
+        ) : null}
         <div className="mt-4">
           <button
             type="button"
