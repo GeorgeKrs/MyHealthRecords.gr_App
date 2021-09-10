@@ -6,8 +6,8 @@ import LoginForm from "../Forms/LoginForm";
 import SignUpForm from "../Forms/SignUpForm";
 
 const IndexScreen = () => {
-  const [tab, setTab] = useState("1");
-  const [activeTab, setActiveTab] = useState("1");
+  const [tab, setTab] = useState("0");
+  const [activeTab, setActiveTab] = useState("0");
 
   const tabSelectorHandler = (buttonId) => {
     setTab(buttonId);
