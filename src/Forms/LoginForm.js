@@ -23,7 +23,7 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="pt-5 d-flex flex-column mb-4 form-custom">
+    <div className="pt-5 mt-5 mb-4 form-cumstom-tab">
       <label className="label">Email</label>
       <input
         type="email"
@@ -41,7 +41,7 @@ const LoginForm = () => {
       <div className="mt-5 mb-2">
         <button
           type="button"
-          className="btn btn-outline-primary w-100"
+          className="btn btn-outline-primary"
           onClick={FormHandler}
           disabled={loading ? true : false}
         >

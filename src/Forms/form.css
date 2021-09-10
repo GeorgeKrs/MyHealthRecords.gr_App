@@ -1,3 +1,10 @@
+.form-cumstom-tab {
+  background: rgba(255, 255, 255, 0.5);
+  padding: 1rem;
+  margin: 1.5rem;
+  border-radius: 1rem;
+}
+
 .form-custom {
   background-color: var(--bs-gray-300);
   padding: 1rem;
