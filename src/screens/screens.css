@@ -27,3 +27,14 @@
   background-color: var(--bs-light);
   min-height: 100vh;
 }
+
+/* IndexScreen */
+.outer-indexdiv {
+  background-color: var(--bs-gray-300);
+  padding-top: 2vh;
+  min-height: 100vh;
+  background-image: url("../assets/IndexScreen_img.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}

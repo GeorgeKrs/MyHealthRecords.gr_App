@@ -25,6 +25,9 @@ const MainScreen = () => {
     <div className="d-flex outer-maindiv">
       <div className="inner-maindiv d-none d-sm-block">
         <div className="p-3 d-flex flex-shrink-1 flex-column text-center mb-3 h-100">
+          <h6>Όνομα</h6>
+          <h6>Επώνυμο</h6>
+          <h6>App Logo</h6>
           {ICONS.map((menu_icon, index, arr) => (
             <div
               key={menu_icon.id}
@@ -49,6 +52,7 @@ const MainScreen = () => {
           ))}
         </div>
       </div>
+
       {(tab === "1" && <VitalsTab />) ||
         (tab === "2" && <VitalsHistoryTab />) ||
         (tab === "3" && <PDFTab />) ||
