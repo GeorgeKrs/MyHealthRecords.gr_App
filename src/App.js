@@ -5,8 +5,6 @@ import IndexScreen from "./screens/IndexScreen";
 function App() {
   return (
     <div className="">
-      {/* <SignUpScreen /> */}
-      {/* <LoginScreen /> */}
       {/* <MainScreen /> */}
       <IndexScreen />
     </div>

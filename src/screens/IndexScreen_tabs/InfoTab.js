@@ -1,6 +1,6 @@
 const InfoTab = () => {
   return (
-    <div className="pt-5 mb-5 form-cumstom-tab">
+    <div className="pt-5 mt-5 form-cumstom-tab">
       <ul className="list-unstyled">
         <li>Lorem ipsum dolor sit amet</li>
         <li>Consectetur adipiscing elit</li>

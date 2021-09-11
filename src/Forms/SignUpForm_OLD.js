@@ -4,17 +4,15 @@ import ErrorMsg from "../general/ErrorMsg";
 import { auth, createUserWithEmailAndPassword } from "../utils/firebase";
 
 const SignUpForm = () => {
-  const [form, setForm] = useState([
-    { email: "" },
-    { firstname: "" },
-    { lastname: "" },
-    { password: "" },
-    { passwordVerif: "" },
-    { AMKA: "" },
-    { AFM: "" },
-    { phone: "" },
-    { conditions: false },
-  ]);
+  const [email, setEmail] = useState("");
+  const [firstname, setName] = useState("");
+  const [lastname, setLastName] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordVerif, setPasswordVerif] = useState("");
+  const [AMKA, setAMKA] = useState("");
+  const [AFM, setAFM] = useState("");
+  const [phone, setPhone] = useState("");
+  const [conditions, setConditions] = useState(false);
 
   const [errors, setError] = useState([
     { erEmail: "" },
@@ -30,11 +28,34 @@ const SignUpForm = () => {
   const re =
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-  // const emailValidation = re.test(String(email).toLowerCase());
-
   useEffect(() => {
-    console.log(form.firstname);
-    if (form.firstname?.lenght < 4) {
+    if (firstname.length < 3) {
+      console.log("< 3");
+    } else {
+      console.log("> 3");
+    }
+  }, [firstname]);
+
+  const FormHandler = () => {
+    setLoading(true);
+
+    const emailValidation = re.test(String(email).toLowerCase());
+
+    if (!emailValidation) {
+      setError((errors) => ({
+        ...errors,
+        erEmail: "Μη έγκυρο email.",
+        isValid: false,
+      }));
+    } else {
+      setError((errors) => ({
+        ...errors,
+        erEmail: "",
+        isValid: true,
+      }));
+    }
+
+    if (firstname.trim().length < 4) {
       setError((errors) => ({
         ...errors,
         erFirstName: "Το όνομα δε μπορεί να έχει λιγότερους από 4 χαρακτήρες.",
@@ -47,11 +68,54 @@ const SignUpForm = () => {
         isValid: true,
       }));
     }
-  }, [form]);
 
-  const FormHandler = () => {
-    setLoading(true);
+    if (lastname.trim().length < 4) {
+      setError((errors) => ({
+        ...errors,
+        erLastName: "Το επώνυμο δε μπορεί να έχει λιγότερους από 4 χαρακτήρες.",
+        isValid: false,
+      }));
+    } else {
+      setError((errors) => ({
+        ...errors,
+        erLastName: "",
+        isValid: true,
+      }));
+    }
 
+    if (
+      password.trim() !== passwordVerif.trim() ||
+      password.trim().length == 0 ||
+      password.trim().length < 4
+    ) {
+      setError((errors) => ({
+        ...errors,
+        erPassword: "Λανθασμένος κωδικός.",
+        isValid: false,
+      }));
+    } else {
+      setError((errors) => ({
+        ...errors,
+        erPassword: "",
+        isValid: true,
+      }));
+    }
+
+    if (!conditions) {
+      setError((errors) => ({
+        ...errors,
+        erConditions: "Πρέπει να αποδεχτείτε τους όρους & προϋποθέσεις.",
+        isValid: false,
+      }));
+    } else {
+      setError((errors) => ({
+        ...errors,
+        erConditions: "",
+        isValid: true,
+      }));
+    }
+
+    console.log(errors.isValid);
     if (errors.isValid === true) {
       // createUserWithEmailAndPassword(auth, email, password)
       //   .then((userCredential) => {
@@ -80,16 +144,14 @@ const SignUpForm = () => {
           <input
             type="text"
             className="inputValues"
-            // value={form.firstname}
-            onChange={(e) =>
-              setForm((form) => ({ ...form, firstname: e.target.value }))
-            }
+            value={firstname}
+            onChange={(e) => setName(e.target.value)}
           />
           {errors.erFirstName ? (
             <ErrorMsg ErrorMsg={errors.erFirstName}></ErrorMsg>
           ) : null}
         </div>
-        {/* <div className="col-sm-12 col-lg-6 mt-4">
+        <div className="col-sm-12 col-lg-6 mt-4">
           <label className="label">Επώνυμο</label>
           <input
             type="text"
@@ -196,7 +258,7 @@ const SignUpForm = () => {
         </div>
         {errors.erConditions ? (
           <ErrorMsg ErrorMsg={errors.erConditions}></ErrorMsg>
-        ) : null} */}
+        ) : null}
         <div className="mt-4">
           <button
             type="button"
