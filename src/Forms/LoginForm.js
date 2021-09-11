@@ -23,7 +23,7 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="pt-5 mt-5 mb-4 form-cumstom-tab">
+    <div className="pt-5 mt-5 form-cumstom-tab">
       <label className="label">Email</label>
       <input
         type="email"

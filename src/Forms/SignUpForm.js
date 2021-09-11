@@ -127,7 +127,7 @@ const SignUpForm = () => {
     }
   };
   return (
-    <div className="pt-5 mb-4 form-cumstom-tab">
+    <div className="pt-5 mt-5 form-cumstom-tab">
       <div className="row">
         <div className="col-sm-12 col-lg-6 mt-4">
           <label className="label">Όνομα</label>
