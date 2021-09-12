@@ -1,4 +1,12 @@
+import { useState } from "react";
+
 const ContactTab = () => {
+  const [loading, setLoading] = useState(false);
+
+  const FormHandler = () => {
+    setLoading(true);
+  };
+
   return (
     <div className="pt-5 mt-5 form-cumstom-tab">
       <div className="row">
@@ -30,17 +38,16 @@ const ContactTab = () => {
         <button
           type="button"
           className="btn btn-outline-danger"
-          //   onClick={FormHandler}
-          //   disabled={loading ? true : false}
+          onClick={FormHandler}
+          disabled={loading ? true : false}
         >
-          {/* {loading && (
-                <span
-                  className="spinner-border spinner-border-sm me-2"
-                  role="status"
-                ></span>
-              )}
-              <span>{loading ? "Περιμένετε..." : "Καταχώρηση"}</span> */}
-          Αποστολή
+          {loading && (
+            <span
+              className="spinner-border spinner-border-sm me-2"
+              role="status"
+            ></span>
+          )}
+          <span>{loading ? "Περιμένετε..." : "Αποστολή"}</span>
         </button>
       </div>
     </div>

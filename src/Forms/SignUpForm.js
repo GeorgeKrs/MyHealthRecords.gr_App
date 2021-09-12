@@ -98,12 +98,7 @@ const SignUpForm = () => {
       }
     }
 
-    if (form.conditions === undefined) {
-      setError((errors) => ({
-        ...errors,
-        erConditions: "",
-      }));
-    } else if (!form.conditions) {
+    if (!form.conditions || form.conditions === undefined) {
       setError((errors) => ({
         ...errors,
         erConditions: "Πρέπει να αποδεχτείτε τους όρους & προϋποθέσεις.",
@@ -136,19 +131,19 @@ const SignUpForm = () => {
     setLoading(false);
 
     if (isValid) {
-      // createUserWithEmailAndPassword(auth, form.email, form.password)
-      //   .then((userCredential) => {
-      //     setLoading(false);
-      //     const userCred = userCredential.user;
-      //     console.log(userCred);
-      //   })
-      //   .catch((error) => {
-      //     setLoading(false);
-      //     const errorCode = error.code;
-      //     const errorMessage = error.message;
-      //     console.log(errorCode);
-      //     console.log(errorMessage);
-      //   });
+      createUserWithEmailAndPassword(auth, form.email, form.password)
+        .then((userCredential) => {
+          setLoading(false);
+          const userCred = userCredential.user;
+          console.log(userCred);
+        })
+        .catch((error) => {
+          setLoading(false);
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorCode);
+          console.log(errorMessage);
+        });
     } else {
       setLoading(false);
     }
@@ -163,7 +158,6 @@ const SignUpForm = () => {
           <input
             type="text"
             className="inputValues"
-            // value={form.firstname}
             onChange={(e) =>
               setForm((form) => ({ ...form, firstName: e.target.value }))
             }
@@ -177,7 +171,6 @@ const SignUpForm = () => {
           <input
             type="text"
             className="inputValues"
-            // value={lastname}
             onChange={(e) =>
               setForm((form) => ({ ...form, lastName: e.target.value }))
             }
@@ -194,7 +187,6 @@ const SignUpForm = () => {
           <input
             type="email"
             className="inputValues"
-            // value={email}
             onChange={(e) =>
               setForm((form) => ({ ...form, email: e.target.value }))
             }
@@ -208,7 +200,6 @@ const SignUpForm = () => {
           <input
             type="password"
             className="inputValues"
-            // value={password}
             onChange={(e) =>
               setForm((form) => ({ ...form, password: e.target.value }))
             }
@@ -225,7 +216,6 @@ const SignUpForm = () => {
           <input
             type="password"
             className="inputValues"
-            // value={passwordVerif}
             onChange={(e) =>
               setForm((form) => ({ ...form, passwordVerif: e.target.value }))
             }
@@ -239,7 +229,6 @@ const SignUpForm = () => {
           <input
             type="text"
             className="inputValues"
-            // value={AMKA}
             onChange={(e) =>
               setForm((form) => ({ ...form, AMKA: e.target.value }))
             }
@@ -256,7 +245,6 @@ const SignUpForm = () => {
           <input
             type="text"
             className="inputValues"
-            // value={AFM}
             onChange={(e) =>
               setForm((form) => ({ ...form, AFM: e.target.value }))
             }
@@ -268,7 +256,6 @@ const SignUpForm = () => {
           <input
             type="text"
             className="inputValues"
-            // value={phone}
             onChange={(e) =>
               setForm((form) => ({ ...form, phone: e.target.value }))
             }

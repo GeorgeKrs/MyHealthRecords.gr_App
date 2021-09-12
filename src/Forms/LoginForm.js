@@ -7,11 +7,13 @@ const LoginForm = () => {
   const [loading, setLoading] = useState(false);
 
   const FormHandler = () => {
+    setLoading(true);
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         setLoading(false);
         const userCred = userCredential.user;
         console.log(userCred);
+        // setLoading(false);
       })
       .catch((error) => {
         setLoading(false);
@@ -19,7 +21,9 @@ const LoginForm = () => {
         const errorMessage = error.message;
         console.log(errorCode);
         console.log(errorMessage);
+        // setLoading(false);
       });
+    setLoading(false);
   };
 
   return (
