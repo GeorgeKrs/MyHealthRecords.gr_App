@@ -6,7 +6,7 @@
 }
 
 .form-custom {
-  background-color: var(--bs-gray-300);
+  background-color: var(--bs-gray-400);
   padding: 1rem;
   margin: 1.5rem;
   border-radius: 1rem;
@@ -23,20 +23,20 @@
   border-radius: 14px;
   padding: 4px;
   width: 100%;
-  border-color: var(--bs-gray-400) !important;
-  background-color: var(--bs-gray-300);
+  border-color: var(--bs-gray-500) !important;
+  background-color: var(--bs-gray-100);
 }
 
 .inputValues:hover {
   outline: none;
   border-color: var(--bs-gray-500) !important;
-  background-color: var(--bs-gray-400);
+  background-color: var(--bs-gray-300);
   transition: background-color 200ms ease;
 }
 
 .inputValues:focus {
   outline: none;
   border-color: var(--bs-gray-900) !important;
-  background-color: var(--bs-gray-200);
+  background-color: var(--bs-gray-50);
   transition: background-color 200ms ease;
 }
