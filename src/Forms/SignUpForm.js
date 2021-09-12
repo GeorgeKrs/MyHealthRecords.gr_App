@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import ErrorMsg from "../general/ErrorMsg";
-// firebase import
-import { auth, createUserWithEmailAndPassword } from "../utils/firebase";
+// firebase
+import { auth, db, createUserWithEmailAndPassword } from "../utils/firebase";
+import { doc, setDoc } from "firebase/firestore";
 
 const SignUpForm = () => {
   const [form, setForm] = useState([
@@ -126,16 +127,38 @@ const SignUpForm = () => {
       isValid = false;
     } else {
       isValid = true;
+      if (form.AMKA === undefined) {
+        form.AMKA = "";
+      }
+      if (form.AFM === undefined) {
+        form.AFM = "";
+      }
+      if (form.phone === undefined) {
+        form.phone = "";
+      }
     }
-
-    setLoading(false);
 
     if (isValid) {
       createUserWithEmailAndPassword(auth, form.email, form.password)
         .then((userCredential) => {
           setLoading(false);
           const userCred = userCredential.user;
-          console.log(userCred);
+          (async () => {
+            await setDoc(doc(db, "users", form.email), {
+              uuid: userCred.uid,
+              email: form.email,
+              password: form.password,
+              firstName: form.firstName,
+              lastName: form.lastName,
+              AMKA: form.AMKA,
+              AFM: form.AFM,
+              phone: form.phone,
+              conditions: true,
+              validAcc: false,
+              signUpDate: "12-9-2021, 18:40",
+              accModifications: "12-9-2021, 18:40",
+            });
+          })();
         })
         .catch((error) => {
           setLoading(false);
@@ -147,7 +170,6 @@ const SignUpForm = () => {
     } else {
       setLoading(false);
     }
-    return isValid;
   };
 
   return (
