@@ -30,132 +30,129 @@ const SignUpForm = () => {
   const re =
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-  
-
   useEffect(() => {
-
-    if (form.firstName < 4) {
-      setError((errors) => ({
-        ...errors,
-        erFirstName: "Το όνομα δε μπορεί να έχει λιγότερους από 4 χαρακτήρες.",
-        isValid: false,
-      }));
-    } else {
-      setError((errors) => ({
-        ...errors,
-        erFirstName: "",
-        isValid: true,
-      }));
+    if (form.firstName !== undefined) {
+      if (form.firstName.length < 4) {
+        setError((errors) => ({
+          ...errors,
+          erFirstName:
+            "Το όνομα δε μπορεί να έχει λιγότερους από 4 χαρακτήρες.",
+          isValid: false,
+        }));
+      } else {
+        setError((errors) => ({
+          ...errors,
+          erFirstName: "",
+          isValid: true,
+        }));
+      }
     }
 
-    if (form.lastName < 4) {
-      setError((errors) => ({
-        ...errors,
-        erLastName: "Το επώνυμο δε μπορεί να έχει λιγότερους από 4 χαρακτήρες.",
-        isValid: false,
-      }));
-    } else {
-      setError((errors) => ({
-        ...errors,
-        erLastName: "",
-        isValid: true,
-      }));
+    if (form.lastName !== undefined) {
+      if (form.lastName.length < 4) {
+        setError((errors) => ({
+          ...errors,
+          erLastName:
+            "Το επώνυμο δε μπορεί να έχει λιγότερους από 4 χαρακτήρες.",
+          isValid: false,
+        }));
+      } else {
+        setError((errors) => ({
+          ...errors,
+          erLastName: "",
+          isValid: true,
+        }));
+      }
     }
 
-    // if (form.email === ""){
-    //   console.log("if");
-    // }else{
-    //   const emailValidation = re.test(String(form.email).toLowerCase());
-    //   if (!emailValidation){
-    //     if (form.email === ""){
-    //       console.log("if");
-    //     }else{
-    //     setError((errors) => ({
-    //       ...errors,
-    //       erEmail: "Μη έγκυρο email.",
-    //       isValid: false,
-    //     }));
-    //     }
-    //   }else{
-    //     setError((errors) => ({
-    //       ...errors,
-    //       erEmail: "",
-    //       isValid: true,
-    //     }));
-    //   }
-    // }
-
-  
-    // const emailValidation = re.test(String(form.email).toLowerCase());
-    if (form.email < 4){
-      setError((errors) => ({
-        ...errors,
-        erEmail: "Μη έγκυρο email.",
-        isValid: false,
-      }));
-    }else{
-      setError((errors) => ({
-        ...errors,
-        erEmail: "",
-        isValid: true,
-      }));
+    if (form.email !== undefined) {
+      let emailValidation = re.test(String(form.email).toLowerCase());
+      if (!emailValidation) {
+        setError((errors) => ({
+          ...errors,
+          erEmail: "Μη έγκυρο email.",
+        }));
+      } else {
+        setError((errors) => ({
+          ...errors,
+          erEmail: "",
+        }));
+      }
     }
 
-    
-    if (
-      form.password !== form.passwordVerif||
-      form.password === 0 ||
-      form.password < 4
-    ) {
-      setError((errors) => ({
-        ...errors,
-        erPassword: "Λανθασμένος κωδικός.",
-        isValid: false,
-      }));
-    } else {
-      setError((errors) => ({
-        ...errors,
-        erPassword: "",
-        isValid: true,
-      }));
+    if (form.password !== undefined || form.passwordVerif !== undefined) {
+      if (
+        form.password !== form.passwordVerif ||
+        form.password === 0 ||
+        form.password < 4
+      ) {
+        setError((errors) => ({
+          ...errors,
+          erPassword: "Λανθασμένος κωδικός.",
+        }));
+      } else {
+        setError((errors) => ({
+          ...errors,
+          erPassword: "",
+        }));
+      }
     }
 
-    if (!form.conditions) {
+    if (form.conditions === undefined) {
+      setError((errors) => ({
+        ...errors,
+        erConditions: "",
+      }));
+    } else if (!form.conditions) {
       setError((errors) => ({
         ...errors,
         erConditions: "Πρέπει να αποδεχτείτε τους όρους & προϋποθέσεις.",
-        isValid: false,
       }));
     } else {
       setError((errors) => ({
         ...errors,
         erConditions: "",
-        isValid: true,
       }));
     }
   }, [form]);
 
   const FormHandler = () => {
-    // setLoading(true); 
+    setLoading(true);
 
-    // if (errors.isValid === true) {
-    //   createUserWithEmailAndPassword(auth, email, password)
-    //     .then((userCredential) => {
-    //       setLoading(false);
-    //       const userCred = userCredential.user;
-    //       console.log(userCred);
-    //     })
-    //     .catch((error) => {
-    //       setLoading(false);
-    //       const errorCode = error.code;
-    //       const errorMessage = error.message;
-    //       console.log(errorCode);
-    //       console.log(errorMessage);
-    //     });
-    // } else {
-    //   setLoading(false);
-    // }
-    console.log(form);
+    let isValid = false;
+    if (
+      errors.erEmail !== "" ||
+      errors.erFirstName !== "" ||
+      errors.erLastName !== "" ||
+      errors.erPassword !== "" ||
+      errors.erConditions !== ""
+    ) {
+      alert("Modal Pop-Up. Fill all the necessary input fields");
+      isValid = false;
+    } else {
+      isValid = true;
+    }
+
+    setLoading(false);
+
+    if (isValid) {
+      // createUserWithEmailAndPassword(auth, form.email, form.password)
+      //   .then((userCredential) => {
+      //     setLoading(false);
+      //     const userCred = userCredential.user;
+      //     console.log(userCred);
+      //   })
+      //   .catch((error) => {
+      //     setLoading(false);
+      //     const errorCode = error.code;
+      //     const errorMessage = error.message;
+      //     console.log(errorCode);
+      //     console.log(errorMessage);
+      //   });
+    } else {
+      setLoading(false);
+    }
+    return isValid;
   };
 
   return (

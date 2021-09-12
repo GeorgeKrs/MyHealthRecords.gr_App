@@ -23,12 +23,20 @@
   border-radius: 14px;
   padding: 4px;
   width: 100%;
-  border-color: var(--bs-gray-600) !important;
+  border-color: var(--bs-gray-400) !important;
+  background-color: var(--bs-gray-300);
+}
+
+.inputValues:hover {
+  outline: none;
+  border-color: var(--bs-gray-500) !important;
+  background-color: var(--bs-gray-400);
+  transition: background-color 200ms ease;
 }
 
 .inputValues:focus {
   outline: none;
   border-color: var(--bs-gray-900) !important;
   background-color: var(--bs-gray-200);
-  transition: background-color 500ms ease;
+  transition: background-color 200ms ease;
 }
