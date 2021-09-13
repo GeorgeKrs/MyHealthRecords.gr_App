@@ -23,7 +23,6 @@ const SignUpForm = () => {
     { erLastName: "" },
     { erPassword: "" },
     { erConditions: "" },
-    { isValid: false },
   ]);
 
   const [loading, setLoading] = useState(false);
@@ -38,13 +37,11 @@ const SignUpForm = () => {
           ...errors,
           erFirstName:
             "Το όνομα δε μπορεί να έχει λιγότερους από 4 χαρακτήρες.",
-          isValid: false,
         }));
       } else {
         setError((errors) => ({
           ...errors,
           erFirstName: "",
-          isValid: true,
         }));
       }
     }
@@ -55,13 +52,11 @@ const SignUpForm = () => {
           ...errors,
           erLastName:
             "Το επώνυμο δε μπορεί να έχει λιγότερους από 4 χαρακτήρες.",
-          isValid: false,
         }));
       } else {
         setError((errors) => ({
           ...errors,
           erLastName: "",
-          isValid: true,
         }));
       }
     }
