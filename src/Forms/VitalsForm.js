@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import ErrorMsg from "../general/ErrorMsg";
 // firebase
 import { db } from "../utils/firebase";
-import { doc, setDoc } from "firebase/firestore";
+import { addDoc, Timestamp, collection } from "firebase/firestore";
 
 const VitalsForm = () => {
   const [form, setForm] = useState([
@@ -111,8 +111,6 @@ const VitalsForm = () => {
   const FormHandler = () => {
     setLoading(true);
 
-    console.log(errors);
-
     let isValid = false;
     if (
       errors.erSystolic !== "" ||
@@ -123,7 +121,6 @@ const VitalsForm = () => {
       errors.erSugar !== "" ||
       errors.erWeight !== ""
     ) {
-      alert("Modal Pop-Up. Fill all the necessary input fields");
       isValid = false;
     } else {
       isValid = true;
@@ -153,7 +150,44 @@ const VitalsForm = () => {
       }
     }
 
+    let isEmpty = true;
+
+    if (
+      form.systolic !== "" ||
+      form.diastolic !== "" ||
+      form.pulses !== "" ||
+      form.temperature !== "" ||
+      form.oxygen !== "" ||
+      form.sugar !== "" ||
+      form.weight !== ""
+    ) {
+      isEmpty = false;
+    } else {
+      isEmpty = true;
+      alert("Modal Pop-Up. Fill all the necessary input fields");
+    }
+
+    if (!isEmpty && isValid) {
+      (async () => {
+        await addDoc(collection(db, "vitalsRecords"), {
+          email: "gkoursoumis97@gmail.com",
+          systolic: form.systolic,
+          diastolic: form.diastolic,
+          temperature: form.temperature,
+          oxygen: form.oxygen,
+          sugar: form.sugar,
+          weight: form.weight,
+          comments: form.comments,
+          SubmitDate: Timestamp.fromDate(new Date()),
+        });
+      })();
+      alert("Data write: Success");
+    } else {
+      alert("Unknown Error");
+    }
+
     console.log(form);
+    console.log(errors);
 
     setTimeout(() => {
       setLoading(false);

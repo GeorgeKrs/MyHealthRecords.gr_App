@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import ErrorMsg from "../general/ErrorMsg";
 // firebase
 import { auth, db, createUserWithEmailAndPassword } from "../utils/firebase";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, Timestamp } from "firebase/firestore";
 
 const SignUpForm = () => {
   const [form, setForm] = useState([
@@ -150,7 +150,7 @@ const SignUpForm = () => {
               phone: form.phone,
               conditions: true,
               validAcc: false,
-              signUpDate: "12-9-2021, 18:40",
+              signUpDate: Timestamp.fromDate(new Date()),
               accModifications: "12-9-2021, 18:40",
             });
           })();
