@@ -26,266 +26,56 @@ const VitalsForm = () => {
     { erComments: "" },
   ]);
 
+  const [systolic, setSystolic] = useState("");
+  const [diastolic, setDiastolic] = useState("");
+  const [pulses, setPulses] = useState("");
+  const [temperature, setTemperature] = useState("");
+  const [oxygen, setOxygen] = useState("");
+  const [sugar, setSugar] = useState("");
+  const [weight, setWeight] = useState("");
+  const [comments, setComments] = useState("");
+
   const [loading, setLoading] = useState(false);
-
-  // useEffect(() => {
-
-  //   if (form.systolic < 50 || form.systolic > 220) {
-  //     setError((errors) => ({
-  //       ...errors,
-  //       erSystolic: "Τιμή εκτός ορίων. 50 < Συστολική Πίεση < 220.",
-  //     }));
-  //   } else {
-  //     setError((errors) => ({
-  //       ...errors,
-  //       erSystolic: "",
-  //     }));
-  //   }
-  //   if (form.diastolic < 30 || form.diastolic > 115) {
-  //     setError((errors) => ({
-  //       ...errors,
-  //       erDiastolic: "Τιμή εκτός ορίων. 30 < Διαστολική Πίεση < 115.",
-  //     }));
-  //   } else {
-  //     setError((errors) => ({
-  //       ...errors,
-  //       erDiastolic: "",
-  //     }));
-  //   }
-  //   if (form.pulses < 40 || form.pulses > 220) {
-  //     setError((errors) => ({
-  //       ...errors,
-  //       erPulses: "Τιμή εκτός ορίων. 40 < Παλμοί < 220.",
-  //     }));
-  //   } else {
-  //     setError((errors) => ({
-  //       ...errors,
-  //       erPulses: "",
-  //     }));
-  //   }
-  //   if (form.temperature < 34 || form.temperature > 43) {
-  //     setError((errors) => ({
-  //       ...errors,
-  //       erTemperature: "Τιμή εκτός ορίων. 34 < Θερμοκρασία < 43",
-  //     }));
-  //   } else {
-  //     setError((errors) => ({
-  //       ...errors,
-  //       erTemperature: "",
-  //     }));
-  //   }
-  //   if (form.oxygen < 70 || form.oxygen > 100) {
-  //     setError((errors) => ({
-  //       ...errors,
-  //       erOxygen: "Τιμή εκτός ορίων. 70 < Οξυγόνο (%) < 100",
-  //     }));
-  //   } else {
-  //     setError((errors) => ({
-  //       ...errors,
-  //       erOxygen: "",
-  //     }));
-  //   }
-  //   if (form.sugar < 85 || form.sugar > 350) {
-  //     setError((errors) => ({
-  //       ...errors,
-  //       erSugar: "Τιμή εκτός ορίων. 85 < Σάκχαρο < 300",
-  //     }));
-  //   } else {
-  //     setError((errors) => ({
-  //       ...errors,
-  //       erSugar: "",
-  //     }));
-  //   }
-  //   if (form.weight < 30 || form.weight > 300) {
-  //     setError((errors) => ({
-  //       ...errors,
-  //       erWeight: "Τιμή εκτός ορίων. 30 < Κιλά < 300",
-  //     }));
-  //   } else {
-  //     setError((errors) => ({
-  //       ...errors,
-  //       erWeight: "",
-  //     }));
-  //   }
-  // }, [form]);
 
   const FormHandler = () => {
     setLoading(true);
 
-    if (form.systolic < 50 || form.systolic > 220) {
-      setError((errors) => ({
-        ...errors,
-        erSystolic: "Τιμή εκτός ορίων. 50 < Συστολική Πίεση < 220.",
-      }));
-    } else {
-      setError((errors) => ({
-        ...errors,
-        erSystolic: "",
-      }));
-    }
-    if (form.diastolic < 30 || form.diastolic > 115) {
-      setError((errors) => ({
-        ...errors,
-        erDiastolic: "Τιμή εκτός ορίων. 30 < Διαστολική Πίεση < 115.",
-      }));
-    } else {
-      setError((errors) => ({
-        ...errors,
-        erDiastolic: "",
-      }));
-    }
-    if (form.pulses < 40 || form.pulses > 220) {
-      setError((errors) => ({
-        ...errors,
-        erPulses: "Τιμή εκτός ορίων. 40 < Παλμοί < 220.",
-      }));
-    } else {
-      setError((errors) => ({
-        ...errors,
-        erPulses: "",
-      }));
-    }
-    if (form.temperature < 34 || form.temperature > 43) {
-      setError((errors) => ({
-        ...errors,
-        erTemperature: "Τιμή εκτός ορίων. 34 < Θερμοκρασία < 43",
-      }));
-    } else {
-      setError((errors) => ({
-        ...errors,
-        erTemperature: "",
-      }));
-    }
-    if (form.oxygen < 70 || form.oxygen > 100) {
-      setError((errors) => ({
-        ...errors,
-        erOxygen: "Τιμή εκτός ορίων. 70 < Οξυγόνο (%) < 100",
-      }));
-    } else {
-      setError((errors) => ({
-        ...errors,
-        erOxygen: "",
-      }));
-    }
-    if (form.sugar < 85 || form.sugar > 350) {
-      setError((errors) => ({
-        ...errors,
-        erSugar: "Τιμή εκτός ορίων. 85 < Σάκχαρο < 350",
-      }));
-    } else {
-      setError((errors) => ({
-        ...errors,
-        erSugar: "",
-      }));
-    }
-    if (form.weight < 30 || form.weight > 300) {
-      setError((errors) => ({
-        ...errors,
-        erWeight: "Τιμή εκτός ορίων. 30 < Κιλά < 300",
-      }));
-    } else {
-      setError((errors) => ({
-        ...errors,
-        erWeight: "",
-      }));
-    }
-
-    if (errors.erSystolic === undefined) {
-      errors.erSystolic = "";
-    }
-    if (errors.erDiastolic === undefined) {
-      errors.erDiastolic = "";
-    }
-    if (errors.erPulses === undefined) {
-      errors.erPulses = "";
-    }
-    if (errors.erTemperature === undefined) {
-      errors.erTemperature = "";
-    }
-    if (errors.erOxygen === undefined) {
-      errors.erOxygen = "";
-    }
-    if (errors.erSugar === undefined) {
-      errors.erSugar = "";
-    }
-    if (errors.erWeight === undefined) {
-      errors.erWeight = "";
-    }
-
-    let isValid = false;
-    if (
-      errors.erSystolic !== "" ||
-      errors.erDiastolic !== "" ||
-      errors.erPulses !== "" ||
-      errors.erTemperature !== "" ||
-      errors.erOxygen !== "" ||
-      errors.erSugar !== "" ||
-      errors.erWeight !== ""
-    ) {
-      isValid = false;
-    } else {
-      isValid = true;
-      if (form.systolic === undefined) {
-        form.systolic = "";
-      }
-      if (form.diastolic === undefined) {
-        form.diastolic = "";
-      }
-      if (form.pulses === undefined) {
-        form.pulses = "";
-      }
-      if (form.temperature === undefined) {
-        form.temperature = "";
-      }
-      if (form.oxygen === undefined) {
-        form.oxygen = "";
-      }
-      if (form.sugar === undefined) {
-        form.sugar = "";
-      }
-      if (form.weight === undefined) {
-        form.weight = "";
-      }
-      if (form.comments === undefined) {
-        form.comments = "";
-      }
-    }
-
-    let isEmpty = true;
+    // console.log(systolic);
+    // console.log(diastolic);
+    // console.log(pulses);
+    // console.log(temperature);
+    // console.log(oxygen);
+    // console.log(diastolic);
+    // console.log(sugar);
+    // console.log(weight);
+    // console.log(comments);
 
     if (
-      form.systolic !== "" ||
-      form.diastolic !== "" ||
-      form.pulses !== "" ||
-      form.temperature !== "" ||
-      form.oxygen !== "" ||
-      form.sugar !== "" ||
-      form.weight !== ""
+      systolic === "" &&
+      diastolic === "" &&
+      pulses === "" &&
+      temperature === "" &&
+      oxygen === "" &&
+      sugar === "" &&
+      weight === ""
     ) {
-      isEmpty = false;
+      alert("all empty");
     } else {
-      isEmpty = true;
-      alert("Modal Pop-Up. Fill all the necessary input fields");
+      alert("at least 1 value");
     }
-
-    if (!isEmpty && isValid) {
-      // (async () => {
-      //   await addDoc(collection(db, "vitalsRecords"), {
-      //     email: "gkoursoumis97@gmail.com",
-      //     systolic: form.systolic,
-      //     diastolic: form.diastolic,
-      //     temperature: form.temperature,
-      //     oxygen: form.oxygen,
-      //     sugar: form.sugar,
-      //     weight: form.weight,
-      //     comments: form.comments,
-      //     SubmitDate: Timestamp.fromDate(new Date()),
-      //   });
-      // })();
-      alert("Data write: Success");
-    } else {
-      alert("Data write: Fail");
-    }
+    // (async () => {
+    //   await addDoc(collection(db, "vitalsRecords"), {
+    //     email: "gkoursoumis97@gmail.com",
+    //     systolic: form.systolic,
+    //     diastolic: form.diastolic,
+    //     temperature: form.temperature,
+    //     oxygen: form.oxygen,
+    //     sugar: form.sugar,
+    //     weight: form.weight,
+    //     comments: form.comments,
+    //     SubmitDate: Timestamp.fromDate(new Date()),
+    //   });
+    // })();
 
     setTimeout(() => {
       setLoading(false);
@@ -302,15 +92,8 @@ const VitalsForm = () => {
               type="number"
               className="inputValues"
               placeholder="Μεγάλη Πίεση"
-              value={form.systolic}
-              onChange={(e) =>
-                setForm((form) => ({ ...form, systolic: e.target.value }))
-              }
-              onInput={
-                errors.erSystolic > 40
-                  ? setError((errors) => ({ ...errors, erSystolic: "" }))
-                  : null
-              }
+              value={systolic}
+              onChange={(e) => setSystolic(e.target.value)}
             />
             {errors.erSystolic ? (
               <ErrorMsg ErrorMsg={errors.erSystolic}></ErrorMsg>
@@ -322,12 +105,8 @@ const VitalsForm = () => {
               type="number"
               className="inputValues"
               placeholder="Μικρή Πίεση"
-              onChange={(e) =>
-                setForm((form) => ({ ...form, diastolic: e.target.value }))
-              }
-              onInput={() =>
-                setError((errors) => ({ ...errors, erDiastolic: "" }))
-              }
+              value={diastolic}
+              onChange={(e) => setDiastolic(e.target.value)}
             />
             {errors.erDiastolic ? (
               <ErrorMsg ErrorMsg={errors.erDiastolic}></ErrorMsg>
@@ -341,12 +120,8 @@ const VitalsForm = () => {
             <input
               type="number"
               className="inputValues"
-              onChange={(e) =>
-                setForm((form) => ({ ...form, pulses: e.target.value }))
-              }
-              onInput={() =>
-                setError((errors) => ({ ...errors, erPulses: "" }))
-              }
+              value={pulses}
+              onChange={(e) => setPulses(e.target.value)}
             />
             {errors.erPulses ? (
               <ErrorMsg ErrorMsg={errors.erPulses}></ErrorMsg>
@@ -358,12 +133,8 @@ const VitalsForm = () => {
               type="number"
               step="0.1"
               className="inputValues"
-              onChange={(e) =>
-                setForm((form) => ({ ...form, temperature: e.target.value }))
-              }
-              onInput={() =>
-                setError((errors) => ({ ...errors, erTemperature: "" }))
-              }
+              value={temperature}
+              onChange={(e) => setTemperature(e.target.value)}
             />
             {errors.erTemperature ? (
               <ErrorMsg ErrorMsg={errors.erTemperature}></ErrorMsg>
@@ -378,12 +149,8 @@ const VitalsForm = () => {
               type="number"
               step="0.1"
               className="inputValues"
-              onChange={(e) =>
-                setForm((form) => ({ ...form, oxygen: e.target.value }))
-              }
-              onInput={() =>
-                setError((errors) => ({ ...errors, erOxygen: "" }))
-              }
+              value={oxygen}
+              onChange={(e) => setOxygen(e.target.value)}
             />
             {errors.erOxygen ? (
               <ErrorMsg ErrorMsg={errors.erOxygen}></ErrorMsg>
@@ -398,10 +165,8 @@ const VitalsForm = () => {
             <input
               type="number"
               className="inputValues"
-              onChange={(e) =>
-                setForm((form) => ({ ...form, sugar: e.target.value }))
-              }
-              onInput={() => setError((errors) => ({ ...errors, erSugar: "" }))}
+              value={sugar}
+              onChange={(e) => setSugar(e.target.value)}
             />
             {errors.erSugar ? (
               <ErrorMsg ErrorMsg={errors.erSugar}></ErrorMsg>
@@ -413,12 +178,8 @@ const VitalsForm = () => {
               type="number"
               step="0.1"
               className="inputValues"
-              onChange={(e) =>
-                setForm((form) => ({ ...form, weight: e.target.value }))
-              }
-              onInput={() =>
-                setError((errors) => ({ ...errors, erWeight: "" }))
-              }
+              value={weight}
+              onChange={(e) => setWeight(e.target.value)}
             />
             {errors.erWeight ? (
               <ErrorMsg ErrorMsg={errors.erWeight}></ErrorMsg>
@@ -432,9 +193,8 @@ const VitalsForm = () => {
             <textarea
               className="inputValues"
               rows="4"
-              onChange={(e) =>
-                setForm((form) => ({ ...form, comments: e.target.value }))
-              }
+              value={comments}
+              onChange={(e) => setComments(e.target.value)}
             ></textarea>
           </div>
         </div>
