@@ -30,82 +30,82 @@ const SignUpForm = () => {
   const re =
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-  // useEffect(() => {
-  //   if (form.firstName !== undefined) {
-  //     if (form.firstName.length < 4) {
-  //       setError((errors) => ({
-  //         ...errors,
-  //         erFirstName:
-  //           "Το όνομα δε μπορεί να έχει λιγότερους από 4 χαρακτήρες.",
-  //       }));
-  //     } else {
-  //       setError((errors) => ({
-  //         ...errors,
-  //         erFirstName: "",
-  //       }));
-  //     }
-  //   }
+  useEffect(() => {
+    if (form.firstName !== undefined) {
+      if (form.firstName.length < 4) {
+        setError((errors) => ({
+          ...errors,
+          erFirstName:
+            "Το όνομα δε μπορεί να έχει λιγότερους από 4 χαρακτήρες.",
+        }));
+      } else {
+        setError((errors) => ({
+          ...errors,
+          erFirstName: "",
+        }));
+      }
+    }
 
-  //   if (form.lastName !== undefined) {
-  //     if (form.lastName.length < 4) {
-  //       setError((errors) => ({
-  //         ...errors,
-  //         erLastName:
-  //           "Το επώνυμο δε μπορεί να έχει λιγότερους από 4 χαρακτήρες.",
-  //       }));
-  //     } else {
-  //       setError((errors) => ({
-  //         ...errors,
-  //         erLastName: "",
-  //       }));
-  //     }
-  //   }
+    if (form.lastName !== undefined) {
+      if (form.lastName.length < 4) {
+        setError((errors) => ({
+          ...errors,
+          erLastName:
+            "Το επώνυμο δε μπορεί να έχει λιγότερους από 4 χαρακτήρες.",
+        }));
+      } else {
+        setError((errors) => ({
+          ...errors,
+          erLastName: "",
+        }));
+      }
+    }
 
-  //   if (form.email !== undefined) {
-  //     let emailValidation = re.test(String(form.email).toLowerCase());
-  //     if (!emailValidation) {
-  //       setError((errors) => ({
-  //         ...errors,
-  //         erEmail: "Μη έγκυρο email.",
-  //       }));
-  //     } else {
-  //       setError((errors) => ({
-  //         ...errors,
-  //         erEmail: "",
-  //       }));
-  //     }
-  //   }
+    if (form.email !== undefined) {
+      let emailValidation = re.test(String(form.email).toLowerCase());
+      if (!emailValidation) {
+        setError((errors) => ({
+          ...errors,
+          erEmail: "Μη έγκυρο email.",
+        }));
+      } else {
+        setError((errors) => ({
+          ...errors,
+          erEmail: "",
+        }));
+      }
+    }
 
-  //   if (form.password !== undefined || form.passwordVerif !== undefined) {
-  //     if (
-  //       form.password !== form.passwordVerif ||
-  //       form.password === 0 ||
-  //       form.password < 4
-  //     ) {
-  //       setError((errors) => ({
-  //         ...errors,
-  //         erPassword: "Λανθασμένος κωδικός.",
-  //       }));
-  //     } else {
-  //       setError((errors) => ({
-  //         ...errors,
-  //         erPassword: "",
-  //       }));
-  //     }
-  //   }
+    if (form.password !== undefined || form.passwordVerif !== undefined) {
+      if (
+        form.password !== form.passwordVerif ||
+        form.password === 0 ||
+        form.password < 4
+      ) {
+        setError((errors) => ({
+          ...errors,
+          erPassword: "Λανθασμένος κωδικός.",
+        }));
+      } else {
+        setError((errors) => ({
+          ...errors,
+          erPassword: "",
+        }));
+      }
+    }
 
-  //   if (!form.conditions || form.conditions === undefined) {
-  //     setError((errors) => ({
-  //       ...errors,
-  //       erConditions: "Πρέπει να αποδεχτείτε τους όρους & προϋποθέσεις.",
-  //     }));
-  //   } else {
-  //     setError((errors) => ({
-  //       ...errors,
-  //       erConditions: "",
-  //     }));
-  //   }
-  // }, [form]);
+    if (!form.conditions || form.conditions === undefined) {
+      setError((errors) => ({
+        ...errors,
+        erConditions: "Πρέπει να αποδεχτείτε τους όρους & προϋποθέσεις.",
+      }));
+    } else {
+      setError((errors) => ({
+        ...errors,
+        erConditions: "",
+      }));
+    }
+  }, [form]);
 
   const FormHandler = () => {
     setLoading(true);

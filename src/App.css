@@ -95,3 +95,12 @@
   transform: translateX(0) translateY(-50%);
   border-left-color: var(--tooltip-background-color);
 }
+
+/* loader css */
+.loader-outerdiv {
+  min-height: 100vh;
+  background-color: var(--bs-danger);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
