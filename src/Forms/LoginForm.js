@@ -12,8 +12,7 @@ const LoginForm = () => {
       .then((userCredential) => {
         setLoading(false);
         const userCred = userCredential.user;
-        console.log(userCred);
-        // setLoading(false);
+        setLoading(false);
       })
       .catch((error) => {
         setLoading(false);
@@ -21,9 +20,8 @@ const LoginForm = () => {
         const errorMessage = error.message;
         console.log(errorCode);
         console.log(errorMessage);
-        // setLoading(false);
+        setLoading(false);
       });
-    setLoading(false);
   };
 
   return (
@@ -32,6 +30,7 @@ const LoginForm = () => {
       <input
         type="email"
         className="inputValues"
+        value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
 
@@ -47,6 +46,7 @@ const LoginForm = () => {
           type="button"
           className="btn btn-outline-primary"
           onClick={FormHandler}
+          value={password}
           disabled={loading ? true : false}
         >
           {loading && (

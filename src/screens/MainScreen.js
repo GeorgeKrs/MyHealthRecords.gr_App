@@ -11,14 +11,27 @@ import AllergiesTab from "./tabs/AllergiesTab";
 // font icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ICONS } from "../icons/icons";
+// firebase
+import { auth, signOut } from "../utils/firebase";
 
 const MainScreen = (props) => {
-  const [tab, setTab] = useState("3");
-  const [activeTab, setActiveTab] = useState("3");
+  const [tab, setTab] = useState("1");
+  const [activeTab, setActiveTab] = useState("1");
 
   const tabSelectorHandler = (tabId) => {
     setTab(tabId);
     setActiveTab(tabId);
+
+    if (tabId === "8") {
+      alert("Sign out ?");
+      signOut(auth)
+        .then(() => {
+          window.location.reload(true);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
 
   return (
