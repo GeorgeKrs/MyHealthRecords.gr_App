@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import ErrorMsg from "../general/ErrorMsg";
 // firebase
 import { db } from "../utils/firebase";
 import { addDoc, Timestamp, collection } from "firebase/firestore";
 
-const VitalsForm = () => {
+const VitalsForm = (props) => {
   const [systolic, setSystolic] = useState("");
   const [diastolic, setDiastolic] = useState("");
   const [pulses, setPulses] = useState("");
@@ -110,9 +110,10 @@ const VitalsForm = () => {
       erWeight === ""
     ) {
       alert("API CALL success modal");
+      const userEmail = props.loggedInUser;
       (async () => {
         await addDoc(collection(db, "vitalsRecords"), {
-          userEmail: "gkoursoumis97@gmail.com",
+          userEmail: userEmail,
           systolic: systolic,
           diastolic: diastolic,
           temperature: temperature,

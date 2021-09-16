@@ -12,9 +12,9 @@ import AllergiesTab from "./tabs/AllergiesTab";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ICONS } from "../icons/icons";
 
-const MainScreen = () => {
-  const [tab, setTab] = useState("1");
-  const [activeTab, setActiveTab] = useState("1");
+const MainScreen = (props) => {
+  const [tab, setTab] = useState("3");
+  const [activeTab, setActiveTab] = useState("3");
 
   const tabSelectorHandler = (tabId) => {
     setTab(tabId);
@@ -25,8 +25,7 @@ const MainScreen = () => {
     <div className="d-flex outer-maindiv">
       <div className="inner-maindiv d-none d-sm-block">
         <div className="p-3 d-flex flex-shrink-1 flex-column text-center mb-3 h-100">
-          <h6>Όνομα</h6>
-          <h6>Επώνυμο</h6>
+          {/* <h6>{props.loggedInUser}</h6> */}
           <h6>App Logo</h6>
           {ICONS.map((menu_icon, index, arr) => (
             <div
@@ -53,7 +52,7 @@ const MainScreen = () => {
         </div>
       </div>
 
-      {(tab === "1" && <VitalsTab />) ||
+      {(tab === "1" && <VitalsTab loggedInUser={props.loggedInUser} />) ||
         (tab === "2" && <VitalsHistoryTab />) ||
         (tab === "3" && <PDFTab />) ||
         (tab === "4" && <PDFHistoryTab />) ||

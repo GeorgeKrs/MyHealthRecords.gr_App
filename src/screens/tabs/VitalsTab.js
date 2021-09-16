@@ -3,11 +3,11 @@ import TableTemperature from "../../general/TableTemperature";
 import VitalsForm from "../../Forms/VitalsForm";
 import TabTitles from "../../general/TabTitles";
 
-const VitalsTab = () => {
+const VitalsTab = (props) => {
   return (
     <div className="p-2 outer-tabsDiv w-100 d-flex flex-column align-items-center">
       <TabTitles title={"Μέτρηση Ζωτικών Λειτουργιών"} />
-      <VitalsForm />
+      <VitalsForm loggedInUser={props.loggedInUser} />
 
       {/* <div className="mt-5 p-2">
         <h4>
