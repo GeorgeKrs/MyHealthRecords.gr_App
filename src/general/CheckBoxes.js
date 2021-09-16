@@ -3,12 +3,18 @@ import Tooltip from "../general/Tooltip";
 // font icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ICONS_ALLERGIES_TAB } from "../icons/icons";
+// firebase
+import { db } from "../utils/firebase";
+import { setDoc, doc, Timestamp } from "firebase/firestore";
 
 const CheckBoxes = (props) => {
   const [isChecked, setIsChecked] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   const [textArea, setTextArea] = useState("");
+
   const [loading, setLoading] = useState(false);
+
+  let UnCheck_data = {};
 
   const checkHandler = (event) => {
     if (event) {
@@ -17,14 +23,114 @@ const CheckBoxes = (props) => {
       setIsChecked(false);
       setIsSaved(false);
       setTextArea("");
+
+      switch (props.boxid) {
+        case "1":
+          UnCheck_data = {
+            food_allergies: false,
+            food_comments: "",
+            LastModification: Timestamp.fromDate(new Date()),
+          };
+          break;
+        case "2":
+          UnCheck_data = {
+            breathe_allergies: false,
+            breathe_comments: "",
+            LastModification: Timestamp.fromDate(new Date()),
+          };
+          break;
+        case "3":
+          UnCheck_data = {
+            sking_allergies: false,
+            skin_comments: "",
+            LastModification: Timestamp.fromDate(new Date()),
+          };
+          break;
+        case "4":
+          UnCheck_data = {
+            sting_allergies: false,
+            sting_comments: "",
+            LastModification: Timestamp.fromDate(new Date()),
+          };
+          break;
+        case "5":
+          UnCheck_data = {
+            drug_allergies: false,
+            drug_comments: "",
+            LastModification: Timestamp.fromDate(new Date()),
+          };
+          break;
+        case "6":
+          UnCheck_data = {
+            other_allergies: false,
+            other_comments: "",
+            LastModification: Timestamp.fromDate(new Date()),
+          };
+          break;
+      }
+      alert("API CALL success modal (set to false Uncheck values");
+      const userEmail = props.loggedInUser;
+      const AllergiesRef = doc(db, "allergiesRecords", userEmail);
+      setDoc(AllergiesRef, UnCheck_data, { merge: true });
     }
   };
 
   const infoHandler = (id) => {
+    let Check_data = {};
     if (isChecked) {
+      // check the inbox id
+      switch (props.boxid) {
+        case "1":
+          Check_data = {
+            food_allergies: true,
+            food_comments: textArea,
+            LastModification: Timestamp.fromDate(new Date()),
+          };
+          break;
+        case "2":
+          Check_data = {
+            breathe_allergies: true,
+            breathe_comments: textArea,
+            LastModification: Timestamp.fromDate(new Date()),
+          };
+          break;
+        case "3":
+          Check_data = {
+            sking_allergies: true,
+            skin_comments: textArea,
+            LastModification: Timestamp.fromDate(new Date()),
+          };
+          break;
+        case "4":
+          Check_data = {
+            sting_allergies: true,
+            sting_comments: textArea,
+            LastModification: Timestamp.fromDate(new Date()),
+          };
+          break;
+        case "5":
+          Check_data = {
+            drug_allergies: true,
+            drug_comments: textArea,
+            LastModification: Timestamp.fromDate(new Date()),
+          };
+          break;
+        case "6":
+          Check_data = {
+            other_allergies: true,
+            other_comments: textArea,
+            LastModification: Timestamp.fromDate(new Date()),
+          };
+          break;
+      }
       if (id === "1") {
         setIsSaved(true);
+        alert("API CALL success modal");
+        const userEmail = props.loggedInUser;
+        const AllergiesRef = doc(db, "allergiesRecords", userEmail);
+        setDoc(AllergiesRef, Check_data, { merge: true });
       } else {
+        alert("API CALL FAILED modal");
         setIsSaved(false);
       }
     } else {

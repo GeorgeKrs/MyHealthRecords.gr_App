@@ -11,7 +11,6 @@ function App() {
   onAuthStateChanged(auth, (user) => {
     if (user) {
       setUserLoggedIn(user.email);
-      console.log(userLoggedIn);
     }
   });
 
