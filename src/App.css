@@ -99,7 +99,7 @@
 /* loader css */
 .loader-outerdiv {
   min-height: 100vh;
-  background-color: var(--bs-danger);
+  background-color: var(--bs-light);
   display: flex;
   justify-content: center;
   align-items: center;

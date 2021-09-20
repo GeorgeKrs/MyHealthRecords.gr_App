@@ -1,13 +1,17 @@
 import { useState, useEffect } from "react";
-import UserSettingsTab from "../screens/tabs/UserSettingsTab";
+import ErrorMsg from "../general/ErrorMsg";
 // firestore
-import { doc, getDoc, collection, getDocs } from "firebase/firestore";
+import { doc, getDoc, setDoc, Timestamp } from "firebase/firestore";
 import { db } from "../utils/firebase";
 import FullScreenLoader from "../general/FullScreenLoader";
 
 const UserSettingsForm = (props) => {
   const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState({});
+
+  const [btnLoading, setBtnLoading] = useState(false);
+  const [errFirstName, setErrFirstName] = useState("");
+  const [errLastName, setErrLastName] = useState("");
 
   const loggedInUser = props.loggedInUser;
 
@@ -21,10 +25,62 @@ const UserSettingsForm = (props) => {
     setLoading(true);
     fetchUserData();
 
+    setUserData((userData) => ({
+      ...userData,
+      accModifications: Timestamp.fromDate(new Date()),
+    }));
+
     setTimeout(function () {
       setLoading(false);
     }, 1000);
   }, []);
+
+  const ValidateFirstName = (firstName) => {
+    if (firstName.length < 4) {
+      setErrFirstName(
+        "Το όνομα δε μπορεί να έχει λιγότερους από 4 χαρακτήρες."
+      );
+    } else {
+      setErrFirstName("");
+    }
+  };
+
+  const ValidateLastName = (lastName) => {
+    if (lastName.length < 4) {
+      setErrLastName(
+        "Το επώνυμο δε μπορεί να έχει λιγότερους από 4 χαρακτήρες."
+      );
+    } else {
+      setErrLastName("");
+    }
+  };
+
+  const FormHandler = () => {
+    setBtnLoading(true);
+    let isValid = false;
+
+    if (
+      errFirstName === "" &&
+      errLastName === "" &&
+      userData.firstName !== "" &&
+      userData.firstName.length > 3 &&
+      userData.lastName.length > 3 &&
+      userData.lastName !== ""
+    ) {
+      isValid = true;
+    }
+
+    if (isValid) {
+      const UserSettingsRef = doc(db, "users", loggedInUser);
+      setDoc(UserSettingsRef, userData, { merge: true });
+    } else {
+      alert("fORM ERROR");
+    }
+
+    setTimeout(function () {
+      setBtnLoading(false);
+    }, 500);
+  };
 
   return (
     <div>
@@ -39,7 +95,15 @@ const UserSettingsForm = (props) => {
                 type="text"
                 className="inputValues"
                 value={userData.firstName}
+                onInput={(e) => ValidateFirstName(e.target.value)}
+                onChange={(e) =>
+                  setUserData((userData) => ({
+                    ...userData,
+                    firstName: e.target.value,
+                  }))
+                }
               />
+              {errFirstName ? <ErrorMsg ErrorMsg={errFirstName} /> : null}
             </div>
             <div className="col-sm-12 col-lg-4 mt-4">
               <label className="label">Επώνυμο</label>
@@ -47,7 +111,15 @@ const UserSettingsForm = (props) => {
                 type="text"
                 className="inputValues"
                 value={userData.lastName}
+                onInput={(e) => ValidateLastName(e.target.value)}
+                onChange={(e) =>
+                  setUserData((userData) => ({
+                    ...userData,
+                    lastName: e.target.value,
+                  }))
+                }
               />
+              {errLastName ? <ErrorMsg ErrorMsg={errLastName} /> : null}
             </div>
             <div className="col-sm-12 col-lg-4 mt-4">
               <label className="label">Email</label>
@@ -62,23 +134,45 @@ const UserSettingsForm = (props) => {
 
           <div className="row">
             <div className="col-sm-12 col-lg-4 mt-4">
-              <label className="label">ΑΜΚΑ (Προαιρετικό)</label>
+              <label className="label">ΑΜΚΑ</label>
               <input
                 type="text"
                 className="inputValues"
                 value={userData.AMKA}
+                onChange={(e) =>
+                  setUserData((userData) => ({
+                    ...userData,
+                    AMKA: e.target.value,
+                  }))
+                }
               />
             </div>
             <div className="col-sm-12 col-lg-4 mt-4">
-              <label className="label">ΑΦΜ (Προαιρετικό)</label>
-              <input type="text" className="inputValues" value={userData.AFM} />
+              <label className="label">ΑΦΜ</label>
+              <input
+                type="text"
+                className="inputValues"
+                value={userData.AFM}
+                onChange={(e) =>
+                  setUserData((userData) => ({
+                    ...userData,
+                    AFM: e.target.value,
+                  }))
+                }
+              />
             </div>
             <div className="col-sm-12 col-lg-4 mt-4">
-              <label className="label">Κινητό (Προαιρετικό)</label>
+              <label className="label">Κινητό</label>
               <input
                 type="text"
                 className="inputValues"
                 value={userData.phone}
+                onChange={(e) =>
+                  setUserData((userData) => ({
+                    ...userData,
+                    phone: e.target.value,
+                  }))
+                }
               />
             </div>
           </div>
@@ -87,16 +181,16 @@ const UserSettingsForm = (props) => {
               <button
                 type="button"
                 className="btn btn-outline-dark"
-                //   onClick={FormHandler}
-                disabled={loading ? true : false}
+                onClick={FormHandler}
+                disabled={btnLoading ? true : false}
               >
-                {loading && (
+                {btnLoading && (
                   <span
                     className="spinner-border spinner-border-sm me-2"
                     role="status"
                   ></span>
                 )}
-                <span>{loading ? "Περιμένετε..." : "Αποθήκευση"}</span>
+                <span>{btnLoading ? "Περιμένετε..." : "Αποθήκευση"}</span>
               </button>
             </div>
             <div className="mt-4 ms-auto">
@@ -104,15 +198,15 @@ const UserSettingsForm = (props) => {
                 type="button"
                 className="btn btn-outline-danger"
                 //   onClick={FormHandler}
-                disabled={loading ? true : false}
+                disabled={btnLoading ? true : false}
               >
-                {loading && (
+                {btnLoading && (
                   <span
                     className="spinner-border spinner-border-sm me-2"
                     role="status"
                   ></span>
                 )}
-                <span>{loading ? "Περιμένετε..." : "Αλλαγή Κωδικού"}</span>
+                <span>{btnLoading ? "Περιμένετε..." : "Αλλαγή Κωδικού"}</span>
               </button>
             </div>
           </div>
