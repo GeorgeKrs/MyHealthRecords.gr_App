@@ -69,7 +69,6 @@ const UserSettingsForm = (props) => {
     ) {
       isValid = true;
     }
-    console.log(userData.accModifications);
 
     if (isValid) {
       const UserSettingsRef = doc(db, "users", loggedInUser);
