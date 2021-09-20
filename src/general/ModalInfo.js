@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 // font icons
-import { ICONS_errHANDLING } from "../icons/icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const ModalInfo = (props) => {
