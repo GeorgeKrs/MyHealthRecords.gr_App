@@ -151,7 +151,24 @@ const SignUpForm = () => {
               conditions: true,
               validAcc: false,
               signUpDate: Timestamp.fromDate(new Date()),
-              accModifications: "12-9-2021, 18:40",
+              accModifications: Timestamp.fromDate(new Date()),
+            });
+          })();
+          (async () => {
+            await setDoc(doc(db, "allergiesRecords", form.email), {
+              food_allergies: false,
+              food_comments: "",
+              breathe_allergies: false,
+              breathe_comments: "",
+              skin_allergies: false,
+              skin_comments: "",
+              sting_allergies: false,
+              sting_comments: "",
+              drug_allergies: false,
+              drug_comments: "",
+              other_allergies: false,
+              other_comments: "",
+              LastModification: Timestamp.fromDate(new Date()),
             });
           })();
         })

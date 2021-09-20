@@ -69,6 +69,7 @@ const UserSettingsForm = (props) => {
     ) {
       isValid = true;
     }
+    console.log(userData.accModifications);
 
     if (isValid) {
       const UserSettingsRef = doc(db, "users", loggedInUser);
@@ -79,13 +80,13 @@ const UserSettingsForm = (props) => {
 
     setTimeout(function () {
       setBtnLoading(false);
-    }, 500);
+    }, 700);
   };
 
   return (
     <div>
       {loading ? (
-        <FullScreenLoader LoadingMsg={"Φόρτωση Δεδομένων..."} />
+        <FullScreenLoader />
       ) : (
         <div className="pt-5 mt-5 form-custom">
           <div className="row">

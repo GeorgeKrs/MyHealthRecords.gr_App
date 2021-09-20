@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Tooltip from "../general/Tooltip";
 // font icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,13 +8,17 @@ import { db } from "../utils/firebase";
 import { setDoc, doc, Timestamp } from "firebase/firestore";
 
 const CheckBoxes = (props) => {
-  const [isChecked, setIsChecked] = useState(false);
-  const [isSaved, setIsSaved] = useState(false);
-  const [textArea, setTextArea] = useState("");
-
-  const [loading, setLoading] = useState(false);
+  const [isChecked, setIsChecked] = useState(props.isCheckedValue);
+  const [isSaved, setIsSaved] = useState(props.isSavedValue);
+  const [textArea, setTextArea] = useState(props.textAreaValue);
 
   let UnCheck_data = {};
+
+  useEffect(() => {
+    setIsChecked(props.isCheckedValue);
+    setIsSaved(props.isSavedValue);
+    setTextArea(props.textAreaValue);
+  }, [props.isCheckedValue, props.isSavedValue, props.textAreaValue]);
 
   const checkHandler = (event) => {
     if (event) {
@@ -41,7 +45,7 @@ const CheckBoxes = (props) => {
           break;
         case "3":
           UnCheck_data = {
-            sking_allergies: false,
+            skin_allergies: false,
             skin_comments: "",
             LastModification: Timestamp.fromDate(new Date()),
           };
@@ -68,7 +72,6 @@ const CheckBoxes = (props) => {
           };
           break;
       }
-      alert("API CALL success modal (set to false Uncheck values");
       const userEmail = props.loggedInUser;
       const AllergiesRef = doc(db, "allergiesRecords", userEmail);
       setDoc(AllergiesRef, UnCheck_data, { merge: true });
@@ -96,7 +99,7 @@ const CheckBoxes = (props) => {
           break;
         case "3":
           Check_data = {
-            sking_allergies: true,
+            skin_allergies: true,
             skin_comments: textArea,
             LastModification: Timestamp.fromDate(new Date()),
           };
@@ -125,12 +128,10 @@ const CheckBoxes = (props) => {
       }
       if (id === "1") {
         setIsSaved(true);
-        alert("API CALL success modal");
         const userEmail = props.loggedInUser;
         const AllergiesRef = doc(db, "allergiesRecords", userEmail);
         setDoc(AllergiesRef, Check_data, { merge: true });
       } else {
-        alert("API CALL FAILED modal");
         setIsSaved(false);
       }
     } else {
