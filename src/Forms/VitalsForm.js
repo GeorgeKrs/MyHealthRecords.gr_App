@@ -1,5 +1,8 @@
 import { useState } from "react";
 import ErrorMsg from "../general/ErrorMsg";
+import ModalInfo from "../general/ModalInfo";
+// font ICONS
+import { ICONS_errHANDLING } from "../icons/icons";
 // firebase
 import { db } from "../utils/firebase";
 import { addDoc, Timestamp, collection } from "firebase/firestore";
@@ -23,6 +26,15 @@ const VitalsForm = (props) => {
   const [erWeight, setErWeight] = useState("");
 
   const [loading, setLoading] = useState(false);
+
+  // modal options
+  const [show, setShow] = useState(false);
+  const [apiState, setApiState] = useState(false);
+  // const [errorAPI, setErrorAPI] = useState(false);
+  // function to get data from child to parent
+  const modalState = (state) => {
+    setShow(!show);
+  };
 
   const ValidateSystolic = (systolic) => {
     if ((systolic < 50 || systolic > 220) && systolic !== "") {
@@ -94,7 +106,7 @@ const VitalsForm = (props) => {
       sugar === "" &&
       weight === ""
     ) {
-      alert("all empty modal");
+      isEmpty = true;
     } else {
       isEmpty = false;
     }
@@ -109,7 +121,6 @@ const VitalsForm = (props) => {
       erSugar === "" &&
       erWeight === ""
     ) {
-      alert("API CALL success modal");
       const userEmail = props.loggedInUser;
       (async () => {
         await addDoc(collection(db, "vitalsRecords"), {
@@ -124,13 +135,15 @@ const VitalsForm = (props) => {
           SubmitDate: Timestamp.fromDate(new Date()),
         });
       })();
+      setApiState(true);
     } else {
-      alert("API CALL FAILED modal");
+      setApiState(false);
     }
+    setShow(!show);
 
     setTimeout(() => {
       setLoading(false);
-    }, 500);
+    }, 350);
   };
 
   return (
@@ -262,6 +275,29 @@ const VitalsForm = (props) => {
           </button>
         </div>
       </div>
+      {show ? (
+        apiState ? (
+          <ModalInfo
+            show={show}
+            modalState={modalState}
+            modalTitle={"Επιτυχής Καταχώρηση"}
+            modalMsg={"Η φόρμα καταχωρήθηκε με επιτυχία."}
+            icon={ICONS_errHANDLING[0].icon}
+            className={"btn btn-outline-success"}
+          />
+        ) : (
+          <ModalInfo
+            show={show}
+            modalState={modalState}
+            modalTitle={"Αποτυχία Καταχώρησης"}
+            modalMsg={
+              "Παρακαλώ συμπληρώστε όποια πεδία θέλετε με βάση τους περιορισμούς. Άδειες καταχωρήσεις και καταχωρήσεις μόνο με σχόλια δεν γίνονται δεκτές."
+            }
+            icon={ICONS_errHANDLING[1].icon}
+            className={"btn btn-outline-danger"}
+          />
+        )
+      ) : null}
     </div>
   );
 };

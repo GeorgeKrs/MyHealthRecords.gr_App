@@ -11,6 +11,8 @@ import {
   faSignOutAlt,
   faSave,
   faUserEdit,
+  faExclamationCircle,
+  faCheckSquare,
 } from "@fortawesome/free-solid-svg-icons";
 
 const ICONS = [
@@ -69,4 +71,17 @@ const ICONS_ALLERGIES_TAB = [
   },
 ];
 
-export { ICONS, ICONS_ALLERGIES_TAB };
+const ICONS_errHANDLING = [
+  {
+    id: "1",
+    icon: faCheckSquare,
+    description: "Επιτυχία",
+  },
+  {
+    id: "2",
+    icon: faExclamationCircle,
+    description: "Σφάλμα",
+  },
+];
+
+export { ICONS, ICONS_ALLERGIES_TAB, ICONS_errHANDLING };
