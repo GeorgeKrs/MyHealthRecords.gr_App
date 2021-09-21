@@ -1,7 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { MONTHS, DAYS, YEARS } from "../general/DateFile";
+import Tooltip from "../general/Tooltip";
+// firestore
+import { collection, query, where, getDocs } from "firebase/firestore";
+import { db } from "../utils/firebase";
 
-const VitalsHistoryForm = () => {
+const VitalsHistoryForm = (props) => {
   const [fromYear, setFromYear] = useState("");
   const [fromMonth, setFromMonth] = useState("");
   const [fromDay, setFromDay] = useState("");
@@ -10,26 +14,47 @@ const VitalsHistoryForm = () => {
   const [toDay, setToDay] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const [viewModal, setViewModal] = useState(false);
+  const [searchState, setSearchState] = useState(false);
+  const [userData, setUserData] = useState({});
+
+  const loggedInUser = props.loggedInUser;
+
+  let userDataArray = [];
+
+  const fetchRecordData = async () => {
+    const vitalsRef = collection(db, "vitalsRecords");
+    const vitalsQuery = query(
+      vitalsRef,
+      where("userEmail", "==", loggedInUser)
+    );
+    const querySnapshot = await getDocs(vitalsQuery);
+    querySnapshot.forEach((doc) => {
+      setUserData(doc.data());
+      userDataArray.push(userData);
+    });
+    setSearchState(true);
+    console.log(userDataArray);
+    console.log(searchState);
+  };
 
   const FormHandler = () => {
     setLoading(true);
-    setViewModal(true);
 
-    console.log(fromYear);
-    console.log(fromMonth);
-    console.log(fromDay);
-    console.log(toYear);
-    console.log(toMonth);
-    console.log(toDay);
+    const DateFrom = [fromYear, fromMonth, fromDay];
+    console.log(DateFrom.join("-"));
+
+    const DateTo = [toYear, toMonth, toDay];
+    console.log(DateTo.join("-"));
+
+    fetchRecordData();
 
     setTimeout(() => {
       setLoading(false);
-    }, 1000);
+    }, 300);
   };
 
   return (
-    <div className="pt-4  mb-4">
+    <div className="pt-4 mb-4 d-flex flex-column align-items-center">
       <div className="form-custom">
         <div className="row">
           <h5>Από:</h5>
@@ -140,6 +165,65 @@ const VitalsHistoryForm = () => {
           </button>
         </div>
       </div>
+      {searchState
+        ? userDataArray.map(
+            (
+              submitDate,
+              diastolic,
+              systolic,
+              pulses,
+              temperature,
+              oxygen,
+              sugar,
+              weight,
+              comments,
+              index
+            ) => (
+              <div className="form-custom container mt-5" id={index}>
+                <h3>{submitDate}</h3>
+                <div className="row mt-4">
+                  <div className="col-lg-3 col-sm-12">
+                    <b>Συστολική Πίεση (mmHg):</b> {diastolic}
+                  </div>
+                  <div className="col-lg-3 col-sm-12">
+                    <b>Διαστολική Πίεση (mmHg):</b> {systolic}
+                  </div>
+                  <div className="col-lg-3 col-sm-12">
+                    <b>Παλμοί (bpm):</b> {pulses}
+                  </div>
+                  <div className="col-lg-3 col-sm-12">
+                    <b>Θερμοκρασία (&#176;C):</b> {temperature}
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-lg-3 col-sm-12">
+                    <b>Οξυγόνο (%):</b> {oxygen}
+                  </div>
+                  <div className="col-lg-3 col-sm-12">
+                    <b>Σάκχαρο (mg/dL):</b> {sugar}
+                  </div>
+                  <div className="col-lg-3 col-sm-12">
+                    <b>Βάρος (Κιλά):</b> {weight}
+                  </div>
+                  <div className="col-lg-3 col-sm-12"></div>
+                </div>
+                <div className="row">
+                  <div
+                    className="col-lg-12 col-sm-12 py-4 comments-div"
+                    style={{ maxHeight: "300px" }}
+                  >
+                    <p>
+                      <b>
+                        Σχόλια:<br></br>
+                      </b>
+                      {comments}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )
+          )
+        : null}
     </div>
   );
 };

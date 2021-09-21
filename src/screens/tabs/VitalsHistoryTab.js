@@ -1,11 +1,11 @@
 import VitalsHistoryForm from "../../Forms/VitalsHistoryForm";
 import TabTitles from "../../general/TabTitles";
 
-const VitalsHistoryTab = () => {
+const VitalsHistoryTab = (props) => {
   return (
-    <div className="p-2 outer-tabsDiv w-100 d-flex flex-column align-items-center">
+    <div className="p-2 outer-tabsDiv w-100 ">
       <TabTitles title={"Ιστορικό Ζωτικών Λειτουργιών"} />
-      <VitalsHistoryForm />
+      <VitalsHistoryForm loggedInUser={props.loggedInUser} />
     </div>
   );
 };
