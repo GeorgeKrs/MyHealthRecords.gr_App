@@ -124,11 +124,11 @@
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: var(--bs-danger);
+  background: var(--bs-primary);
   border-radius: 10px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #c12e3c;
+  background: var(--bs-primary-700);
 }

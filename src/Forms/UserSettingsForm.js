@@ -79,7 +79,7 @@ const UserSettingsForm = (props) => {
 
     setTimeout(function () {
       setBtnLoading(false);
-    }, 700);
+    }, 300);
   };
 
   return (
@@ -193,22 +193,7 @@ const UserSettingsForm = (props) => {
                 <span>{btnLoading ? "Περιμένετε..." : "Αποθήκευση"}</span>
               </button>
             </div>
-            <div className="mt-4 ms-auto">
-              <button
-                type="button"
-                className="btn btn-outline-danger"
-                //   onClick={FormHandler}
-                disabled={btnLoading ? true : false}
-              >
-                {btnLoading && (
-                  <span
-                    className="spinner-border spinner-border-sm me-2"
-                    role="status"
-                  ></span>
-                )}
-                <span>{btnLoading ? "Περιμένετε..." : "Αλλαγή Κωδικού"}</span>
-              </button>
-            </div>
+            <div className="mt-4 ms-auto"></div>
           </div>
         </div>
       )}

@@ -128,14 +128,24 @@ const VitalsForm = (props) => {
           systolic: systolic,
           diastolic: diastolic,
           temperature: temperature,
+          pulses: pulses,
           oxygen: oxygen,
           sugar: sugar,
           weight: weight,
           comments: comments,
-          SubmitDate: Timestamp.fromDate(new Date()),
+          submitDate: Timestamp.fromDate(new Date()),
         });
       })();
       setApiState(true);
+
+      setSystolic("");
+      setDiastolic("");
+      setPulses("");
+      setTemperature("");
+      setOxygen("");
+      setSugar("");
+      setWeight("");
+      setComments("");
     } else {
       setApiState(false);
     }
