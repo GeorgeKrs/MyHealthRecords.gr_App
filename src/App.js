@@ -14,6 +14,7 @@ function App() {
     if (user) {
       setUserLoggedIn(user.email);
     }
+
     setTimeout(function () {
       setLoader(false);
     }, 1000);

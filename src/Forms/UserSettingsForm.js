@@ -23,16 +23,16 @@ const UserSettingsForm = (props) => {
 
   useEffect(() => {
     setLoading(true);
-    fetchUserData();
+    fetchUserData().finally(
+      setTimeout(function () {
+        setLoading(false);
+      }, 500)
+    );
 
     setUserData((userData) => ({
       ...userData,
       accModifications: Timestamp.fromDate(new Date()),
     }));
-
-    setTimeout(function () {
-      setLoading(false);
-    }, 1000);
   }, []);
 
   const ValidateFirstName = (firstName) => {
