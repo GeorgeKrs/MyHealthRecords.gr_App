@@ -1,5 +1,5 @@
 const FullScreenLoader = (props) => {
-  return props.setNotFullscreen === true ? (
+  return props.setFullscreen === false ? (
     <div className="mt-4 d-flex flex-column align-items-center">
       <div className="spinner-grow"></div>
       <div>

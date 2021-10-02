@@ -281,8 +281,8 @@ const VitalsHistoryForm = (props) => {
         <div className="ms-auto">
           {userData.length === 0 ? null : (
             <div>
-              <button className="mx-1 btn btn-outline-danger">Next</button>
               <button className="btn btn-outline-primary">Previous</button>
+              <button className="mx-2 btn btn-outline-danger">Next</button>
             </div>
           )}
         </div>
