@@ -21,9 +21,9 @@ function App() {
   });
 
   return (
-    <div className="">
+    <div style={{ minHeight: "100vh" }}>
       {loader ? (
-        <FullScreenLoader />
+        <FullScreenLoader setFullscreen={true} />
       ) : userLoggedIn ? (
         <MainScreen loggedInUser={userLoggedIn} />
       ) : (

@@ -1,13 +1,12 @@
 const FullScreenLoader = (props) => {
-  return props.setFullscreen === false ? (
-    <div className="mt-4 d-flex flex-column align-items-center">
-      <div className="spinner-grow"></div>
-      <div>
-        <h5>{props.LoadingMsg || "Παρακαλώ Περιμένετε..."}</h5>
-      </div>
-    </div>
-  ) : (
-    <div className="loader-outerdiv d-flex flex-column align-items-center">
+  return (
+    <div
+      className={
+        props.setFullscreen === false
+          ? "mt-4 d-flex flex-column align-items-center"
+          : "loader-outerdiv d-flex flex-column align-items-center"
+      }
+    >
       <div className="spinner-grow"></div>
       <div>
         <h5>{props.LoadingMsg || "Παρακαλώ Περιμένετε..."}</h5>
