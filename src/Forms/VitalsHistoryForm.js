@@ -10,14 +10,17 @@ import {
   orderBy,
   limit,
   startAfter,
-  startAt,
-  endBefore,
-  endAt,
+  doc,
+  getDoc,
 } from "firebase/firestore";
 import { db } from "../utils/firebase";
 // font icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
+import {
+  faExclamationTriangle,
+  faAngleDoubleLeft,
+  faAngleRight,
+} from "@fortawesome/free-solid-svg-icons";
 
 const VitalsHistoryForm = (props) => {
   const [fromYear, setFromYear] = useState(new Date().getFullYear().toString());
@@ -36,11 +39,21 @@ const VitalsHistoryForm = (props) => {
   const [searchState, setSearchState] = useState(false);
 
   const [lastItemVisible, setLastItemVisible] = useState(0);
-  // const [lastItem, setLastItem] = useState(0);
+
+  const [userDocCounter, setUserDocCounter] = useState(0);
+  const [queryCounter, setQueryCounter] = useState(0);
+
+  const [nextItem, setNextItem] = useState(false);
+  const [prevItem, setPrevItem] = useState(false);
+
+  const [startBtnStatus, setStartBtnStatus] = useState(true);
+  const [nextBtnStatus, setNextBtnStatus] = useState(false);
 
   const loggedInUser = props.loggedInUser;
 
   let userDataArray = [];
+
+  const queryLimit = 5;
 
   const fetchRecordData = async () => {
     setLoading(true);
@@ -53,7 +66,7 @@ const VitalsHistoryForm = (props) => {
       where("submitDate", ">=", DateFrom),
       where("submitDate", "<=", DateTo),
       orderBy("submitDate", "desc"),
-      limit(1)
+      limit(queryLimit)
     );
 
     const querySnapshot = await getDocs(vitalsQuery);
@@ -66,26 +79,86 @@ const VitalsHistoryForm = (props) => {
 
     setUserData(userDataArray);
     setSearchState(true);
+
+    const docCounterRef = doc(db, "users", loggedInUser);
+    const docSnap = await getDoc(docCounterRef);
+
+    setUserDocCounter(docSnap.data().docCounter);
+    setQueryCounter(2 * queryLimit);
+
+    setStartBtnStatus(true);
   };
 
-  // const LoadNext = async () => {
+  const LoadMore = async () => {
+    const DateFrom = new Date(fromYear, fromMonth - 1, fromDay);
+    const DateTo = new Date(toYear, toMonth - 1, toDay);
 
-  //   const nextItems = query(
-  //     collection(db, "vitalsRecords"),
-  //     where("userEmail", "==", loggedInUser),
-  //     where("submitDate", ">=", DateFrom),
-  //     where("submitDate", "<=", DateTo),
-  //     orderBy("submitDate", "desc"),
-  //     startAfter(lastItemVisible),
-  //     limit(1)
-  //   );
+    if (queryCounter >= userDocCounter) {
+      setNextBtnStatus(true);
+    } else {
+      setNextBtnStatus(false);
+    }
+    console.log(queryCounter);
+    console.log("users", userDocCounter);
 
-  //   const queryNextItems = await getDocs(nextItems);
+    let loadItems = null;
+    if (nextItem === true) {
+      loadItems = query(
+        collection(db, "vitalsRecords"),
+        where("userEmail", "==", loggedInUser),
+        where("submitDate", ">=", DateFrom),
+        where("submitDate", "<=", DateTo),
+        orderBy("submitDate", "desc"),
+        startAfter(lastItemVisible),
+        limit(queryLimit)
+      );
+      const queryNextItems = await getDocs(loadItems);
+      setLastItemVisible(queryNextItems.docs[queryNextItems.docs.length - 1]);
 
-  //   queryNextItems.forEach((doc) => {
-  //     userDataArray.push(doc.data());
-  //   });
-  // };
+      queryNextItems.forEach((doc) => {
+        userDataArray.push(doc.data());
+      });
+
+      setQueryCounter(queryCounter + queryLimit);
+
+      setStartBtnStatus(false);
+    } else if (prevItem === true) {
+      loadItems = query(
+        collection(db, "vitalsRecords"),
+        where("userEmail", "==", loggedInUser),
+        where("submitDate", ">=", DateFrom),
+        where("submitDate", "<=", DateTo),
+        orderBy("submitDate", "desc"),
+        limit(queryLimit)
+      );
+      const queryNextItems = await getDocs(loadItems);
+      setLastItemVisible(queryNextItems.docs[queryNextItems.docs.length - 1]);
+
+      queryNextItems.forEach((doc) => {
+        userDataArray.push(doc.data());
+      });
+
+      setQueryCounter(queryLimit);
+
+      setStartBtnStatus(true);
+      setNextBtnStatus(false);
+    }
+
+    setUserData(userDataArray);
+    setSearchState(true);
+  };
+
+  useEffect(() => {
+    if (nextItem === true || prevItem === true) {
+      LoadMore().then(
+        setTimeout(function () {
+          setLoading(false);
+        }, 350)
+      );
+      setNextItem(false);
+      setPrevItem(false);
+    }
+  }, [nextItem, prevItem]);
 
   useEffect(() => {
     if (loading === true) {
@@ -281,8 +354,30 @@ const VitalsHistoryForm = (props) => {
         <div className="ms-auto">
           {userData.length === 0 ? null : (
             <div>
-              <button className="btn btn-outline-primary">Previous</button>
-              <button className="mx-2 btn btn-outline-danger">Next</button>
+              <button
+                disabled={startBtnStatus ? true : false}
+                className="btn btn-primary"
+                onClick={(e) => setPrevItem(true)}
+              >
+                <FontAwesomeIcon
+                  size="lg"
+                  icon={faAngleDoubleLeft}
+                  style={{ color: "var(--bs-dark)" }}
+                />
+                Αρχή
+              </button>
+              <button
+                disabled={nextBtnStatus ? true : false}
+                className="mx-2 btn btn-danger"
+                onClick={(e) => setNextItem(true)}
+              >
+                Επόμενο
+                <FontAwesomeIcon
+                  size="lg"
+                  icon={faAngleRight}
+                  style={{ color: "var(--bs-dark)" }}
+                />
+              </button>
             </div>
           )}
         </div>
