@@ -369,7 +369,7 @@ const VitalsHistoryForm = (props) => {
                 <tbody>
                   <tr>
                     <th scope="row">Τιμές:</th>
-                    <td>{i.diastolic}</td>
+                    <td>{i.systolic}</td>
                     <td>{i.diastolic}</td>
                     <td>{i.pulses}</td>
                     <td>{i.temperature}</td>
