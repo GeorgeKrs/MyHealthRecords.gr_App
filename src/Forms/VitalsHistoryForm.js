@@ -52,13 +52,21 @@ const VitalsHistoryForm = (props) => {
   const loggedInUser = props.loggedInUser;
 
   let userDataArray = [];
+  let userAllRecocdsArray = [];
 
-  const queryLimit = 5;
+  const queryLimit = 2;
 
   const fetchRecordData = async () => {
     setLoading(true);
-    const DateFrom = new Date(fromYear, fromMonth - 1, fromDay);
-    const DateTo = new Date(toYear, toMonth - 1, toDay);
+    const DateFrom = new Date(
+      fromYear,
+      fromMonth - 1,
+      fromDay,
+      "00",
+      "00",
+      "01"
+    );
+    const DateTo = new Date(toYear, toMonth - 1, toDay, "23", "59", "59");
 
     const vitalsQuery = query(
       collection(db, "vitalsRecords"),
@@ -80,28 +88,47 @@ const VitalsHistoryForm = (props) => {
     setUserData(userDataArray);
     setSearchState(true);
 
-    const docCounterRef = doc(db, "users", loggedInUser);
-    const docSnap = await getDoc(docCounterRef);
+    const docCounterRef = query(
+      collection(db, "vitalsRecords"),
+      where("userEmail", "==", loggedInUser),
+      where("submitDate", ">=", DateFrom),
+      where("submitDate", "<=", DateTo),
+      orderBy("submitDate", "desc")
+    );
 
-    setUserDocCounter(docSnap.data().docCounter);
+    const docSnap = await getDocs(docCounterRef);
+
+    docSnap.forEach((doc) => {
+      userAllRecocdsArray.push(doc.data());
+    });
+
+    setUserDocCounter(userAllRecocdsArray.length);
+    console.log(userDocCounter);
+
     setQueryCounter(2 * queryLimit);
 
     setStartBtnStatus(true);
   };
 
   const LoadMore = async () => {
-    const DateFrom = new Date(fromYear, fromMonth - 1, fromDay);
-    const DateTo = new Date(toYear, toMonth - 1, toDay);
+    const DateFrom = new Date(
+      fromYear,
+      fromMonth - 1,
+      fromDay,
+      "00",
+      "00",
+      "01"
+    );
+    const DateTo = new Date(toYear, toMonth - 1, toDay, "23", "59", "59");
+
+    let loadItems = null;
 
     if (queryCounter >= userDocCounter) {
       setNextBtnStatus(true);
     } else {
       setNextBtnStatus(false);
     }
-    console.log(queryCounter);
-    console.log("users", userDocCounter);
 
-    let loadItems = null;
     if (nextItem === true) {
       loadItems = query(
         collection(db, "vitalsRecords"),
@@ -138,7 +165,7 @@ const VitalsHistoryForm = (props) => {
         userDataArray.push(doc.data());
       });
 
-      setQueryCounter(queryLimit);
+      setQueryCounter(2 * queryLimit);
 
       setStartBtnStatus(true);
       setNextBtnStatus(false);
@@ -162,11 +189,16 @@ const VitalsHistoryForm = (props) => {
 
   useEffect(() => {
     if (loading === true) {
-      fetchRecordData().finally(
+      fetchRecordData().then(
         setTimeout(function () {
           setLoading(false);
         }, 350)
       );
+    }
+    if (userDocCounter >= queryCounter) {
+      setNextBtnStatus(false);
+    } else {
+      setNextBtnStatus(true);
     }
   }, [loading]);
 
@@ -310,11 +342,17 @@ const VitalsHistoryForm = (props) => {
               id={index}
               key={index}
             >
-              <h5>
-                {i.submitDate.toDate().getDate()} /{" "}
-                {i.submitDate.toDate().getMonth() + 1} /{" "}
-                {i.submitDate.toDate().getFullYear()}
-              </h5>
+              <div>
+                <h5>
+                  {i.submitDate.toDate().getDate()} /{" "}
+                  {i.submitDate.toDate().getMonth() + 1} /{" "}
+                  {i.submitDate.toDate().getFullYear()}
+                </h5>
+                <h6>
+                  {i.submitDate.toDate().getHours()} :{" "}
+                  {i.submitDate.toDate().getMinutes()}
+                </h6>
+              </div>
               <table className="table">
                 <thead>
                   <tr>
