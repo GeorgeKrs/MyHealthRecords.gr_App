@@ -71,8 +71,8 @@ const MainScreen = (props) => {
         (tab === "2" && (
           <VitalsHistoryTab loggedInUser={props.loggedInUser} />
         )) ||
-        (tab === "3" && <PDFTab />) ||
-        (tab === "4" && <PDFHistoryTab />) ||
+        (tab === "3" && <PDFTab loggedInUser={props.loggedInUser} />) ||
+        (tab === "4" && <PDFHistoryTab loggedInUser={props.loggedInUser} />) ||
         (tab === "5" && <AllergiesTab loggedInUser={props.loggedInUser} />) ||
         (tab === "7" && <UserSettingsTab loggedInUser={props.loggedInUser} />)}
     </div>

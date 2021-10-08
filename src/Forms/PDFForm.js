@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./form.css";
 import DoctorsSpecs from "../general/DoctorsSpecs";
 import ErrorMsg from "../general/ErrorMsg";
@@ -12,9 +12,9 @@ import {
 import { db } from "../utils/firebase";
 import { addDoc, Timestamp, collection } from "firebase/firestore";
 
-const PDFForm = () => {
+const PDFForm = (props) => {
   const [doctorSpec, setDoctorSpec] = useState("");
-  const [file, setFile] = useState(null);
+  const [selectedFile, setFile] = useState(null);
   const [comments, setComments] = useState("");
 
   const [erDoctorSpec, setErDoctorSpec] = useState("");
@@ -22,12 +22,21 @@ const PDFForm = () => {
 
   const [loading, setLoading] = useState(false);
 
-  // const ValidateDocSpec = (doctorSelected) => {};
+  const [uploadingState, setUploadingState] = useState(false);
+  const [uploading, setUploading] = useState(37);
+
+  const userEmail = props.loggedInUser;
+
+  useEffect(() => {
+    console.log(uploading);
+  }, [uploading, uploadingState]);
+
+  const FileHandler = (event) => {
+    setFile(event.target.files[0]);
+  };
 
   const FormHandler = () => {
     setLoading(true);
-
-    let isEmpty = true;
 
     if (
       doctorSpec === undefined ||
@@ -35,36 +44,42 @@ const PDFForm = () => {
       doctorSpec === null ||
       doctorSpec === "Ειδικότητες Ιατρών"
     ) {
-      setErDoctorSpec("Please Select a doctor");
+      setErDoctorSpec("Παρακαλώ Επιλέξτε ειδικότητα Ιατρού");
     } else {
       setErDoctorSpec("");
-      if (file === undefined || file === null || file === "") {
-        setErFile("Please Select a file");
+      if (
+        selectedFile === undefined ||
+        selectedFile === null ||
+        selectedFile === ""
+      ) {
+        setErFile("Παρακαλώ επιλέξτε αρχείο PDF");
       } else {
         setErFile("");
-        isEmpty = false;
+        UploadFileHandler();
       }
     }
 
-    if (!isEmpty) {
+    setLoading(false);
+    console.log(doctorSpec);
+    console.log(selectedFile);
+    console.log(comments);
+  };
+
+  const UploadFileHandler = () => {
+    if (selectedFile.type === "application/pdf") {
       const storage = getStorage();
-      // Create the file metadata
-      /** @type {any} */
-      const metadata = {
-        contentType: "pdf",
-      };
+      const storageRef = ref(storage, userEmail + "/" + selectedFile.name);
+      const uploadTask = uploadBytesResumable(storageRef, selectedFile);
 
-      // Upload file and metadata to the object 'pdfFiles/file_name.jpg'
-      const storageRef = ref(storage, "pdfFiles/" + file.name);
-      const uploadTask = uploadBytesResumable(storageRef, file, metadata);
-
-      // Listen for state changes, errors, and completion of the upload.
       uploadTask.on(
         "state_changed",
         (snapshot) => {
+          // Observe state change events such as progress, pause, and resume
           // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
           const progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          setUploading(progress);
+
           console.log("Upload is " + progress + "% done");
           switch (snapshot.state) {
             case "paused":
@@ -76,24 +91,7 @@ const PDFForm = () => {
           }
         },
         (error) => {
-          // A full list of error codes is available at
-          // https://firebase.google.com/docs/storage/web/handle-errors
-          switch (error.code) {
-            case "storage/unauthorized":
-              console.log("User doesn't have permission to access the object");
-              break;
-            case "storage/canceled":
-              console.log("User canceled the upload");
-              break;
-
-            // ...
-
-            case "storage/unknown":
-              console.log(
-                "Unknown error occurred, inspect error.serverResponse"
-              );
-              break;
-          }
+          alert("Error occured, try again later");
         },
         () => {
           // Upload completed successfully, now we can get the download URL
@@ -101,7 +99,7 @@ const PDFForm = () => {
             console.log("File available at", downloadURL);
             (async () => {
               await addDoc(collection(db, "pdfRecords"), {
-                userEmail: "gkoursoumis97@gmail.com",
+                userEmail: userEmail,
                 doctorSpec: doctorSpec,
                 pdfUrl: downloadURL,
                 comments: comments,
@@ -112,17 +110,13 @@ const PDFForm = () => {
         }
       );
     } else {
-      alert("failed modal");
+      setTimeout(() => {
+        setLoading(false);
+      }, 500);
     }
-
-    console.log(doctorSpec);
-    console.log(file);
-    console.log(comments);
-
-    setTimeout(() => {
-      setLoading(false);
-    }, 500);
+    alert("NO PDF");
   };
+
   return (
     <div className="pt-4 mb-4">
       <div className="form-custom">
@@ -151,7 +145,7 @@ const PDFForm = () => {
               type="file"
               accept="application/pdf"
               className="form-control inputValues"
-              onChange={(e) => setFile(e.target.value)}
+              onChange={FileHandler}
             />
             {erFile ? <ErrorMsg ErrorMsg={erFile}></ErrorMsg> : null}
           </div>
@@ -182,6 +176,15 @@ const PDFForm = () => {
             )}
             <span>{loading ? "Περιμένετε..." : "Καταχώρηση"}</span>
           </button>
+        </div>
+      </div>
+
+      <div className="mt-5">
+        <h5>Ανέβασμα αρχείου:</h5>
+        <div className="progress">
+          <div className="progress-bar " style={{ width: `${uploading}%` }}>
+            {uploading}
+          </div>
         </div>
       </div>
     </div>
