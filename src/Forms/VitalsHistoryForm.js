@@ -103,7 +103,6 @@ const VitalsHistoryForm = (props) => {
     });
 
     setUserDocCounter(userAllRecocdsArray.length);
-    console.log(userDocCounter);
 
     setQueryCounter(2 * queryLimit);
 
@@ -390,6 +389,11 @@ const VitalsHistoryForm = (props) => {
       </div>
       <div className="container d-flex">
         <div className="ms-auto">
+          {userDocCounter === 0 ? null : (
+            <p className="text-left">
+              <b>Συνολικές εγγραφές: {userDocCounter}</b>
+            </p>
+          )}
           {userData.length === 0 ? null : (
             <div>
               <button
