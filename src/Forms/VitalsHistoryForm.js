@@ -54,7 +54,7 @@ const VitalsHistoryForm = (props) => {
   let userDataArray = [];
   let userAllRecocdsArray = [];
 
-  const queryLimit = 2;
+  const queryLimit = 10;
 
   const fetchRecordData = async () => {
     setLoading(true);
@@ -107,6 +107,7 @@ const VitalsHistoryForm = (props) => {
     setQueryCounter(2 * queryLimit);
 
     setStartBtnStatus(true);
+    setNextBtnStatus(false);
   };
 
   const LoadMore = async () => {
@@ -176,7 +177,7 @@ const VitalsHistoryForm = (props) => {
 
   useEffect(() => {
     if (nextItem === true || prevItem === true) {
-      LoadMore().then(
+      LoadMore().finally(
         setTimeout(function () {
           setLoading(false);
         }, 350)
@@ -188,7 +189,7 @@ const VitalsHistoryForm = (props) => {
 
   useEffect(() => {
     if (loading === true) {
-      fetchRecordData().then(
+      fetchRecordData().finally(
         setTimeout(function () {
           setLoading(false);
         }, 350)
@@ -355,7 +356,7 @@ const VitalsHistoryForm = (props) => {
               <table className="table">
                 <thead>
                   <tr>
-                    <th scope="col"></th>
+                    <th scope="col">Αριθμός Μέτρησης: {index + 1}</th>
                     <th scope="col">Συστολική Πίεση (mmHg)</th>
                     <th scope="col">Διαστολική Πίεση (mmHg)</th>
                     <th scope="col">Παλμοί (bpm)</th>

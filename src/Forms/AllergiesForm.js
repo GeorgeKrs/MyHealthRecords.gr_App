@@ -26,13 +26,13 @@ const AllergiesForm = (props) => {
     fetchUserData().then(
       setTimeout(function () {
         setLoading(false);
-      }, 350)
+      }, 400)
     );
   }, []);
   return (
     <div className="pt-4 mb-4">
       {loading ? (
-        <FullScreenLoader />
+        <FullScreenLoader setFullscreen={true} />
       ) : (
         <div className="form-custom">
           <p>

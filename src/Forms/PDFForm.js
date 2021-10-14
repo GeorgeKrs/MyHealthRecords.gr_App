@@ -2,6 +2,9 @@ import { useState, useEffect } from "react";
 import "./form.css";
 import DoctorsSpecs from "../general/DoctorsSpecs";
 import ErrorMsg from "../general/ErrorMsg";
+import ModalInfo from "../general/ModalInfo";
+// font ICONS
+import { ICONS_errHANDLING } from "../icons/icons";
 // firebase
 import {
   getStorage,
@@ -22,22 +25,27 @@ const PDFForm = (props) => {
 
   const [loading, setLoading] = useState(false);
 
-  const [uploadingState, setUploadingState] = useState(false);
-  const [uploading, setUploading] = useState(37);
+  const [uploading, setUploading] = useState(0);
+
+  // modal options
+  const [show, setShow] = useState("none");
+  const [apiState, setApiState] = useState(false);
+  const modalState = () => {
+    setShow("none");
+    setApiState(false);
+  };
 
   const userEmail = props.loggedInUser;
 
-  useEffect(() => {
-    console.log(uploading);
-  }, [uploading, uploadingState]);
+  useEffect(() => {}, [uploading, show, setApiState]);
 
   const FileHandler = (event) => {
     setFile(event.target.files[0]);
   };
 
   const FormHandler = () => {
+    setUploading(0);
     setLoading(true);
-
     if (
       doctorSpec === undefined ||
       doctorSpec === "" ||
@@ -45,6 +53,7 @@ const PDFForm = (props) => {
       doctorSpec === "Ειδικότητες Ιατρών"
     ) {
       setErDoctorSpec("Παρακαλώ Επιλέξτε ειδικότητα Ιατρού");
+      setLoading(false);
     } else {
       setErDoctorSpec("");
       if (
@@ -53,20 +62,18 @@ const PDFForm = (props) => {
         selectedFile === ""
       ) {
         setErFile("Παρακαλώ επιλέξτε αρχείο PDF");
+        setLoading(false);
       } else {
         setErFile("");
+        setApiState(true);
         UploadFileHandler();
       }
     }
-
-    setLoading(false);
-    console.log(doctorSpec);
-    console.log(selectedFile);
-    console.log(comments);
   };
 
   const UploadFileHandler = () => {
     if (selectedFile.type === "application/pdf") {
+      setUploading(1);
       const storage = getStorage();
       const storageRef = ref(storage, userEmail + "/" + selectedFile.name);
       const uploadTask = uploadBytesResumable(storageRef, selectedFile);
@@ -78,25 +85,17 @@ const PDFForm = (props) => {
           // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
           const progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          setUploading(progress);
-
-          console.log("Upload is " + progress + "% done");
-          switch (snapshot.state) {
-            case "paused":
-              console.log("Upload is paused");
-              break;
-            case "running":
-              console.log("Upload is running");
-              break;
-          }
+          const progressView = Math.round(progress);
+          setUploading(progressView);
         },
         (error) => {
-          alert("Error occured, try again later");
+          setShow("1");
         },
         () => {
           // Upload completed successfully, now we can get the download URL
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            console.log("File available at", downloadURL);
+            setLoading(false);
+
             (async () => {
               await addDoc(collection(db, "pdfRecords"), {
                 userEmail: userEmail,
@@ -105,7 +104,7 @@ const PDFForm = (props) => {
                 comments: comments,
                 SubmitDate: Timestamp.fromDate(new Date()),
               });
-            })();
+            })().finally(setShow("0"));
           });
         }
       );
@@ -113,8 +112,8 @@ const PDFForm = (props) => {
       setTimeout(() => {
         setLoading(false);
       }, 500);
+      setShow("2");
     }
-    alert("NO PDF");
   };
 
   return (
@@ -178,15 +177,55 @@ const PDFForm = (props) => {
           </button>
         </div>
       </div>
-
-      <div className="mt-5">
-        <h5>Ανέβασμα αρχείου:</h5>
-        <div className="progress">
-          <div className="progress-bar " style={{ width: `${uploading}%` }}>
-            {uploading}
+      {uploading === 0 ? null : (
+        <div className="mt-5">
+          <h5>Ανέβασμα αρχείου:</h5>
+          <div className="progress">
+            <div className="progress-bar " style={{ width: `${uploading}%` }}>
+              {uploading}
+            </div>
           </div>
         </div>
-      </div>
+      )}
+      {apiState === true ? (
+        show === "0" ? (
+          <ModalInfo
+            show={show}
+            modalState={modalState}
+            modalTitle={"Επιτυχής Καταχώρηση"}
+            modalMsg={"Το αρχείο καταχωρήθηκε με επιτυχία."}
+            icon={ICONS_errHANDLING[0].icon}
+            className={"btn btn-outline-success"}
+          />
+        ) : show === "1" ? (
+          <ModalInfo
+            show={show}
+            modalState={modalState}
+            modalTitle={"Αποτυχία Καταχώρησης"}
+            modalMsg={"Προέκυψε κάποιο σφάλμα. Προσπαθήστε αργότερα."}
+            icon={ICONS_errHANDLING[1].icon}
+            className={"btn btn-outline-danger"}
+          />
+        ) : show === "2" ? (
+          <ModalInfo
+            show={show}
+            modalState={modalState}
+            modalTitle={"Αποτυχία Καταχώρησης"}
+            modalMsg={"Το επιλεγμένο αρχείο δεν είναι της μορφής PDF."}
+            icon={ICONS_errHANDLING[1].icon}
+            className={"btn btn-outline-danger"}
+          />
+        ) : show === "3" ? (
+          <ModalInfo
+            show={show}
+            modalState={modalState}
+            modalTitle={"Αποτυχία Καταχώρησης"}
+            modalMsg={"Το επιλεγμένο έχει ήδη καταχωρηθεί."}
+            icon={ICONS_errHANDLING[1].icon}
+            className={"btn btn-outline-danger"}
+          />
+        ) : null
+      ) : null}
     </div>
   );
 };

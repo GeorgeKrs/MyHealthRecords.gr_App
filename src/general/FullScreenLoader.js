@@ -3,7 +3,7 @@ const FullScreenLoader = (props) => {
     <div
       className={
         props.setFullscreen === false
-          ? "mt-4 d-flex flex-column align-items-center"
+          ? "mt-5 d-flex flex-column align-items-center"
           : "loader-outerdiv d-flex flex-column align-items-center"
       }
     >
