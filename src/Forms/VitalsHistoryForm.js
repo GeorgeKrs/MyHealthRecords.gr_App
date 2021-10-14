@@ -185,7 +185,7 @@ const VitalsHistoryForm = (props) => {
       setNextItem(false);
       setPrevItem(false);
     }
-  }, [nextItem, prevItem]);
+  }, [nextItem, prevItem, queryCounter, nextBtnStatus]);
 
   useEffect(() => {
     if (loading === true) {
