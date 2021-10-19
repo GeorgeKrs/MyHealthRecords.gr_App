@@ -23,12 +23,12 @@ const AllergiesForm = (props) => {
   };
 
   useEffect(() => {
-    fetchUserData().then(
+    fetchUserData().finally(
       setTimeout(function () {
         setLoading(false);
-      }, 400)
+      }, 300)
     );
-  }, []);
+  });
   return (
     <div className="pt-4 mb-4">
       {loading ? (

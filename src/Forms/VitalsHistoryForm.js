@@ -10,8 +10,8 @@ import {
   orderBy,
   limit,
   startAfter,
-  doc,
-  getDoc,
+  endAt,
+  startAt,
 } from "firebase/firestore";
 import { db } from "../utils/firebase";
 // font icons
@@ -38,23 +38,21 @@ const VitalsHistoryForm = (props) => {
   const [userData, setUserData] = useState([]);
   const [searchState, setSearchState] = useState(false);
 
-  const [lastItemVisible, setLastItemVisible] = useState(0);
+  const [searchBtn, setSearchBtn] = useState(false);
+
+  const [btnID, setBtnID] = useState("0");
 
   const [userDocCounter, setUserDocCounter] = useState(0);
+  const [userDocsID, setUserDocsID] = useState([]);
   const [queryCounter, setQueryCounter] = useState(0);
-
-  const [nextItem, setNextItem] = useState(false);
-  const [prevItem, setPrevItem] = useState(false);
-
-  const [startBtnStatus, setStartBtnStatus] = useState(true);
-  const [nextBtnStatus, setNextBtnStatus] = useState(false);
 
   const loggedInUser = props.loggedInUser;
 
   let userDataArray = [];
   let userAllRecocdsArray = [];
+  let userDocsIDArray = [];
 
-  const queryLimit = 10;
+  const queryLimit = 2;
 
   const fetchRecordData = async () => {
     setLoading(true);
@@ -76,11 +74,7 @@ const VitalsHistoryForm = (props) => {
       orderBy("submitDate", "desc"),
       limit(queryLimit)
     );
-
     const querySnapshot = await getDocs(vitalsQuery);
-
-    setLastItemVisible(querySnapshot.docs[querySnapshot.docs.length - 1]);
-
     querySnapshot.forEach((doc) => {
       userDataArray.push(doc.data());
     });
@@ -95,22 +89,43 @@ const VitalsHistoryForm = (props) => {
       where("submitDate", "<=", DateTo),
       orderBy("submitDate", "desc")
     );
-
     const docSnap = await getDocs(docCounterRef);
-
     docSnap.forEach((doc) => {
+      userDocsIDArray.push(doc.id);
       userAllRecocdsArray.push(doc.data());
     });
-
     setUserDocCounter(userAllRecocdsArray.length);
+    setUserDocsID(userDocsIDArray);
 
-    setQueryCounter(2 * queryLimit);
-
-    setStartBtnStatus(true);
-    setNextBtnStatus(false);
+    setLoading(false);
+    setSearchBtn(false);
   };
 
-  const LoadMore = async () => {
+  useEffect(() => {
+    if (loading === true && searchBtn === true) {
+      fetchRecordData().finally(
+        setTimeout(function () {
+          setLoading(false);
+        }, 350)
+      );
+    }
+  }, [searchBtn]);
+
+  const FormHandler = () => {
+    setLoading(true);
+    setSearchBtn(true);
+  };
+
+  const idHandler = (event) => {
+    setLoading(true);
+    setBtnID(event.target.id);
+  };
+
+  const fetchPaginationData = async () => {
+    setLoading(true);
+
+    let clicked_id = parseInt(btnID);
+
     const DateFrom = new Date(
       fromYear,
       fromMonth - 1,
@@ -121,90 +136,52 @@ const VitalsHistoryForm = (props) => {
     );
     const DateTo = new Date(toYear, toMonth - 1, toDay, "23", "59", "59");
 
-    let loadItems = null;
+    clicked_id = clicked_id * 10;
+    const lastItemIndex = clicked_id - 1;
+    const firstItemIndex = lastItemIndex - 9;
 
-    if (queryCounter >= userDocCounter) {
-      setNextBtnStatus(true);
-    } else {
-      setNextBtnStatus(false);
+    let firstItemRef = userDocsID[parseInt(firstItemIndex)];
+    let lastItemRef = userDocsID[parseInt(lastItemIndex)];
+
+    if (lastItemRef === undefined) {
+      lastItemRef = null;
     }
 
-    if (nextItem === true) {
-      loadItems = query(
-        collection(db, "vitalsRecords"),
-        where("userEmail", "==", loggedInUser),
-        where("submitDate", ">=", DateFrom),
-        where("submitDate", "<=", DateTo),
-        orderBy("submitDate", "desc"),
-        startAfter(lastItemVisible),
-        limit(queryLimit)
-      );
-      const queryNextItems = await getDocs(loadItems);
-      setLastItemVisible(queryNextItems.docs[queryNextItems.docs.length - 1]);
-
-      queryNextItems.forEach((doc) => {
-        userDataArray.push(doc.data());
-      });
-
-      setQueryCounter(queryCounter + queryLimit);
-
-      setStartBtnStatus(false);
-    } else if (prevItem === true) {
-      loadItems = query(
-        collection(db, "vitalsRecords"),
-        where("userEmail", "==", loggedInUser),
-        where("submitDate", ">=", DateFrom),
-        where("submitDate", "<=", DateTo),
-        orderBy("submitDate", "desc"),
-        limit(queryLimit)
-      );
-      const queryNextItems = await getDocs(loadItems);
-      setLastItemVisible(queryNextItems.docs[queryNextItems.docs.length - 1]);
-
-      queryNextItems.forEach((doc) => {
-        userDataArray.push(doc.data());
-      });
-
-      setQueryCounter(2 * queryLimit);
-
-      setStartBtnStatus(true);
-      setNextBtnStatus(false);
+    if (firstItemRef === undefined) {
+      firstItemRef = null;
     }
+
+    const vitalsQuery = query(
+      collection(db, "vitalsRecords"),
+      where("userEmail", "==", loggedInUser),
+      where("submitDate", ">=", DateFrom),
+      where("submitDate", "<=", DateTo),
+      orderBy("submitDate", "desc"),
+      startAt(firstItemRef),
+      endAt(lastItemRef),
+      limit(queryLimit)
+    );
+
+    const querySnapshot = await getDocs(vitalsQuery);
+    querySnapshot.forEach((doc) => {
+      userDataArray.push(doc.data());
+    });
 
     setUserData(userDataArray);
+
     setSearchState(true);
+    setLoading(false);
   };
 
   useEffect(() => {
-    if (nextItem === true || prevItem === true) {
-      LoadMore().finally(
-        setTimeout(function () {
-          setLoading(false);
-        }, 350)
-      );
-      setNextItem(false);
-      setPrevItem(false);
-    }
-  }, [nextItem, prevItem, queryCounter, nextBtnStatus]);
-
-  useEffect(() => {
-    if (loading === true) {
-      fetchRecordData().finally(
+    if (loading === true && btnID != 0) {
+      fetchPaginationData().finally(
         setTimeout(function () {
           setLoading(false);
         }, 350)
       );
     }
-    if (userDocCounter >= queryCounter) {
-      setNextBtnStatus(false);
-    } else {
-      setNextBtnStatus(true);
-    }
-  }, [loading]);
-
-  const FormHandler = () => {
-    setLoading(true);
-  };
+  }, [btnID]);
 
   return (
     <div>
@@ -294,6 +271,7 @@ const VitalsHistoryForm = (props) => {
 
           <div className="mt-5">
             <button
+              id="0"
               type="button"
               className="btn btn-outline-primary"
               onClick={FormHandler}
@@ -356,7 +334,7 @@ const VitalsHistoryForm = (props) => {
               <table className="table">
                 <thead>
                   <tr>
-                    <th scope="col">Αριθμός Μέτρησης: {index + 1}</th>
+                    <th scope="col"></th>
                     <th scope="col">Συστολική Πίεση (mmHg)</th>
                     <th scope="col">Διαστολική Πίεση (mmHg)</th>
                     <th scope="col">Παλμοί (bpm)</th>
@@ -396,31 +374,48 @@ const VitalsHistoryForm = (props) => {
             </p>
           )}
           {userData.length === 0 ? null : (
-            <div>
-              <button
-                disabled={startBtnStatus ? true : false}
-                className="btn btn-primary"
-                onClick={(e) => setPrevItem(true)}
-              >
-                <FontAwesomeIcon
-                  size="lg"
-                  icon={faAngleDoubleLeft}
-                  style={{ color: "var(--bs-dark)" }}
-                />
-                Αρχή
-              </button>
-              <button
-                disabled={nextBtnStatus ? true : false}
-                className="mx-2 btn btn-danger"
-                onClick={(e) => setNextItem(true)}
-              >
-                Επόμενο
-                <FontAwesomeIcon
-                  size="lg"
-                  icon={faAngleRight}
-                  style={{ color: "var(--bs-dark)" }}
-                />
-              </button>
+            <div className="d-flex flex-wrap">
+              <div className="p-1">
+                <button
+                  id="1"
+                  className="btn btn-primary"
+                  onClick={idHandler}
+                  disabled={true}
+                >
+                  {" "}
+                  1
+                </button>
+              </div>
+              <div className="p-1">
+                <button
+                  id="2"
+                  className="btn btn-outline-primary"
+                  onClick={idHandler}
+                >
+                  {" "}
+                  2
+                </button>
+              </div>
+              <div className="p-1">
+                <button
+                  id="3"
+                  className="btn btn-outline-primary"
+                  onClick={idHandler}
+                >
+                  {" "}
+                  3
+                </button>
+              </div>
+              <div className="p-1">
+                <button
+                  id="4"
+                  className="btn btn-outline-primary"
+                  onClick={idHandler}
+                >
+                  {" "}
+                  4
+                </button>
+              </div>
             </div>
           )}
         </div>

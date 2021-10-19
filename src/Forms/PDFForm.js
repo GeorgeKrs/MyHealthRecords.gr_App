@@ -102,6 +102,7 @@ const PDFForm = (props) => {
                 doctorSpec: doctorSpec,
                 pdfUrl: downloadURL,
                 comments: comments,
+                fileName: selectedFile.name,
                 SubmitDate: Timestamp.fromDate(new Date()),
               });
             })().finally(setShow("0"));
