@@ -44,15 +44,16 @@ const VitalsHistoryForm = (props) => {
 
   const [userDocCounter, setUserDocCounter] = useState(0);
   const [userDocsID, setUserDocsID] = useState([]);
-  const [queryCounter, setQueryCounter] = useState(0);
+  const [paginationBtnsArray, setPaginationBtnsArray] = useState([]);
 
   const loggedInUser = props.loggedInUser;
 
   let userDataArray = [];
   let userAllRecocdsArray = [];
   let userDocsIDArray = [];
+  let paginationArray = [];
 
-  const queryLimit = 2;
+  const queryLimit = 10;
 
   const fetchRecordData = async () => {
     setLoading(true);
@@ -97,6 +98,15 @@ const VitalsHistoryForm = (props) => {
     setUserDocCounter(userAllRecocdsArray.length);
     setUserDocsID(userDocsIDArray);
 
+    const paginationNumber = Math.ceil(userDocCounter / 10);
+
+    for (var i = 0; i < paginationNumber; i++) {
+      paginationArray.push(i);
+    }
+
+    setPaginationBtnsArray(paginationArray);
+
+    setBtnID("1");
     setLoading(false);
     setSearchBtn(false);
   };
@@ -375,47 +385,22 @@ const VitalsHistoryForm = (props) => {
           )}
           {userData.length === 0 ? null : (
             <div className="d-flex flex-wrap">
-              <div className="p-1">
-                <button
-                  id="1"
-                  className="btn btn-primary"
-                  onClick={idHandler}
-                  disabled={true}
-                >
-                  {" "}
-                  1
-                </button>
-              </div>
-              <div className="p-1">
-                <button
-                  id="2"
-                  className="btn btn-outline-primary"
-                  onClick={idHandler}
-                >
-                  {" "}
-                  2
-                </button>
-              </div>
-              <div className="p-1">
-                <button
-                  id="3"
-                  className="btn btn-outline-primary"
-                  onClick={idHandler}
-                >
-                  {" "}
-                  3
-                </button>
-              </div>
-              <div className="p-1">
-                <button
-                  id="4"
-                  className="btn btn-outline-primary"
-                  onClick={idHandler}
-                >
-                  {" "}
-                  4
-                </button>
-              </div>
+              {paginationBtnsArray.map((index) => (
+                <div className="p-1" key={index + 1}>
+                  <button
+                    id={index + 1}
+                    className={
+                      index + 1 == btnID
+                        ? "btn btn-primary"
+                        : "btn btn-outline-primary"
+                    }
+                    disabled={index + 1 == btnID ? true : false}
+                    onClick={idHandler}
+                  >
+                    {index + 1}
+                  </button>
+                </div>
+              ))}
             </div>
           )}
         </div>
