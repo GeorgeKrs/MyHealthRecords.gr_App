@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { MONTHS, DAYS, YEARS } from "../general/DateFile";
 import FullScreenLoader from "../general/FullScreenLoader";
 // firestore
@@ -10,7 +10,6 @@ import {
   orderBy,
   limit,
   startAfter,
-  endAt,
   startAt,
 } from "firebase/firestore";
 import { db } from "../utils/firebase";
@@ -57,7 +56,6 @@ const VitalsHistoryForm = (props) => {
   const queryLimit = 2;
 
   const fetchRecordData = async () => {
-    console.log("fetch records");
     setLoading(true);
     const DateFrom = new Date(
       fromYear,
@@ -101,7 +99,6 @@ const VitalsHistoryForm = (props) => {
     setUserDocsID(userDocsIDArray);
 
     const paginationNumber = Math.ceil(userDocCounter / queryLimit);
-    console.log(paginationNumber);
 
     for (var i = 0; i < paginationNumber; i++) {
       paginationArray.push(i);
@@ -135,8 +132,7 @@ const VitalsHistoryForm = (props) => {
   const fetchPaginationData = async () => {
     setLoading(true);
 
-    console.log("fetchPagination");
-
+    userDataArray.length = 0;
     let clicked_id = parseInt(btnID);
 
     const DateFrom = new Date(
@@ -149,44 +145,27 @@ const VitalsHistoryForm = (props) => {
     );
     const DateTo = new Date(toYear, toMonth - 1, toDay, "23", "59", "59");
 
-    // clicked_id = clicked_id * 10;
-    // const lastItemIndex = clicked_id - 1;
-    // const firstItemIndex = lastItemIndex - 9;
-
     clicked_id = clicked_id * 2;
-    const lastItemIndex = clicked_id - 1;
     const firstItemIndex = clicked_id - queryLimit;
 
     let firstItemRef = userDocsID[parseInt(firstItemIndex)];
-    let lastItemRef = userDocsID[parseInt(lastItemIndex)];
 
-    if (lastItemRef === undefined) {
-      lastItemRef = null;
-    }
-
-    if (firstItemRef === undefined) {
-      firstItemRef = null;
-    }
-
-    const vitalsQuery = query(
+    const vitalsQueryPagination = query(
       collection(db, "vitalsRecords"),
       where("userEmail", "==", loggedInUser),
       where("submitDate", ">=", DateFrom),
       where("submitDate", "<=", DateTo),
       orderBy("submitDate", "desc"),
       startAt(firstItemRef),
-      endAt(lastItemRef),
       limit(queryLimit)
     );
 
-    const querySnapshot = await getDocs(vitalsQuery);
-    querySnapshot.forEach((doc) => {
+    const querySnapshotPagination = await getDocs(vitalsQueryPagination);
+    querySnapshotPagination.forEach((doc) => {
       userDataArray.push(doc.data());
-      console.log(doc.data());
     });
 
     setUserData(userDataArray);
-
     setSearchState(true);
     setLoading(false);
   };
@@ -203,7 +182,7 @@ const VitalsHistoryForm = (props) => {
         }, 350)
       );
     }
-  }, [btnID, paginationLoading]);
+  }, [btnID, paginationLoading, userData]);
 
   return (
     <div>
