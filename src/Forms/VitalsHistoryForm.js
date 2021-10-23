@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { MONTHS, DAYS, YEARS } from "../general/DateFile";
 import FullScreenLoader from "../general/FullScreenLoader";
 // firestore
@@ -35,6 +35,7 @@ const VitalsHistoryForm = (props) => {
   const [toDay, setToDay] = useState((new Date().getDate() + 1).toString());
   const [loading, setLoading] = useState(false);
 
+  const [paginationLoading, setPaginationLoading] = useState(false);
   const [userData, setUserData] = useState([]);
   const [searchState, setSearchState] = useState(false);
 
@@ -53,9 +54,10 @@ const VitalsHistoryForm = (props) => {
   let userDocsIDArray = [];
   let paginationArray = [];
 
-  const queryLimit = 10;
+  const queryLimit = 2;
 
   const fetchRecordData = async () => {
+    console.log("fetch records");
     setLoading(true);
     const DateFrom = new Date(
       fromYear,
@@ -98,7 +100,8 @@ const VitalsHistoryForm = (props) => {
     setUserDocCounter(userAllRecocdsArray.length);
     setUserDocsID(userDocsIDArray);
 
-    const paginationNumber = Math.ceil(userDocCounter / 10);
+    const paginationNumber = Math.ceil(userDocCounter / queryLimit);
+    console.log(paginationNumber);
 
     for (var i = 0; i < paginationNumber; i++) {
       paginationArray.push(i);
@@ -112,27 +115,27 @@ const VitalsHistoryForm = (props) => {
   };
 
   useEffect(() => {
-    if (loading === true && searchBtn === true) {
-      fetchRecordData().finally(
-        setTimeout(function () {
-          setLoading(false);
-        }, 350)
-      );
+    if (loading === true && searchBtn === true && paginationLoading === false) {
+      fetchRecordData();
     }
-  }, [searchBtn]);
+  }, [searchBtn, paginationBtnsArray]);
 
   const FormHandler = () => {
     setLoading(true);
     setSearchBtn(true);
+    setPaginationLoading(false);
   };
 
   const idHandler = (event) => {
     setLoading(true);
     setBtnID(event.target.id);
+    setPaginationLoading(true);
   };
 
   const fetchPaginationData = async () => {
     setLoading(true);
+
+    console.log("fetchPagination");
 
     let clicked_id = parseInt(btnID);
 
@@ -146,9 +149,13 @@ const VitalsHistoryForm = (props) => {
     );
     const DateTo = new Date(toYear, toMonth - 1, toDay, "23", "59", "59");
 
-    clicked_id = clicked_id * 10;
+    // clicked_id = clicked_id * 10;
+    // const lastItemIndex = clicked_id - 1;
+    // const firstItemIndex = lastItemIndex - 9;
+
+    clicked_id = clicked_id * 2;
     const lastItemIndex = clicked_id - 1;
-    const firstItemIndex = lastItemIndex - 9;
+    const firstItemIndex = clicked_id - queryLimit;
 
     let firstItemRef = userDocsID[parseInt(firstItemIndex)];
     let lastItemRef = userDocsID[parseInt(lastItemIndex)];
@@ -175,6 +182,7 @@ const VitalsHistoryForm = (props) => {
     const querySnapshot = await getDocs(vitalsQuery);
     querySnapshot.forEach((doc) => {
       userDataArray.push(doc.data());
+      console.log(doc.data());
     });
 
     setUserData(userDataArray);
@@ -184,14 +192,18 @@ const VitalsHistoryForm = (props) => {
   };
 
   useEffect(() => {
-    if (loading === true && btnID != 0) {
+    if (
+      loading === true &&
+      paginationLoading === true &&
+      (btnID !== "0" || btnID !== 0 || btnID != 0)
+    ) {
       fetchPaginationData().finally(
         setTimeout(function () {
           setLoading(false);
         }, 350)
       );
     }
-  }, [btnID]);
+  }, [btnID, paginationLoading]);
 
   return (
     <div>
