@@ -57,6 +57,7 @@ const VitalsHistoryForm = (props) => {
 
   const fetchRecordData = async () => {
     setLoading(true);
+
     const DateFrom = new Date(
       fromYear,
       fromMonth - 1,
@@ -132,7 +133,6 @@ const VitalsHistoryForm = (props) => {
   const fetchPaginationData = async () => {
     setLoading(true);
 
-    userDataArray.length = 0;
     let clicked_id = parseInt(btnID);
 
     const DateFrom = new Date(
@@ -141,7 +141,7 @@ const VitalsHistoryForm = (props) => {
       fromDay,
       "00",
       "00",
-      "01"
+      "00"
     );
     const DateTo = new Date(toYear, toMonth - 1, toDay, "23", "59", "59");
 
@@ -160,6 +160,7 @@ const VitalsHistoryForm = (props) => {
       limit(queryLimit)
     );
 
+    userDataArray.length = 0;
     const querySnapshotPagination = await getDocs(vitalsQueryPagination);
     querySnapshotPagination.forEach((doc) => {
       userDataArray.push(doc.data());
@@ -182,7 +183,7 @@ const VitalsHistoryForm = (props) => {
         }, 350)
       );
     }
-  }, [btnID, paginationLoading, userData]);
+  }, [btnID, userData]);
 
   return (
     <div>
