@@ -98,7 +98,7 @@
 
 /* loader css */
 .loader-outerdiv {
-  min-height: 85vh;
+  min-height: 100vh;
   background-color: var(--bs-light);
   display: flex;
   justify-content: center;
