@@ -182,8 +182,8 @@ const PDFForm = (props) => {
         <div className="mt-5">
           <h5>Ανέβασμα αρχείου:</h5>
           <div className="progress">
-            <div className="progress-bar " style={{ width: `${uploading}%` }}>
-              {uploading}
+            <div className="progress-bar" style={{ width: `${uploading}%` }}>
+              {uploading}%
             </div>
           </div>
         </div>
