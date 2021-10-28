@@ -9,7 +9,7 @@ import {
   getDocs,
   orderBy,
   limit,
-  startAt,
+  startAfter,
 } from "firebase/firestore";
 import { db } from "../utils/firebase";
 // font icons
@@ -30,7 +30,10 @@ const VitalsHistoryForm = (props) => {
   const [loading, setLoading] = useState(false);
 
   const [paginationLoading, setPaginationLoading] = useState(false);
+  // fetching data of user
   const [userData, setUserData] = useState([]);
+  // date for query
+  const [userAllRecords, setUserAllRecords] = useState(null);
   const [searchState, setSearchState] = useState(false);
 
   const [searchBtn, setSearchBtn] = useState(false);
@@ -38,17 +41,15 @@ const VitalsHistoryForm = (props) => {
   const [btnID, setBtnID] = useState("0");
 
   const [userDocCounter, setUserDocCounter] = useState(0);
-  const [userDocsID, setUserDocsID] = useState([]);
   const [paginationBtnsArray, setPaginationBtnsArray] = useState([]);
 
   const loggedInUser = props.loggedInUser;
 
   let userDataArray = [];
-  let userAllRecocdsArray = [];
-  let userDocsIDArray = [];
+  let userAllRecordsArray = [];
   let paginationArray = [];
 
-  const queryLimit = 2;
+  const queryLimit = 10;
 
   const fetchRecordData = async () => {
     setLoading(true);
@@ -88,15 +89,15 @@ const VitalsHistoryForm = (props) => {
     );
     const docSnap = await getDocs(docCounterRef);
     docSnap.forEach((doc) => {
-      userDocsIDArray.push(doc.id);
-      userAllRecocdsArray.push(doc.data());
+      userAllRecordsArray.push(doc.data());
     });
-    setUserDocCounter(userAllRecocdsArray.length);
-    setUserDocsID(userDocsIDArray);
+
+    setUserAllRecords(userAllRecordsArray);
+    setUserDocCounter(userAllRecordsArray.length);
 
     const paginationNumber = Math.ceil(userDocCounter / queryLimit);
 
-    for (var i = 0; i < paginationNumber; i++) {
+    for (let i = 0; i < paginationNumber; i++) {
       paginationArray.push(i);
     }
 
@@ -106,12 +107,6 @@ const VitalsHistoryForm = (props) => {
     setLoading(false);
     setSearchBtn(false);
   };
-
-  useEffect(() => {
-    if (loading === true && searchBtn === true && paginationLoading === false) {
-      fetchRecordData();
-    }
-  }, [searchBtn, paginationBtnsArray]);
 
   const FormHandler = () => {
     setLoading(true);
@@ -140,10 +135,15 @@ const VitalsHistoryForm = (props) => {
     );
     const DateTo = new Date(toYear, toMonth - 1, toDay, "23", "59", "59");
 
-    clicked_id = clicked_id * 2;
-    const firstItemIndex = clicked_id - queryLimit;
+    let firstItemIndex = 0;
+    if (clicked_id != 1) {
+      clicked_id = clicked_id * queryLimit;
+      firstItemIndex = clicked_id - queryLimit - 1;
+    } else {
+      firstItemIndex = 0;
+    }
 
-    let firstItemRef = userDocsID[parseInt(firstItemIndex)];
+    const firstItemRef = userAllRecords[firstItemIndex].submitDate;
 
     const vitalsQueryPagination = query(
       collection(db, "vitalsRecords"),
@@ -151,20 +151,28 @@ const VitalsHistoryForm = (props) => {
       where("submitDate", ">=", DateFrom),
       where("submitDate", "<=", DateTo),
       orderBy("submitDate", "desc"),
-      startAt(firstItemRef),
+      startAfter(firstItemRef),
       limit(queryLimit)
     );
 
     userDataArray.length = 0;
+
     const querySnapshotPagination = await getDocs(vitalsQueryPagination);
     querySnapshotPagination.forEach((doc) => {
       userDataArray.push(doc.data());
     });
 
     setUserData(userDataArray);
+
     setSearchState(true);
     setLoading(false);
   };
+
+  useEffect(() => {
+    if (loading === true && searchBtn === true && paginationLoading === false) {
+      fetchRecordData();
+    }
+  }, [searchBtn, paginationBtnsArray]);
 
   useEffect(() => {
     if (
