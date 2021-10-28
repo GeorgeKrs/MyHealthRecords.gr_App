@@ -71,6 +71,8 @@ const CheckBoxes = (props) => {
             LastModification: Timestamp.fromDate(new Date()),
           };
           break;
+        default:
+          alert("Unexpected Error");
       }
       const userEmail = props.loggedInUser;
       const AllergiesRef = doc(db, "allergiesRecords", userEmail);
@@ -125,6 +127,8 @@ const CheckBoxes = (props) => {
             LastModification: Timestamp.fromDate(new Date()),
           };
           break;
+        default:
+          alert("Unexpected Error");
       }
       if (id === "1") {
         setIsSaved(true);

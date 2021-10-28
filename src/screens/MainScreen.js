@@ -14,7 +14,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ICONS } from "../icons/icons";
 // firebase
 import { auth, signOut } from "../utils/firebase";
-import FullScreenLoader from "../general/FullScreenLoader";
 
 const MainScreen = (props) => {
   const [tab, setTab] = useState("1");

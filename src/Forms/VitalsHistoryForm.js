@@ -9,17 +9,12 @@ import {
   getDocs,
   orderBy,
   limit,
-  startAfter,
   startAt,
 } from "firebase/firestore";
 import { db } from "../utils/firebase";
 // font icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faExclamationTriangle,
-  faAngleDoubleLeft,
-  faAngleRight,
-} from "@fortawesome/free-solid-svg-icons";
+import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
 
 const VitalsHistoryForm = (props) => {
   const [fromYear, setFromYear] = useState(new Date().getFullYear().toString());

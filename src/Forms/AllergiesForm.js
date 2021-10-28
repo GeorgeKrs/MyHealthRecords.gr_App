@@ -7,10 +7,7 @@ import { doc, getDoc } from "firebase/firestore";
 import FullScreenLoader from "../general/FullScreenLoader";
 
 const AllergiesForm = (props) => {
-  const [isChecked, setIsChecked] = useState(false);
-  const [isSaved, setIsSaved] = useState(false);
   const [userData, setUserData] = useState({});
-  const [textArea, setTextArea] = useState("");
 
   const [loading, setLoading] = useState(true);
 

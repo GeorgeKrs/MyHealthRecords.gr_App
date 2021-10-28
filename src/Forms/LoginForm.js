@@ -11,7 +11,7 @@ const LoginForm = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         setLoading(false);
-        const userCred = userCredential.user;
+        // const userCred = userCredential.user;
         setLoading(false);
       })
       .catch((error) => {
