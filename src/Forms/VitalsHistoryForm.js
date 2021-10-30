@@ -9,7 +9,7 @@ import {
   getDocs,
   orderBy,
   limit,
-  startAfter,
+  startAt,
 } from "firebase/firestore";
 import { db } from "../utils/firebase";
 // font icons
@@ -138,7 +138,7 @@ const VitalsHistoryForm = (props) => {
     let firstItemIndex = 0;
     if (clicked_id != 1) {
       clicked_id = clicked_id * queryLimit;
-      firstItemIndex = clicked_id - queryLimit - 1;
+      firstItemIndex = clicked_id - queryLimit;
     } else {
       firstItemIndex = 0;
     }
@@ -151,7 +151,7 @@ const VitalsHistoryForm = (props) => {
       where("submitDate", ">=", DateFrom),
       where("submitDate", "<=", DateTo),
       orderBy("submitDate", "desc"),
-      startAfter(firstItemRef),
+      startAt(firstItemRef),
       limit(queryLimit)
     );
 

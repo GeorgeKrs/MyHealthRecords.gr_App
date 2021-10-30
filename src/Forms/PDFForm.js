@@ -13,7 +13,14 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import { db } from "../utils/firebase";
-import { addDoc, Timestamp, collection } from "firebase/firestore";
+import {
+  addDoc,
+  Timestamp,
+  collection,
+  getDocs,
+  where,
+  query,
+} from "firebase/firestore";
 
 const PDFForm = (props) => {
   const [doctorSpec, setDoctorSpec] = useState("");
@@ -24,6 +31,8 @@ const PDFForm = (props) => {
   const [erFile, setErFile] = useState("");
 
   const [loading, setLoading] = useState(false);
+  const [duplicateState, setDuplicateState] = useState(false);
+  const [duplicateData, setDuplicateData] = useState([]);
 
   const [uploading, setUploading] = useState(0);
 
@@ -36,11 +45,97 @@ const PDFForm = (props) => {
   };
 
   const userEmail = props.loggedInUser;
+  let duplicateDataArray = [];
 
-  useEffect(() => {}, [uploading, show, setApiState]);
+  useEffect(() => {}, [
+    duplicateState,
+    duplicateData,
+    uploading,
+    show,
+    apiState,
+  ]);
 
-  const FileHandler = (event) => {
+  const FileHandler = async (event) => {
     setFile(event.target.files[0]);
+    const docIDRef = event.target.files[0].name.split(".");
+
+    const duplicateQuery = query(
+      collection(db, "pdfRecords"),
+      where("userEmail", "==", userEmail),
+      where("fileName", "==", docIDRef[0])
+    );
+
+    duplicateDataArray.length = 0;
+
+    const querySnapshot = await getDocs(duplicateQuery);
+    querySnapshot.forEach((doc) => {
+      duplicateDataArray.push(doc.data());
+    });
+
+    if (duplicateDataArray.length === 0) {
+      setDuplicateState(false);
+      duplicateDataArray.length = 0;
+      setDuplicateData(duplicateDataArray);
+    } else if (duplicateDataArray.length === 1) {
+      setDuplicateState(true);
+      setDuplicateData(duplicateDataArray);
+    } else {
+      alert("Unexpected error");
+    }
+  };
+
+  const UploadFileHandler = () => {
+    if (duplicateState === false) {
+      if (selectedFile.type === "application/pdf") {
+        setUploading(1);
+        const storage = getStorage();
+        const storageRef = ref(storage, userEmail + "/" + selectedFile.name);
+        const uploadTask = uploadBytesResumable(storageRef, selectedFile);
+
+        const docIDRef = selectedFile.name.split(".");
+
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            // Observe state change events such as progress, pause, and resume
+            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+            const progress =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            const progressView = Math.round(progress);
+            setUploading(progressView);
+          },
+          (error) => {
+            setShow("1");
+          },
+          () => {
+            // Upload completed successfully, now we can get the download URL
+            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+              setLoading(false);
+
+              (async () => {
+                await addDoc(collection(db, "pdfRecords"), {
+                  userEmail: userEmail,
+                  doctorSpec: doctorSpec,
+                  pdfUrl: downloadURL,
+                  comments: comments,
+                  fileName: docIDRef[0],
+                  SubmitDate: Timestamp.fromDate(new Date()),
+                });
+              })().finally(setShow("0"));
+            });
+          }
+        );
+        setDuplicateState(true);
+      } else {
+        setTimeout(() => {
+          setLoading(false);
+        }, 500);
+        setShow("2");
+      }
+    } else {
+      setShow("3");
+      setLoading(false);
+    }
   };
 
   const FormHandler = () => {
@@ -66,54 +161,9 @@ const PDFForm = (props) => {
       } else {
         setErFile("");
         setApiState(true);
+
         UploadFileHandler();
       }
-    }
-  };
-
-  const UploadFileHandler = () => {
-    if (selectedFile.type === "application/pdf") {
-      setUploading(1);
-      const storage = getStorage();
-      const storageRef = ref(storage, userEmail + "/" + selectedFile.name);
-      const uploadTask = uploadBytesResumable(storageRef, selectedFile);
-
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          // Observe state change events such as progress, pause, and resume
-          // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          const progressView = Math.round(progress);
-          setUploading(progressView);
-        },
-        (error) => {
-          setShow("1");
-        },
-        () => {
-          // Upload completed successfully, now we can get the download URL
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            setLoading(false);
-
-            (async () => {
-              await addDoc(collection(db, "pdfRecords"), {
-                userEmail: userEmail,
-                doctorSpec: doctorSpec,
-                pdfUrl: downloadURL,
-                comments: comments,
-                fileName: selectedFile.name,
-                SubmitDate: Timestamp.fromDate(new Date()),
-              });
-            })().finally(setShow("0"));
-          });
-        }
-      );
-    } else {
-      setTimeout(() => {
-        setLoading(false);
-      }, 500);
-      setShow("2");
     }
   };
 
@@ -127,6 +177,7 @@ const PDFForm = (props) => {
               className="inputValues"
               value={doctorSpec}
               onChange={(e) => setDoctorSpec(e.target.value)}
+              disabled={loading ? true : false}
             >
               <option>Ειδικότητες Ιατρών</option>
               {DoctorsSpecs.map((doctor, index) => (
@@ -146,6 +197,7 @@ const PDFForm = (props) => {
               accept="application/pdf"
               className="form-control inputValues"
               onChange={FileHandler}
+              disabled={loading ? true : false}
             />
             {erFile ? <ErrorMsg ErrorMsg={erFile}></ErrorMsg> : null}
           </div>
@@ -157,6 +209,7 @@ const PDFForm = (props) => {
               className="inputValues"
               rows="4"
               onChange={(e) => setComments(e.target.value)}
+              disabled={loading ? true : false}
             />
           </div>
         </div>

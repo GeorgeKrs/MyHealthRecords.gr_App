@@ -23,7 +23,7 @@ const AllergiesForm = (props) => {
     fetchUserData().finally(
       setTimeout(function () {
         setLoading(false);
-      }, 300)
+      }, 400)
     );
   });
   return (
