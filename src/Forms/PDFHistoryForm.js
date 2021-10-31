@@ -418,6 +418,10 @@ const PDFHistoryForm = (props) => {
                     </a>
                   </td>
                 </tr>
+                <tr>
+                  <th scope="row">Σχόλια:</th>
+                  <td>{i.comments}</td>
+                </tr>
               </tbody>
             </table>
           </div>

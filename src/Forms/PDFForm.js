@@ -34,6 +34,7 @@ const PDFForm = (props) => {
   const [duplicateState, setDuplicateState] = useState(false);
   const [duplicateData, setDuplicateData] = useState([]);
 
+  const [justUpload, setJustUpload] = useState(false);
   const [uploading, setUploading] = useState(0);
 
   // modal options
@@ -50,37 +51,41 @@ const PDFForm = (props) => {
   useEffect(() => {}, [
     duplicateState,
     duplicateData,
+    justUpload,
     uploading,
     show,
     apiState,
   ]);
 
   const FileHandler = async (event) => {
-    setFile(event.target.files[0]);
-    const docIDRef = event.target.files[0].name.split(".");
+    setJustUpload(false);
+    if (event.target.files[0] != undefined || event.target.files[0] != null) {
+      setFile(event.target.files[0]);
+      const docIDRef = event.target.files[0].name.split(".");
 
-    const duplicateQuery = query(
-      collection(db, "pdfRecords"),
-      where("userEmail", "==", userEmail),
-      where("fileName", "==", docIDRef[0])
-    );
+      const duplicateQuery = query(
+        collection(db, "pdfRecords"),
+        where("userEmail", "==", userEmail),
+        where("fileName", "==", docIDRef[0])
+      );
 
-    duplicateDataArray.length = 0;
-
-    const querySnapshot = await getDocs(duplicateQuery);
-    querySnapshot.forEach((doc) => {
-      duplicateDataArray.push(doc.data());
-    });
-
-    if (duplicateDataArray.length === 0) {
-      setDuplicateState(false);
       duplicateDataArray.length = 0;
-      setDuplicateData(duplicateDataArray);
-    } else if (duplicateDataArray.length === 1) {
-      setDuplicateState(true);
-      setDuplicateData(duplicateDataArray);
-    } else {
-      alert("Unexpected error");
+
+      const querySnapshot = await getDocs(duplicateQuery);
+      querySnapshot.forEach((doc) => {
+        duplicateDataArray.push(doc.data());
+      });
+
+      if (duplicateDataArray.length === 0) {
+        setDuplicateState(false);
+        duplicateDataArray.length = 0;
+        setDuplicateData(duplicateDataArray);
+      } else if (duplicateDataArray.length === 1) {
+        setDuplicateState(true);
+        setDuplicateData(duplicateDataArray);
+      } else {
+        alert("Unexpected error");
+      }
     }
   };
 
@@ -126,6 +131,7 @@ const PDFForm = (props) => {
           }
         );
         setDuplicateState(true);
+        setJustUpload(true);
       } else {
         setTimeout(() => {
           setLoading(false);
@@ -219,7 +225,7 @@ const PDFForm = (props) => {
             type="button"
             className="btn btn-outline-primary"
             onClick={FormHandler}
-            disabled={loading ? true : false}
+            disabled={loading ? true : justUpload ? true : false}
           >
             {loading && (
               <span
@@ -274,6 +280,7 @@ const PDFForm = (props) => {
             show={show}
             modalState={modalState}
             modalTitle={"Αποτυχία Καταχώρησης"}
+            dateInfo={true}
             modalMsg={"Το επιλεγμένο αρχείο έχει ήδη καταχωρηθεί."}
             modalDate={
               duplicateData === undefined || null

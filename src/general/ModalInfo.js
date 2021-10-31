@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Modal, Button } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 // font icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -15,12 +15,15 @@ const ModalInfo = (props) => {
 
       <Modal.Body>
         <p>{props.modalMsg}</p>
-        <div>
-          Ημερομηνία καταχώρησης:
-          <p>
-            {props.modalDate}/{props.modalMonth}/{props.modalYear}
-          </p>
-        </div>
+        {props.dateInfo === true ? (
+          <div>
+            Ημερομηνία καταχώρησης:
+            <p>
+              {props.modalDate || null}/{props.modalMonth || null}/
+              {props.modalYear || null}
+            </p>
+          </div>
+        ) : null}
       </Modal.Body>
 
       <Modal.Footer>
