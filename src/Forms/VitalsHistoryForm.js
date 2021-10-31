@@ -26,7 +26,7 @@ const VitalsHistoryForm = (props) => {
   const [toMonth, setToMonth] = useState(
     (new Date().getMonth() + 1).toString()
   );
-  const [toDay, setToDay] = useState((new Date().getDate() + 1).toString());
+  const [toDay, setToDay] = useState(new Date().getDate().toString());
   const [loading, setLoading] = useState(false);
 
   const [paginationLoading, setPaginationLoading] = useState(false);
