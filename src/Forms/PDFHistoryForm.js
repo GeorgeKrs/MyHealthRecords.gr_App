@@ -1,9 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { MONTHS, DAYS, YEARS } from "../general/DateFile";
 import FullScreenLoader from "../general/FullScreenLoader";
 import DoctorsSpecs from "../general/DoctorsSpecs";
 // firestore
-import { collection, query, where, getDocs, orderBy } from "firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  orderBy,
+  limit,
+  startAt,
+} from "firebase/firestore";
 import { db } from "../utils/firebase";
 // font icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -21,46 +29,213 @@ const PDFHistoryForm = (props) => {
   const [toMonth, setToMonth] = useState(
     (new Date().getMonth() + 1).toString()
   );
-  const [toDay, setToDay] = useState((new Date().getDate() + 1).toString());
+  const [toDay, setToDay] = useState(new Date().getDate().toString());
   const [loading, setLoading] = useState(false);
 
+  const [paginationLoading, setPaginationLoading] = useState(false);
+  // fetching data of user
   const [userData, setUserData] = useState([]);
+  // date for query
+  const [userAllRecords, setUserAllRecords] = useState(null);
   const [searchState, setSearchState] = useState(false);
+
+  const [searchBtn, setSearchBtn] = useState(false);
+
+  const [btnID, setBtnID] = useState("0");
+
+  const [userDocCounter, setUserDocCounter] = useState(0);
+  const [paginationBtnsArray, setPaginationBtnsArray] = useState([]);
 
   const loggedInUser = props.loggedInUser;
 
   let userDataArray = [];
+  let userAllRecordsArray = [];
+  let paginationArray = [];
+
+  const queryLimit = 10;
 
   const fetchRecordData = async () => {
     setLoading(true);
-    const DateFrom = new Date(fromYear, fromMonth - 1, fromDay);
-    const DateTo = new Date(toYear, toMonth - 1, toDay);
 
-    // const PDFQuery = query(
-    //   collection(db, "vitalsRecords"),
-    //   where("userEmail", "==", loggedInUser),
-    //   where("submitDate", ">=", DateFrom),
-    //   where("submitDate", "<=", DateTo),
-    //   orderBy("submitDate", "desc")
-    // );
+    const DateFrom = new Date(
+      fromYear,
+      fromMonth - 1,
+      fromDay,
+      "00",
+      "00",
+      "01"
+    );
+    const DateTo = new Date(toYear, toMonth - 1, toDay, "23", "59", "59");
 
-    // const querySnapshot = await getDocs(PDFQuery);
-    // querySnapshot.forEach((doc) => {
-    //   userDataArray.push(doc.data());
-    // });
-    // setUserData(userDataArray);
-    // setSearchState(true);
+    if (
+      doctorSpec === null ||
+      doctorSpec === undefined ||
+      doctorSpec === "" ||
+      doctorSpec === "allSpecs"
+    ) {
+      const pdfQuery = query(
+        collection(db, "pdfRecords"),
+        where("userEmail", "==", loggedInUser),
+        where("SubmitDate", ">=", DateFrom),
+        where("SubmitDate", "<=", DateTo),
+        orderBy("SubmitDate", "desc"),
+        limit(queryLimit)
+      );
+
+      const querySnapshot = await getDocs(pdfQuery);
+      querySnapshot.forEach((doc) => {
+        userDataArray.push(doc.data());
+      });
+
+      setUserData(userDataArray);
+      setSearchState(true);
+
+      const docCounterRef = query(
+        collection(db, "pdfRecords"),
+        where("userEmail", "==", loggedInUser),
+        where("SubmitDate", ">=", DateFrom),
+        where("SubmitDate", "<=", DateTo),
+        orderBy("SubmitDate", "desc")
+      );
+      const docSnap = await getDocs(docCounterRef);
+      docSnap.forEach((doc) => {
+        userAllRecordsArray.push(doc.data());
+      });
+
+      setUserAllRecords(userAllRecordsArray);
+      setUserDocCounter(userAllRecordsArray.length);
+
+      const paginationNumber = Math.ceil(userDocCounter / queryLimit);
+
+      for (let i = 0; i < paginationNumber; i++) {
+        paginationArray.push(i);
+      }
+
+      setPaginationBtnsArray(paginationArray);
+    } else {
+      const pdfQuery = query(
+        collection(db, "pdfRecords"),
+        where("userEmail", "==", loggedInUser),
+        where("doctorSpec", "==", doctorSpec),
+        where("SubmitDate", ">=", DateFrom),
+        where("SubmitDate", "<=", DateTo),
+        orderBy("SubmitDate", "desc"),
+        limit(queryLimit)
+      );
+
+      const querySnapshot = await getDocs(pdfQuery);
+      querySnapshot.forEach((doc) => {
+        userDataArray.push(doc.data());
+      });
+
+      setUserData(userDataArray);
+      setSearchState(true);
+
+      const docCounterRef = query(
+        collection(db, "pdfRecords"),
+        where("userEmail", "==", loggedInUser),
+        where("doctorSpec", "==", doctorSpec),
+        where("SubmitDate", ">=", DateFrom),
+        where("SubmitDate", "<=", DateTo),
+        orderBy("SubmitDate", "desc")
+      );
+      const docSnap = await getDocs(docCounterRef);
+      docSnap.forEach((doc) => {
+        userAllRecordsArray.push(doc.data());
+      });
+
+      setUserAllRecords(userAllRecordsArray);
+      setUserDocCounter(userAllRecordsArray.length);
+
+      const paginationNumber = Math.ceil(userDocCounter / queryLimit);
+
+      for (let i = 0; i < paginationNumber; i++) {
+        paginationArray.push(i);
+      }
+
+      setPaginationBtnsArray(paginationArray);
+    }
+
+    setBtnID("1");
+    setLoading(false);
+    setSearchBtn(false);
   };
 
   const FormHandler = () => {
     setLoading(true);
-
-    fetchRecordData().finally(
-      setTimeout(function () {
-        setLoading(false);
-      }, 350)
-    );
+    setSearchBtn(true);
+    setPaginationLoading(false);
   };
+
+  const idHandler = (event) => {
+    setLoading(true);
+    setBtnID(event.target.id);
+    setPaginationLoading(true);
+  };
+
+  const fetchPaginationData = async () => {
+    setLoading(true);
+
+    let clicked_id = parseInt(btnID);
+
+    const DateFrom = new Date(
+      fromYear,
+      fromMonth - 1,
+      fromDay,
+      "00",
+      "00",
+      "00"
+    );
+    const DateTo = new Date(toYear, toMonth - 1, toDay, "23", "59", "59");
+
+    let firstItemIndex = 0;
+    if (clicked_id != 1) {
+      clicked_id = clicked_id * queryLimit;
+      firstItemIndex = clicked_id - queryLimit;
+    } else {
+      firstItemIndex = 0;
+    }
+
+    const firstItemRef = userAllRecords[firstItemIndex].SubmitDate;
+
+    const pdfQueryPagination = query(
+      collection(db, "pdfRecords"),
+      where("userEmail", "==", loggedInUser),
+      where("SubmitDate", ">=", DateFrom),
+      where("SubmitDate", "<=", DateTo),
+      orderBy("SubmitDate", "desc"),
+      startAt(firstItemRef),
+      limit(queryLimit)
+    );
+
+    userDataArray.length = 0;
+
+    const querySnapshotPagination = await getDocs(pdfQueryPagination);
+    querySnapshotPagination.forEach((doc) => {
+      userDataArray.push(doc.data());
+    });
+
+    setUserData(userDataArray);
+
+    setSearchState(true);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    if (loading === true && searchBtn === true && paginationLoading === false) {
+      fetchRecordData();
+    }
+  }, [searchBtn, paginationBtnsArray]);
+
+  useEffect(() => {
+    if (
+      loading === true &&
+      paginationLoading === true &&
+      (btnID !== "0" || btnID !== 0 || btnID != 0)
+    ) {
+      fetchPaginationData();
+    }
+  }, [btnID, userData]);
 
   return (
     <div className="pt-4 mb-4 d-flex flex-column align-items-center">
@@ -154,7 +329,7 @@ const PDFHistoryForm = (props) => {
               className="inputValues"
               onChange={(e) => setDoctorSpec(e.target.value)}
             >
-              <option>Όλες οι ειδικότητες</option>
+              <option value="allSpecs">Όλες οι ειδικότητες</option>
               {DoctorsSpecs.map((doctor, index) => (
                 <option key={index} value={doctor}>
                   {doctor}
@@ -215,44 +390,68 @@ const PDFHistoryForm = (props) => {
             key={index}
           >
             <h5>
-              {i.submitDate.toDate().getDate()} /{" "}
-              {i.submitDate.toDate().getMonth() + 1} /{" "}
-              {i.submitDate.toDate().getFullYear()}
+              {i.SubmitDate.toDate().getDate()} /{" "}
+              {i.SubmitDate.toDate().getMonth() + 1} /{" "}
+              {i.SubmitDate.toDate().getFullYear()}
             </h5>
+            <h6>
+              {i.SubmitDate.toDate().getHours()} :{" "}
+              {i.SubmitDate.toDate().getMinutes()}
+            </h6>
             <table className="table">
               <thead>
                 <tr>
                   <th scope="col"></th>
-                  <th scope="col">Συστολική Πίεση (mmHg)</th>
-                  <th scope="col">Διαστολική Πίεση (mmHg)</th>
-                  <th scope="col">Παλμοί (bpm)</th>
-                  <th scope="col">Θερμοκρασία (&#176;C)</th>
-                  <th scope="col">Οξυγόνο (%)</th>
-                  <th scope="col">Σάκχαρο (mg/dL)</th>
-                  <th scope="col">Βάρος (Κιλά)</th>
+                  <th scope="col"></th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <th scope="row">Τιμές:</th>
-                  <td>{i.diastolic}</td>
-                  <td>{i.diastolic}</td>
-                  <td>{i.pulses}</td>
-                  <td>{i.temperature}</td>
-                  <td>{i.oxygen}</td>
-                  <td>{i.sugar}</td>
-                  <td>{i.weight}</td>
+                  <th scope="row">Ειδικότητα:</th>
+                  <td>{i.doctorSpec}</td>
                 </tr>
-                <tr></tr>
                 <tr>
-                  <th scope="row">Σχόλια:</th>
-                  <td colSpan="7">{i.comments}</td>
+                  <th scope="row">Αρχείο:</th>
+                  <td>
+                    <a href={i.pdfUrl} className="link-danger" target="_blank">
+                      {i.fileName}
+                    </a>
+                  </td>
                 </tr>
               </tbody>
             </table>
           </div>
         ))
       )}
+      <div className="container d-flex">
+        <div className="ms-auto">
+          {userDocCounter === 0 ? null : (
+            <p className="text-left">
+              <b>Συνολικές εγγραφές: {userDocCounter}</b>
+            </p>
+          )}
+          {userData.length === 0 ? null : (
+            <div className="d-flex flex-wrap">
+              {paginationBtnsArray.map((index) => (
+                <div className="p-1" key={index + 1}>
+                  <button
+                    id={index + 1}
+                    className={
+                      index + 1 == btnID
+                        ? "btn btn-primary"
+                        : "btn btn-outline-primary"
+                    }
+                    disabled={index + 1 == btnID ? true : false}
+                    onClick={idHandler}
+                  >
+                    {index + 1}
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 };

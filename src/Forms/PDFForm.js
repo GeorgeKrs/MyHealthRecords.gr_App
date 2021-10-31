@@ -274,7 +274,22 @@ const PDFForm = (props) => {
             show={show}
             modalState={modalState}
             modalTitle={"Αποτυχία Καταχώρησης"}
-            modalMsg={"Το επιλεγμένο έχει ήδη καταχωρηθεί."}
+            modalMsg={"Το επιλεγμένο αρχείο έχει ήδη καταχωρηθεί."}
+            modalDate={
+              duplicateData === undefined || null
+                ? null
+                : duplicateData[0].SubmitDate.toDate().getDate()
+            }
+            modalMonth={
+              duplicateData === undefined || null
+                ? null
+                : duplicateData[0].SubmitDate.toDate().getMonth() + 1
+            }
+            modalYear={
+              duplicateData === undefined || null
+                ? null
+                : duplicateData[0].SubmitDate.toDate().getFullYear()
+            }
             icon={ICONS_errHANDLING[1].icon}
             className={"btn btn-outline-danger"}
           />

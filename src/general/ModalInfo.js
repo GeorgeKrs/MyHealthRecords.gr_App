@@ -15,6 +15,12 @@ const ModalInfo = (props) => {
 
       <Modal.Body>
         <p>{props.modalMsg}</p>
+        <div>
+          Ημερομηνία καταχώρησης:
+          <p>
+            {props.modalDate}/{props.modalMonth}/{props.modalYear}
+          </p>
+        </div>
       </Modal.Body>
 
       <Modal.Footer>
