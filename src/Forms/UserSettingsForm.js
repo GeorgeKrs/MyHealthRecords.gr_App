@@ -87,113 +87,119 @@ const UserSettingsForm = (props) => {
       {loading ? (
         <FullScreenLoader />
       ) : (
-        <div className="pt-5 mt-5 form-custom">
-          <div className="row">
-            <div className="col-sm-12 col-lg-4 mt-4">
-              <label className="label">Όνομα</label>
-              <input
-                type="text"
-                className="inputValues"
-                value={userData.firstName}
-                onInput={(e) => ValidateFirstName(e.target.value)}
-                onChange={(e) =>
-                  setUserData((userData) => ({
-                    ...userData,
-                    firstName: e.target.value,
-                  }))
-                }
-              />
-              {errFirstName ? <ErrorMsg ErrorMsg={errFirstName} /> : null}
+        <div>
+          <div className="pt-5 mt-5 form-custom">
+            <div className="row">
+              <div className="col-sm-12 col-lg-4 mt-4">
+                <label className="label">Όνομα</label>
+                <input
+                  type="text"
+                  className="inputValues"
+                  value={userData.firstName}
+                  onInput={(e) => ValidateFirstName(e.target.value)}
+                  onChange={(e) =>
+                    setUserData((userData) => ({
+                      ...userData,
+                      firstName: e.target.value,
+                    }))
+                  }
+                />
+                {errFirstName ? <ErrorMsg ErrorMsg={errFirstName} /> : null}
+              </div>
+              <div className="col-sm-12 col-lg-4 mt-4">
+                <label className="label">Επώνυμο</label>
+                <input
+                  type="text"
+                  className="inputValues"
+                  value={userData.lastName}
+                  onInput={(e) => ValidateLastName(e.target.value)}
+                  onChange={(e) =>
+                    setUserData((userData) => ({
+                      ...userData,
+                      lastName: e.target.value,
+                    }))
+                  }
+                />
+                {errLastName ? <ErrorMsg ErrorMsg={errLastName} /> : null}
+              </div>
+              <div className="col-sm-12 col-lg-4 mt-4">
+                <label className="label">Email</label>
+                <input
+                  type="email"
+                  className="inputValues"
+                  disabled={true}
+                  value={userData.email}
+                />
+              </div>
             </div>
-            <div className="col-sm-12 col-lg-4 mt-4">
-              <label className="label">Επώνυμο</label>
-              <input
-                type="text"
-                className="inputValues"
-                value={userData.lastName}
-                onInput={(e) => ValidateLastName(e.target.value)}
-                onChange={(e) =>
-                  setUserData((userData) => ({
-                    ...userData,
-                    lastName: e.target.value,
-                  }))
-                }
-              />
-              {errLastName ? <ErrorMsg ErrorMsg={errLastName} /> : null}
+            <div className="row">
+              <div className="col-sm-12 col-lg-4 mt-4">
+                <label className="label">ΑΜΚΑ</label>
+                <input
+                  type="text"
+                  className="inputValues"
+                  value={userData.AMKA}
+                  onChange={(e) =>
+                    setUserData((userData) => ({
+                      ...userData,
+                      AMKA: e.target.value,
+                    }))
+                  }
+                />
+              </div>
+              <div className="col-sm-12 col-lg-4 mt-4">
+                <label className="label">ΑΦΜ</label>
+                <input
+                  type="text"
+                  className="inputValues"
+                  value={userData.AFM}
+                  onChange={(e) =>
+                    setUserData((userData) => ({
+                      ...userData,
+                      AFM: e.target.value,
+                    }))
+                  }
+                />
+              </div>
+              <div className="col-sm-12 col-lg-4 mt-4">
+                <label className="label">Κινητό</label>
+                <input
+                  type="text"
+                  className="inputValues"
+                  value={userData.phone}
+                  onChange={(e) =>
+                    setUserData((userData) => ({
+                      ...userData,
+                      phone: e.target.value,
+                    }))
+                  }
+                />
+              </div>
             </div>
-            <div className="col-sm-12 col-lg-4 mt-4">
-              <label className="label">Email</label>
-              <input
-                type="email"
-                className="inputValues"
-                disabled={true}
-                value={userData.email}
-              />
+            <div className="d-flex">
+              <div className="mt-4">
+                <button
+                  type="button"
+                  className="btn btn-outline-dark"
+                  onClick={FormHandler}
+                  disabled={btnLoading ? true : false}
+                >
+                  {btnLoading && (
+                    <span
+                      className="spinner-border spinner-border-sm me-2"
+                      role="status"
+                    ></span>
+                  )}
+                  <span>{btnLoading ? "Περιμένετε..." : "Αποθήκευση"}</span>
+                </button>
+              </div>
+              <div className="mt-4 ms-auto"></div>
             </div>
           </div>
-
-          <div className="row">
-            <div className="col-sm-12 col-lg-4 mt-4">
-              <label className="label">ΑΜΚΑ</label>
-              <input
-                type="text"
-                className="inputValues"
-                value={userData.AMKA}
-                onChange={(e) =>
-                  setUserData((userData) => ({
-                    ...userData,
-                    AMKA: e.target.value,
-                  }))
-                }
-              />
+          <div className="p-4 mt-5 form-custom">
+            <div className="d-flex">
+              <b>Διαγραφή όλων των δεδομένων μου από την εφαρμογή:</b>
             </div>
-            <div className="col-sm-12 col-lg-4 mt-4">
-              <label className="label">ΑΦΜ</label>
-              <input
-                type="text"
-                className="inputValues"
-                value={userData.AFM}
-                onChange={(e) =>
-                  setUserData((userData) => ({
-                    ...userData,
-                    AFM: e.target.value,
-                  }))
-                }
-              />
-            </div>
-            <div className="col-sm-12 col-lg-4 mt-4">
-              <label className="label">Κινητό</label>
-              <input
-                type="text"
-                className="inputValues"
-                value={userData.phone}
-                onChange={(e) =>
-                  setUserData((userData) => ({
-                    ...userData,
-                    phone: e.target.value,
-                  }))
-                }
-              />
-            </div>
-          </div>
-          <div className="d-flex">
-            <div className="mt-4">
-              <button
-                type="button"
-                className="btn btn-outline-dark"
-                onClick={FormHandler}
-                disabled={btnLoading ? true : false}
-              >
-                {btnLoading && (
-                  <span
-                    className="spinner-border spinner-border-sm me-2"
-                    role="status"
-                  ></span>
-                )}
-                <span>{btnLoading ? "Περιμένετε..." : "Αποθήκευση"}</span>
-              </button>
-            </div>
-            <div className="mt-4 ms-auto"></div>
           </div>
         </div>
       )}
