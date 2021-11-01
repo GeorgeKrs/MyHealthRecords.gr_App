@@ -14,25 +14,35 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ICONS } from "../icons/icons";
 // firebase
 import { auth, signOut } from "../utils/firebase";
+// modals
+import { Modal } from "react-bootstrap";
 
 const MainScreen = (props) => {
   const [tab, setTab] = useState("1");
   const [activeTab, setActiveTab] = useState("1");
 
-  const tabSelectorHandler = (tabId) => {
-    setTab(tabId);
-    setActiveTab(tabId);
+  // modals
+  const [showSignOut, setShowSignOut] = useState(false);
+  const handleCloseSignOut = () => setShowSignOut(false);
+  const handleOpenSignOut = () => setShowSignOut(true);
 
+  const tabSelectorHandler = (tabId) => {
     if (tabId === "8") {
-      alert("Sign out ?");
-      signOut(auth)
-        .then(() => {
-          window.location.reload(true);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      handleOpenSignOut();
+    } else {
+      setTab(tabId);
+      setActiveTab(tabId);
     }
+  };
+
+  const signOutHandler = () => {
+    signOut(auth)
+      .then(() => {
+        window.location.reload(true);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -74,6 +84,32 @@ const MainScreen = (props) => {
         (tab === "4" && <PDFHistoryTab loggedInUser={props.loggedInUser} />) ||
         (tab === "5" && <AllergiesTab loggedInUser={props.loggedInUser} />) ||
         (tab === "7" && <UserSettingsTab loggedInUser={props.loggedInUser} />)}
+
+      {/* signout modal */}
+      <Modal show={showSignOut} onHide={handleCloseSignOut}>
+        <Modal.Header>
+          <Modal.Title>Αποσύνδεση</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Είστε σίγουροι ότι θέλετε να αποσυνδεθείτε;</Modal.Body>
+
+        <Modal.Footer>
+          <button
+            type="button"
+            className="btn btn-danger"
+            onClick={signOutHandler}
+          >
+            Διαγραφή
+          </button>
+          <button
+            type="button"
+            className="btn btn-secondary"
+            onClick={handleCloseSignOut}
+          >
+            Άκυρο
+          </button>
+        </Modal.Footer>
+      </Modal>
+      {/*signout modal */}
     </div>
   );
 };

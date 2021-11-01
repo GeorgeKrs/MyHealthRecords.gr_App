@@ -7,6 +7,7 @@ import FullScreenLoader from "../general/FullScreenLoader";
 // font icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+// modals
 import { Modal } from "react-bootstrap";
 
 const UserSettingsForm = (props) => {
