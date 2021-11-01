@@ -40,3 +40,12 @@
   background-color: var(--bs-gray-50);
   transition: background-color 200ms ease;
 }
+
+@media (max-width: 576px) {
+  #deleteUserDataBtn {
+    display: inline-block !important;
+  }
+  #TermsInfoUserDataBtn {
+    display: inline-block !important;
+  }
+}

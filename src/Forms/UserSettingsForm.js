@@ -4,6 +4,10 @@ import ErrorMsg from "../general/ErrorMsg";
 import { doc, getDoc, setDoc, Timestamp } from "firebase/firestore";
 import { db } from "../utils/firebase";
 import FullScreenLoader from "../general/FullScreenLoader";
+// font icons
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashAlt, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import { Modal } from "react-bootstrap";
 
 const UserSettingsForm = (props) => {
   const [loading, setLoading] = useState(true);
@@ -14,6 +18,15 @@ const UserSettingsForm = (props) => {
   const [errLastName, setErrLastName] = useState("");
 
   const loggedInUser = props.loggedInUser;
+
+  // modals
+  const [showInfo, setShowInfo] = useState(false);
+  const handleCloseInfo = () => setShowInfo(false);
+  const handleOpenInfo = () => setShowInfo(true);
+
+  const [showDelete, setShowDelete] = useState(false);
+  const handleCloseDelete = () => setShowDelete(false);
+  const handleOpenDelete = () => setShowDelete(true);
 
   const fetchUserData = async () => {
     const docRef = doc(db, "users", loggedInUser);
@@ -26,7 +39,7 @@ const UserSettingsForm = (props) => {
     fetchUserData().finally(
       setTimeout(function () {
         setLoading(false);
-      }, 500)
+      }, 300)
     );
 
     setUserData((userData) => ({
@@ -90,6 +103,9 @@ const UserSettingsForm = (props) => {
         <div>
           <div className="pt-5 mt-5 form-custom">
             <div className="row">
+              <u>
+                <h6>Προσωπικά Στοιχεία:</h6>{" "}
+              </u>
               <div className="col-sm-12 col-lg-4 mt-4">
                 <label className="label">Όνομα</label>
                 <input
@@ -180,7 +196,7 @@ const UserSettingsForm = (props) => {
               <div className="mt-4">
                 <button
                   type="button"
-                  className="btn btn-outline-dark"
+                  className="btn btn-outline-primary"
                   onClick={FormHandler}
                   disabled={btnLoading ? true : false}
                 >
@@ -196,11 +212,98 @@ const UserSettingsForm = (props) => {
               <div className="mt-4 ms-auto"></div>
             </div>
           </div>
+
           <div className="p-4 mt-5 form-custom">
-            <div className="d-flex">
-              <b>Διαγραφή όλων των δεδομένων μου από την εφαρμογή:</b>
+            <u>
+              <h6>Όροι,Προϋποθέσεις κ' Cookies εφαρμογής:</h6>
+            </u>
+            <div className="d-flex" id="TermsInfoUserDataBtn">
+              <div className="mt-3">
+                <b>Εμφάνιση των όρων και των προϋποθέσεων της εφαρμογής:</b>
+              </div>
+              <div className="mt-3 ms-auto">
+                <button className="btn btn-info" onClick={handleOpenInfo}>
+                  Πληροφορίες
+                  <FontAwesomeIcon
+                    size="lg"
+                    icon={faInfoCircle}
+                    style={{ color: "var(--bs-purple)", paddingLeft: "3px" }}
+                  />
+                </button>
+              </div>
             </div>
           </div>
+          <div className="p-4 mt-5 form-custom">
+            <u>
+              <h6>Διαχείριση Λογαριασμού:</h6>
+            </u>
+            <div className="d-flex" id="deleteUserDataBtn">
+              <div className="mt-3">
+                <b>Διαγραφή όλων των δεδομένων μου από την εφαρμογή:</b>
+              </div>
+              <div className="mt-3 ms-auto">
+                <button className="btn btn-dark" onClick={handleOpenDelete}>
+                  Διαγραφή
+                  <FontAwesomeIcon
+                    size="lg"
+                    icon={faTrashAlt}
+                    style={{ color: "var(--bs-danger)", paddingLeft: "3px" }}
+                  />
+                </button>
+              </div>
+            </div>
+          </div>
+          {/* info modal */}
+          <Modal show={showInfo} onHide={handleCloseInfo}>
+            <Modal.Header>
+              <Modal.Title>Όροι,Προϋποθέσεις κ' Cookies</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>Terms n Conditions</Modal.Body>
+            <Modal.Body>Cookies</Modal.Body>
+            <Modal.Footer>
+              <button
+                type="button"
+                className="btn btn-secondary"
+                onClick={handleCloseInfo}
+              >
+                Κλείσιμο
+              </button>
+            </Modal.Footer>
+          </Modal>
+          {/* end of info modal modal */}
+
+          {/* delete all data modal */}
+          <Modal show={showDelete} onHide={handleCloseDelete}>
+            <Modal.Header>
+              <Modal.Title>Διαγραφή Δεδομένων</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              Είστε σίγουροι ότι θέλετε να διαγράψετε όλα σας τα καταχωρημένα
+              δεδομένα; (Μετρήσεις ζωτικών λειτουργιών και PDF).
+            </Modal.Body>
+            <Modal.Body>
+              <b>
+                Αυτή η πράξη <u>ΔΕΝ</u> μπορεί να αντιστραφεί.
+              </b>
+            </Modal.Body>
+            <Modal.Footer>
+              <button
+                type="button"
+                className="btn btn-danger"
+                // onClick={deleteMeetingHandler}
+              >
+                Διαγραφή
+              </button>
+              <button
+                type="button"
+                className="btn btn-secondary"
+                onClick={handleCloseDelete}
+              >
+                Άκυρο
+              </button>
+            </Modal.Footer>
+          </Modal>
+          {/* end of delete all data modal */}
         </div>
       )}
     </div>
