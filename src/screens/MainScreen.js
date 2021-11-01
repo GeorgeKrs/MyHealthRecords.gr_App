@@ -46,7 +46,7 @@ const MainScreen = (props) => {
   };
 
   return (
-    <div className="d-flex outer-maindiv">
+    <div className="d-flex outer-maindiv" id="outerMainDiv">
       <div className="inner-maindiv d-none d-sm-block">
         <div className="p-3 d-flex flex-shrink-1 flex-column text-center mb-3 h-100">
           {/* <h6>{props.loggedInUser}</h6> */}
@@ -71,6 +71,32 @@ const MainScreen = (props) => {
                   onClick={tabSelectorHandler.bind(this, menu_icon.id)}
                 />
               </Tooltip>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* mobile version */}
+      <div className="inner-maindiv d-sm-block d-md-none">
+        <div className="text-center">
+          <div className="pt-5">
+            <h6>Logo</h6>
+          </div>
+        </div>
+        <div className="d-flex flex-wrap p-3 text-center mb-3">
+          {ICONS.map((menu_icon) => (
+            <div key={menu_icon.id} className="p-3 mt-2 ">
+              <FontAwesomeIcon
+                id={menu_icon.id}
+                className={
+                  activeTab === menu_icon.id
+                    ? "icons-custom-active"
+                    : "icons-custom"
+                }
+                icon={menu_icon.icon}
+                size="lg"
+                onClick={tabSelectorHandler.bind(this, menu_icon.id)}
+              />
             </div>
           ))}
         </div>

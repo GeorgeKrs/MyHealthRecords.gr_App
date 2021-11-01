@@ -38,3 +38,12 @@
   background-position: center;
   background-size: cover;
 }
+
+@media (max-width: 576px) {
+  #outerMainDiv {
+    display: inline-block !important;
+  }
+  .inner-maindiv {
+    min-height: 0vh;
+  }
+}
