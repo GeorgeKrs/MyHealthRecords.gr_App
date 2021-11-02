@@ -1,7 +1,14 @@
 import { useState, useEffect } from "react";
 import ErrorMsg from "../general/ErrorMsg";
 // firestore
-import { doc, getDoc, setDoc, Timestamp } from "firebase/firestore";
+import {
+  doc,
+  getDoc,
+  setDoc,
+  Timestamp,
+  addDoc,
+  collection,
+} from "firebase/firestore";
 import { db } from "../utils/firebase";
 import FullScreenLoader from "../general/FullScreenLoader";
 // font icons
@@ -20,6 +27,9 @@ const UserSettingsForm = (props) => {
 
   const loggedInUser = props.loggedInUser;
 
+  const [textArea, setTextArea] = useState("");
+  const [errorTextArea, setErrorTextArea] = useState("");
+
   // modals
   const [showInfo, setShowInfo] = useState(false);
   const handleCloseInfo = () => setShowInfo(false);
@@ -28,6 +38,25 @@ const UserSettingsForm = (props) => {
   const [showDelete, setShowDelete] = useState(false);
   const handleCloseDelete = () => setShowDelete(false);
   const handleOpenDelete = () => setShowDelete(true);
+
+  const [showEmail, setShowEmail] = useState(false);
+  const handleCloseEmail = () => setShowEmail(false);
+  const handleOpenEmail = () => setShowEmail(true);
+
+  const sendEmailHandler = () => {
+    if (textArea === "" || textArea === null || textArea === undefined) {
+      setErrorTextArea("Το μήνυμα δεν μπορεί να είναι άδειο.");
+    } else {
+      setErrorTextArea("");
+      (async () => {
+        await addDoc(collection(db, "admin_ContactMsgs"), {
+          userEmail: loggedInUser,
+          text: textArea,
+          submitDate: Timestamp.fromDate(new Date()),
+        });
+      })();
+    }
+  };
 
   const fetchUserData = async () => {
     const docRef = doc(db, "users", loggedInUser);
@@ -214,6 +243,7 @@ const UserSettingsForm = (props) => {
             </div>
           </div>
 
+          {/* terms and conditions */}
           <div className="p-4 mt-5 form-custom">
             <u>
               <h6>Όροι,Προϋποθέσεις κ' Cookies εφαρμογής:</h6>
@@ -234,6 +264,30 @@ const UserSettingsForm = (props) => {
               </div>
             </div>
           </div>
+
+          {/* contact me */}
+          <div className="p-4 mt-5 form-custom">
+            <u>
+              <h6>Επικοινωνία:</h6>
+            </u>
+            <div className="d-flex" id="deleteUserDataBtn">
+              <div className="mt-3">
+                <b>Επικοινωνήστε μαζί μας και θα σας απαντήσουμε με email:</b>
+              </div>
+              <div className="mt-3 ms-auto">
+                <button className="btn btn-warning" onClick={handleOpenEmail}>
+                  Επικοινωνία
+                  <FontAwesomeIcon
+                    size="lg"
+                    icon={faTrashAlt}
+                    style={{ color: "var(--bs-info)", paddingLeft: "3px" }}
+                  />
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* delete data  */}
           <div className="p-4 mt-5 form-custom">
             <u>
               <h6>Διαχείριση Λογαριασμού:</h6>
@@ -254,6 +308,7 @@ const UserSettingsForm = (props) => {
               </div>
             </div>
           </div>
+
           {/* info modal */}
           <Modal show={showInfo} onHide={handleCloseInfo}>
             <Modal.Header>
@@ -271,7 +326,42 @@ const UserSettingsForm = (props) => {
               </button>
             </Modal.Footer>
           </Modal>
-          {/* end of info modal modal */}
+          {/* end of info modal */}
+
+          {/* email modal */}
+          <Modal show={showEmail} onHide={handleCloseEmail}>
+            <Modal.Header>
+              <Modal.Title>Αποστολή Email</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <label className="label">Μήνυμα</label>
+              <textarea
+                className="inputValues"
+                rows="4"
+                onChange={(e) => setTextArea(e.target.value)}
+              ></textarea>
+              {errorTextArea ? (
+                <ErrorMsg ErrorMsg={errorTextArea}></ErrorMsg>
+              ) : null}
+            </Modal.Body>
+            <Modal.Footer>
+              <button
+                type="button"
+                className="btn btn-danger"
+                onClick={sendEmailHandler}
+              >
+                Αποστολή
+              </button>
+              <button
+                type="button"
+                className="btn btn-secondary"
+                onClick={handleCloseEmail}
+              >
+                Κλείσιμο
+              </button>
+            </Modal.Footer>
+          </Modal>
+          {/* end of email modal */}
 
           {/* delete all data modal */}
           <Modal show={showDelete} onHide={handleCloseDelete}>
