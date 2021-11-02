@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import ErrorMsg from "../general/ErrorMsg";
+import SuccessMsg from "../general/SuccessMsg";
 // firestore
 import {
   doc,
@@ -29,6 +30,7 @@ const UserSettingsForm = (props) => {
 
   const [textArea, setTextArea] = useState("");
   const [errorTextArea, setErrorTextArea] = useState("");
+  const [emailStatus, setEmailStatus] = useState(false);
 
   // modals
   const [showInfo, setShowInfo] = useState(false);
@@ -40,14 +42,22 @@ const UserSettingsForm = (props) => {
   const handleOpenDelete = () => setShowDelete(true);
 
   const [showEmail, setShowEmail] = useState(false);
-  const handleCloseEmail = () => setShowEmail(false);
+  const handleCloseEmail = () => {
+    setShowEmail(false);
+    setTimeout(function () {
+      setEmailStatus(false);
+      setTextArea("");
+    }, 300);
+  };
+
   const handleOpenEmail = () => setShowEmail(true);
 
   const sendEmailHandler = () => {
     if (textArea === "" || textArea === null || textArea === undefined) {
-      setErrorTextArea("Το μήνυμα δεν μπορεί να είναι άδειο.");
+      setErrorTextArea("Το μήνυμά δεν μπορεί να είναι άδειο.");
     } else {
       setErrorTextArea("");
+      setEmailStatus(true);
       (async () => {
         await addDoc(collection(db, "admin_ContactMsgs"), {
           userEmail: loggedInUser,
@@ -339,18 +349,28 @@ const UserSettingsForm = (props) => {
                 className="inputValues"
                 rows="4"
                 onChange={(e) => setTextArea(e.target.value)}
+                disabled={emailStatus ? true : false}
+                value={textArea}
               ></textarea>
               {errorTextArea ? (
                 <ErrorMsg ErrorMsg={errorTextArea}></ErrorMsg>
+              ) : null}
+              {emailStatus ? (
+                <SuccessMsg
+                  SuccessMsg={
+                    "Το μήνυμα σας στάλθηκε με επιτυχία. Θα επικοινωνήσουμε εμείς μαζί σας το συντομότερο δυνατόν."
+                  }
+                />
               ) : null}
             </Modal.Body>
             <Modal.Footer>
               <button
                 type="button"
-                className="btn btn-danger"
+                className={emailStatus ? "btn btn-success" : "btn btn-danger"}
                 onClick={sendEmailHandler}
+                disabled={emailStatus ? true : false}
               >
-                Αποστολή
+                {emailStatus ? "Στάλθηκε" : "Αποστολή"}
               </button>
               <button
                 type="button"
