@@ -14,7 +14,11 @@ import { db } from "../utils/firebase";
 import FullScreenLoader from "../general/FullScreenLoader";
 // font icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashAlt, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import {
+  faTrashAlt,
+  faInfoCircle,
+  faEnvelope,
+} from "@fortawesome/free-solid-svg-icons";
 // modals
 import { Modal } from "react-bootstrap";
 
@@ -47,6 +51,7 @@ const UserSettingsForm = (props) => {
     setTimeout(function () {
       setEmailStatus(false);
       setTextArea("");
+      setErrorTextArea("");
     }, 300);
   };
 
@@ -54,7 +59,7 @@ const UserSettingsForm = (props) => {
 
   const sendEmailHandler = () => {
     if (textArea === "" || textArea === null || textArea === undefined) {
-      setErrorTextArea("Το μήνυμά δεν μπορεί να είναι άδειο.");
+      setErrorTextArea("Το μήνυμα δεν μπορεί να είναι άδειο.");
     } else {
       setErrorTextArea("");
       setEmailStatus(true);
@@ -260,7 +265,7 @@ const UserSettingsForm = (props) => {
             </u>
             <div className="d-flex" id="TermsInfoUserDataBtn">
               <div className="mt-3">
-                <b>Εμφάνιση των όρων και των προϋποθέσεων της εφαρμογής:</b>
+                <b>Εμφάνιση των όρων και των προϋποθέσεων της εφαρμογής.</b>
               </div>
               <div className="mt-3 ms-auto">
                 <button className="btn btn-info" onClick={handleOpenInfo}>
@@ -282,14 +287,14 @@ const UserSettingsForm = (props) => {
             </u>
             <div className="d-flex" id="deleteUserDataBtn">
               <div className="mt-3">
-                <b>Επικοινωνήστε μαζί μας και θα σας απαντήσουμε με email:</b>
+                <b>Επικοινωνήστε μαζί μας και θα σας απαντήσουμε με email.</b>
               </div>
               <div className="mt-3 ms-auto">
                 <button className="btn btn-warning" onClick={handleOpenEmail}>
                   Επικοινωνία
                   <FontAwesomeIcon
                     size="lg"
-                    icon={faTrashAlt}
+                    icon={faEnvelope}
                     style={{ color: "var(--bs-info)", paddingLeft: "3px" }}
                   />
                 </button>
@@ -304,7 +309,7 @@ const UserSettingsForm = (props) => {
             </u>
             <div className="d-flex" id="deleteUserDataBtn">
               <div className="mt-3">
-                <b>Διαγραφή όλων των δεδομένων μου από την εφαρμογή:</b>
+                <b>Διαγραφή όλων των δεδομένων μου από την εφαρμογή.</b>
               </div>
               <div className="mt-3 ms-auto">
                 <button className="btn btn-dark" onClick={handleOpenDelete}>
@@ -329,7 +334,7 @@ const UserSettingsForm = (props) => {
             <Modal.Footer>
               <button
                 type="button"
-                className="btn btn-secondary"
+                className="btn btn-info"
                 onClick={handleCloseInfo}
               >
                 Κλείσιμο
@@ -341,7 +346,7 @@ const UserSettingsForm = (props) => {
           {/* email modal */}
           <Modal show={showEmail} onHide={handleCloseEmail}>
             <Modal.Header>
-              <Modal.Title>Αποστολή Email</Modal.Title>
+              <Modal.Title>Αποστολή Μηνύματος</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <label className="label">Μήνυμα</label>
@@ -374,7 +379,7 @@ const UserSettingsForm = (props) => {
               </button>
               <button
                 type="button"
-                className="btn btn-secondary"
+                className="btn btn-warning"
                 onClick={handleCloseEmail}
               >
                 Κλείσιμο
@@ -407,7 +412,7 @@ const UserSettingsForm = (props) => {
               </button>
               <button
                 type="button"
-                className="btn btn-secondary"
+                className="btn btn-dark"
                 onClick={handleCloseDelete}
               >
                 Άκυρο
