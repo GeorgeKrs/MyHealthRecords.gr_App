@@ -16,6 +16,7 @@ import { ICONS } from "../icons/icons";
 import { auth, signOut } from "../utils/firebase";
 // modals
 import { Modal } from "react-bootstrap";
+import { faCaretSquareDown } from "@fortawesome/free-solid-svg-icons";
 
 const MainScreen = (props) => {
   const [tab, setTab] = useState("1");
@@ -25,6 +26,10 @@ const MainScreen = (props) => {
   const [showSignOut, setShowSignOut] = useState(false);
   const handleCloseSignOut = () => setShowSignOut(false);
   const handleOpenSignOut = () => setShowSignOut(true);
+
+  const [dropMenuState, setDropMenuState] = useState(false);
+  const handleCloseMenu = () => setDropMenuState(false);
+  const handleOpenMenu = () => setDropMenuState(true);
 
   const tabSelectorHandler = (tabId) => {
     if (tabId === "8") {
@@ -77,28 +82,15 @@ const MainScreen = (props) => {
       </div>
 
       {/* mobile version */}
-      <div className="inner-maindiv d-sm-block d-md-none">
-        <div className="text-center">
-          <div className="pt-5">
-            <h6>Logo</h6>
-          </div>
-        </div>
-        <div className="d-flex flex-wrap p-3 text-center mb-3">
-          {ICONS.map((menu_icon) => (
-            <div key={menu_icon.id} className="p-3 mt-2 ">
-              <FontAwesomeIcon
-                id={menu_icon.id}
-                className={
-                  activeTab === menu_icon.id
-                    ? "icons-custom-active"
-                    : "icons-custom"
-                }
-                icon={menu_icon.icon}
-                size="lg"
-                onClick={tabSelectorHandler.bind(this, menu_icon.id)}
-              />
-            </div>
-          ))}
+
+      <div className="p-3 inner-maindiv d-sm-block d-md-none d-flex justify-content-center">
+        <FontAwesomeIcon
+          style={{ fontSize: "25px", color: "var(--bs-light)" }}
+          icon={faCaretSquareDown}
+          onClick={handleOpenMenu}
+        />
+        <div className="px-3" style={{ color: "var(--bs-light)" }}>
+          Μενού Πλοήγησης
         </div>
       </div>
 
@@ -110,6 +102,46 @@ const MainScreen = (props) => {
         (tab === "4" && <PDFHistoryTab loggedInUser={props.loggedInUser} />) ||
         (tab === "5" && <AllergiesTab loggedInUser={props.loggedInUser} />) ||
         (tab === "7" && <UserSettingsTab loggedInUser={props.loggedInUser} />)}
+
+      {/* menu modal */}
+      <Modal show={dropMenuState} onHide={handleCloseMenu}>
+        <Modal.Header>
+          <Modal.Title>Πλοήγηση</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div
+            className="d-flex flex-wrap p-3 text-center mb-3"
+            style={{ backgroundColor: "var(--bs-primary" }}
+          >
+            {ICONS.map((menu_icon) => (
+              <div key={menu_icon.id} className="p-3 mt-2 ">
+                <FontAwesomeIcon
+                  id={menu_icon.id}
+                  className={
+                    activeTab === menu_icon.id
+                      ? "icons-custom-active"
+                      : "icons-custom"
+                  }
+                  icon={menu_icon.icon}
+                  size="lg"
+                  onClick={tabSelectorHandler.bind(this, menu_icon.id)}
+                />
+              </div>
+            ))}
+          </div>
+        </Modal.Body>
+
+        <Modal.Footer>
+          <button
+            type="button"
+            className="btn btn-danger"
+            onClick={handleCloseMenu}
+          >
+            Επιστροφή
+          </button>
+        </Modal.Footer>
+      </Modal>
+      {/* end of menu modal */}
 
       {/* signout modal */}
       <Modal show={showSignOut} onHide={handleCloseSignOut}>
@@ -124,7 +156,7 @@ const MainScreen = (props) => {
             className="btn btn-danger"
             onClick={signOutHandler}
           >
-            Διαγραφή
+            Αποσύνδεση
           </button>
           <button
             type="button"
