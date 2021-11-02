@@ -4,7 +4,6 @@ import {
   faFileMedical,
   faBookMedical,
   faAllergies,
-  faUserCog,
   faChartBar,
   faPaw,
   faCalendarAlt,
@@ -13,6 +12,7 @@ import {
   faUserEdit,
   faExclamationCircle,
   faCheckSquare,
+  faCog,
 } from "@fortawesome/free-solid-svg-icons";
 
 const ICONS = [
@@ -48,7 +48,7 @@ const ICONS = [
   },
   {
     id: "7",
-    icon: faUserCog,
+    icon: faCog,
     description: "Ρυθμίσεις Χρήστη",
   },
   {

@@ -114,7 +114,7 @@ const MainScreen = (props) => {
             style={{ backgroundColor: "var(--bs-primary" }}
           >
             {ICONS.map((menu_icon) => (
-              <div key={menu_icon.id} className="p-3 mt-2 ">
+              <div key={menu_icon.id} className="p-3 mt-2">
                 <FontAwesomeIcon
                   id={menu_icon.id}
                   className={
