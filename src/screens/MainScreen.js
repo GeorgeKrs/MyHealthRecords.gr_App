@@ -110,11 +110,11 @@ const MainScreen = (props) => {
         </Modal.Header>
         <Modal.Body>
           <div
-            className="d-flex flex-wrap p-3 text-center mb-3"
+            className="d-flex justify-content-center flex-wrap p-3 text-center mb-3"
             style={{ backgroundColor: "var(--bs-primary" }}
           >
             {ICONS.map((menu_icon) => (
-              <div key={menu_icon.id} className="p-3 mt-2">
+              <div key={menu_icon.id} className="p-2 mt-2">
                 <FontAwesomeIcon
                   id={menu_icon.id}
                   className={

@@ -45,5 +45,6 @@
   }
   .inner-maindiv {
     min-height: 0vh;
+    min-width: 100vw;
   }
 }
