@@ -9,6 +9,9 @@ import {
   Timestamp,
   addDoc,
   collection,
+  getDocs,
+  query,
+  where,
 } from "firebase/firestore";
 import { db } from "../utils/firebase";
 import FullScreenLoader from "../general/FullScreenLoader";
@@ -31,18 +34,29 @@ const UserSettingsForm = (props) => {
   const [errLastName, setErrLastName] = useState("");
 
   const loggedInUser = props.loggedInUser;
+  let deleteReqArray = [];
 
   const [textArea, setTextArea] = useState("");
   const [errorTextArea, setErrorTextArea] = useState("");
   const [emailStatus, setEmailStatus] = useState(false);
+  const [deleteReqStatus, setDeleteReqStatus] = useState(false);
+
+  const [deleteTimestamp, setDeleteTimestamp] = useState([]);
 
   // modals
+  const [SaveChanges, setSaveChanges] = useState(false);
+  const handleCloseChanges = () => setSaveChanges(false);
+  const handleOpenChanges = () => setSaveChanges(true);
+
   const [showInfo, setShowInfo] = useState(false);
   const handleCloseInfo = () => setShowInfo(false);
   const handleOpenInfo = () => setShowInfo(true);
 
   const [showDelete, setShowDelete] = useState(false);
-  const handleCloseDelete = () => setShowDelete(false);
+  const handleCloseDelete = () => {
+    setShowDelete(false);
+  };
+
   const handleOpenDelete = () => setShowDelete(true);
 
   const [showEmail, setShowEmail] = useState(false);
@@ -77,6 +91,29 @@ const UserSettingsForm = (props) => {
     const docRef = doc(db, "users", loggedInUser);
     const docSnap = await getDoc(docRef);
     setUserData(docSnap.data());
+
+    setUserData((userData) => ({
+      ...userData,
+      accModifications: Timestamp.fromDate(new Date()),
+    }));
+
+    const q = query(
+      collection(db, "admin_DeleteDataRequests"),
+      where("userEmail", "==", loggedInUser)
+    );
+
+    const docSnapDelete = await getDocs(q);
+    docSnapDelete.forEach((doc) => {
+      deleteReqArray.push(doc.data());
+    });
+
+    setDeleteTimestamp(deleteReqArray);
+
+    if (deleteReqArray[0] === undefined || deleteReqArray[0] === null) {
+      setDeleteReqStatus(false);
+    } else {
+      setDeleteReqStatus(true);
+    }
   };
 
   useEffect(() => {
@@ -84,13 +121,8 @@ const UserSettingsForm = (props) => {
     fetchUserData().finally(
       setTimeout(function () {
         setLoading(false);
-      }, 300)
+      }, 200)
     );
-
-    setUserData((userData) => ({
-      ...userData,
-      accModifications: Timestamp.fromDate(new Date()),
-    }));
   }, []);
 
   const ValidateFirstName = (firstName) => {
@@ -131,13 +163,24 @@ const UserSettingsForm = (props) => {
     if (isValid) {
       const UserSettingsRef = doc(db, "users", loggedInUser);
       setDoc(UserSettingsRef, userData, { merge: true });
+      setSaveChanges(true);
     } else {
-      alert("fORM ERROR");
+      alert("Προέκυψε σφάλμα, παρακαλώ προσπαθήστε αργότερα.");
     }
 
     setTimeout(function () {
       setBtnLoading(false);
     }, 150);
+  };
+
+  const DeleteDataHandler = () => {
+    (async () => {
+      await addDoc(collection(db, "admin_DeleteDataRequests"), {
+        userEmail: loggedInUser,
+        submitDate: Timestamp.fromDate(new Date()),
+      });
+    })();
+    setDeleteReqStatus(true);
   };
 
   return (
@@ -324,6 +367,27 @@ const UserSettingsForm = (props) => {
             </div>
           </div>
 
+          {/* saveChanges personal info modal */}
+          <Modal show={SaveChanges} onHide={handleOpenChanges}>
+            <Modal.Header>
+              <Modal.Title>Αποθήκευση Αλλαγών</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              Οι αλλαγές σας στα προσωπικά σας στοιχεία αποθηκεύτηκαν με
+              επιτυχία.
+            </Modal.Body>
+            <Modal.Footer>
+              <button
+                type="button"
+                className="btn btn-success"
+                onClick={handleCloseChanges}
+              >
+                Κλείσιμο
+              </button>
+            </Modal.Footer>
+          </Modal>
+          {/* end of info modal */}
+
           {/* info modal */}
           <Modal show={showInfo} onHide={handleCloseInfo}>
             <Modal.Header>
@@ -391,24 +455,38 @@ const UserSettingsForm = (props) => {
           {/* delete all data modal */}
           <Modal show={showDelete} onHide={handleCloseDelete}>
             <Modal.Header>
-              <Modal.Title>Διαγραφή Δεδομένων</Modal.Title>
+              <Modal.Title>Αίτημα Διαγραφής Δεδομένων</Modal.Title>
             </Modal.Header>
             <Modal.Body>
+              Εάν προχωρήσετε στην αίτηση διαγραφής, μέσα στις επόμενες 72 ώρες
+              θα διαγραφούν όλα σας τα δεδομένα από την εφαρμογή (Μετρήσεις
+              ζωτικών λειτουργιών και PDF).
+            </Modal.Body>
+            <Modal.Body>
               Είστε σίγουροι ότι θέλετε να διαγράψετε όλα σας τα καταχωρημένα
-              δεδομένα; (Μετρήσεις ζωτικών λειτουργιών και PDF).
+              δεδομένα;
             </Modal.Body>
             <Modal.Body>
               <b>
                 Αυτή η πράξη <u>ΔΕΝ</u> μπορεί να αντιστραφεί.
               </b>
+              {deleteReqStatus ? (
+                <SuccessMsg
+                  SuccessMsg={"Το αίτημα σας στάλθηκε με επιτυχία."}
+                />
+              ) : null}
             </Modal.Body>
+
             <Modal.Footer>
               <button
                 type="button"
-                className="btn btn-danger"
-                // onClick={deleteMeetingHandler}
+                className={
+                  deleteReqStatus ? "btn btn-success" : "btn btn-danger"
+                }
+                onClick={DeleteDataHandler}
+                disabled={deleteReqStatus ? true : false}
               >
-                Διαγραφή
+                {deleteReqStatus ? "Στάλθηκε" : "Διαγραφή"}
               </button>
               <button
                 type="button"
