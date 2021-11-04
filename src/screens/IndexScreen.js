@@ -16,40 +16,29 @@ const IndexScreen = () => {
 
   return (
     <div className="outer-indexdiv">
+      <div className="p-3 bd-highlight d-sm-block d-md-none d-lg-none">
+        APP LOGO
+      </div>
+      <div className="pt-4 d-flex flex-column align-items-center d-sm-block d-md-none d-lg-none">
+        {(tab === "1" && <ContactTab />) ||
+          (tab === "2" && <InfoTab />) ||
+          (tab === "3" && <LoginForm />) ||
+          (tab === "4" && <SignUpForm />)}
+      </div>
       <div className="container">
-        <div className="d-flex bd-highlight mb-3">
-          <div className="me-auto p-3 bd-highlight">APP LOGO</div>
-          <div className="p-3 bd-highlight">
-            <button
-              id="1"
-              className={
-                activeTab === "1" ? "btn btn-danger" : "btn btn-outline-danger"
-              }
-              onClick={tabSelectorHandler.bind(this, "1")}
-            >
-              Επικοινωνία
-            </button>
+        <div className="d-lg-flex d-md-flex bd-highlight mb-3">
+          <div className="me-auto p-3 bd-highlight d-none d-sm-none d-md-block d-lg-block">
+            APP LOGO
           </div>
-          <div className="p-3 bd-highlight">
-            <button
-              id="2"
-              className={
-                activeTab === "2"
-                  ? "btn btn-success"
-                  : "btn btn-outline-success"
-              }
-              onClick={tabSelectorHandler.bind(this, "2")}
-            >
-              Σχετικά με εμάς
-            </button>
-          </div>
-          <div className="p-3 bd-highlight">
+
+          <div className="p-3 bd-highlight" id="firstButtonMargin">
             <button
               id="3"
+              style={{ fontWeight: "bolder" }}
               className={
                 activeTab === "3"
-                  ? "btn btn-primary"
-                  : "btn btn-outline-primary"
+                  ? "btn btn-primary w-100"
+                  : "btn btn-outline-primary w-100"
               }
               onClick={tabSelectorHandler.bind(this, "3")}
             >
@@ -59,17 +48,53 @@ const IndexScreen = () => {
           <div className="p-3 bd-highlight">
             <button
               id="4"
+              style={{ fontWeight: "bolder" }}
               className={
-                activeTab === "4" ? "btn btn-dark" : "btn btn-outline-dark"
+                activeTab === "4"
+                  ? "btn btn-dark w-100"
+                  : "btn btn-outline-dark w-100"
               }
               onClick={tabSelectorHandler.bind(this, "4")}
             >
               Εγγραφή
             </button>
           </div>
+          <div className="p-3 bd-highlight">
+            <button
+              id="2"
+              style={{ fontWeight: "bolder" }}
+              className={
+                activeTab === "2"
+                  ? "btn btn-success w-100"
+                  : "btn btn-outline-success w-100"
+              }
+              onClick={tabSelectorHandler.bind(this, "2")}
+            >
+              Σχετικά με εμάς
+            </button>
+          </div>
+          <div className="p-3 bd-highlight">
+            <button
+              id="1"
+              style={{
+                fontWeight: "bolder",
+              }}
+              className={
+                activeTab === "1"
+                  ? "btn btn-danger w-100"
+                  : "btn btn-outline-danger w-100"
+              }
+              onClick={tabSelectorHandler.bind(this, "1")}
+            >
+              Επικοινωνία
+            </button>
+          </div>
         </div>
       </div>
-      <div className="mt-5 pt-5 d-flex flex-column align-items-center">
+      <div
+        className="mt-5 pt-5 d-flex flex-column align-items-center"
+        id="IndexTabsForLargeScreen"
+      >
         {(tab === "1" && <ContactTab />) ||
           (tab === "2" && <InfoTab />) ||
           (tab === "3" && <LoginForm />) ||

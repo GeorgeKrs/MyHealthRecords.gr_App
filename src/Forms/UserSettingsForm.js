@@ -52,7 +52,7 @@ const UserSettingsForm = (props) => {
       setEmailStatus(false);
       setTextArea("");
       setErrorTextArea("");
-    }, 300);
+    }, 150);
   };
 
   const handleOpenEmail = () => setShowEmail(true);
@@ -137,7 +137,7 @@ const UserSettingsForm = (props) => {
 
     setTimeout(function () {
       setBtnLoading(false);
-    }, 300);
+    }, 150);
   };
 
   return (
