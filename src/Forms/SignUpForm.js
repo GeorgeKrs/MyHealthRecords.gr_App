@@ -3,6 +3,8 @@ import ErrorMsg from "../general/ErrorMsg";
 // firebase
 import { auth, db, createUserWithEmailAndPassword } from "../utils/firebase";
 import { doc, setDoc, Timestamp } from "firebase/firestore";
+// modal
+import { Modal } from "react-bootstrap";
 
 const SignUpForm = () => {
   const [form, setForm] = useState([
@@ -26,6 +28,16 @@ const SignUpForm = () => {
   ]);
 
   const [loading, setLoading] = useState(false);
+
+  // error signing in modal
+  const [showErrorModal, setShowErrorModal] = useState(false);
+  const handleCloseErrorModal = () => setShowErrorModal(false);
+  const handleOpenErrorModal = () => setShowErrorModal(true);
+
+  // email exists modal
+  const [showEmailExists, setShowEmailExists] = useState(false);
+  const handleCloseEmailExists = () => setShowEmailExists(false);
+  const handleOpenEmailExists = () => setShowEmailExists(true);
 
   const re =
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -118,7 +130,7 @@ const SignUpForm = () => {
       errors.erPassword !== "" ||
       errors.erConditions !== ""
     ) {
-      alert("Modal Pop-Up. Fill all the necessary input fields");
+      handleOpenErrorModal();
       isValid = false;
     } else {
       isValid = true;
@@ -174,10 +186,7 @@ const SignUpForm = () => {
         })
         .catch((error) => {
           setLoading(false);
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          console.log(errorCode);
-          console.log(errorMessage);
+          handleOpenEmailExists();
         });
     } else {
       setLoading(false);
@@ -334,6 +343,60 @@ const SignUpForm = () => {
           </button>
         </div>
       </div>
+
+      {/* no SignIn modal */}
+      <Modal show={showErrorModal} onHide={handleCloseErrorModal}>
+        <Modal.Header>
+          <Modal.Title>Αποτυχία Εγγραφής</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+          Παρακαλώ συμπληρώστε όλα τα υποχρεωτικά πεδία ακολουθώντας τους
+          περιορισμούς.
+        </Modal.Body>
+
+        <Modal.Body>
+          <ul className="list-group list-group-numbered">
+            Υποχρεωτικά πεδία θεωρούνται τα παρακάτω:
+            <li className="list-group-item mt-2">Όνομα</li>
+            <li className="list-group-item">Επώνυμο</li>
+            <li className="list-group-item">Email</li>
+            <li className="list-group-item">Κωδικός</li>
+            <li className="list-group-item">Όροι Χρήσης και προϋποθέσεις</li>
+          </ul>
+        </Modal.Body>
+
+        <Modal.Footer>
+          <button
+            type="button"
+            className="btn btn-danger"
+            onClick={handleCloseErrorModal}
+          >
+            Επιστροφή
+          </button>
+        </Modal.Footer>
+      </Modal>
+      {/* end of no SignIn modal */}
+
+      {/* Email exists */}
+      <Modal show={showEmailExists} onHide={handleCloseEmailExists}>
+        <Modal.Header>
+          <Modal.Title>Αποτυχία Εγγραφής</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>Υπάρχει ήδη ένας λογαριασμός με αυτό το email.</Modal.Body>
+
+        <Modal.Footer>
+          <button
+            type="button"
+            className="btn btn-danger"
+            onClick={handleCloseEmailExists}
+          >
+            Επιστροφή
+          </button>
+        </Modal.Footer>
+      </Modal>
+      {/* end of Email exists modal */}
     </div>
   );
 };
