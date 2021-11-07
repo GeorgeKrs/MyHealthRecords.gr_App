@@ -13,6 +13,10 @@ import {
   faExclamationCircle,
   faCheckSquare,
   faCog,
+  faHeart,
+  faWeight,
+  faLungs,
+  faThermometer,
 } from "@fortawesome/free-solid-svg-icons";
 
 const ICONS = [
@@ -84,4 +88,27 @@ const ICONS_errHANDLING = [
   },
 ];
 
-export { ICONS, ICONS_ALLERGIES_TAB, ICONS_errHANDLING };
+const ICONS_METRICS_TAB = [
+  {
+    id: "1",
+    icon: faHeart,
+  },
+  {
+    id: "2",
+    icon: faHeartbeat,
+  },
+  {
+    id: "3",
+    icon: faThermometer,
+  },
+  {
+    id: "4",
+    icon: faLungs,
+  },
+  {
+    id: "5",
+    icon: faWeight,
+  },
+];
+
+export { ICONS, ICONS_ALLERGIES_TAB, ICONS_errHANDLING, ICONS_METRICS_TAB };

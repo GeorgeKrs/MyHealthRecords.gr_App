@@ -1,3 +1,6 @@
+// font icons
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 const AverageComp = (props) => {
   return (
     <div className={`card text-center border-${props.color} mt-5`}>
@@ -5,7 +8,9 @@ const AverageComp = (props) => {
       <div className={`card-body text-${props.color}`}>
         <div className="row">
           <div className="col-lg-6 col-md-6 col-sm-12">
-            <p className="card-text">ΕΙΚΟΝΑ</p>
+            <p className="card-text">
+              <FontAwesomeIcon size="lg" icon={props.icon} />
+            </p>
           </div>
           <div className="col-lg-6 col-md-6 col-sm-12">
             <p className="card-text">{props.text}</p>

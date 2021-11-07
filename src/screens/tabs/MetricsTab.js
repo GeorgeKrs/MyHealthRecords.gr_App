@@ -8,7 +8,7 @@ const MetricsTab = (props) => {
   return (
     <div className="p-2 w-100 d-flex flex-column align-items-md-center">
       <TabTitles title={"Στατιστικά Μετρήσεων Ζωτικών Λειτουργιών"} />
-      <div className="mx-auto mt-5 mb-5 w-100">
+      <div className="mt-5 mb-5 w-100">
         <AverageVitalsModal />
       </div>
       <div className="mx-auto mt-5 mb-5 w-100">

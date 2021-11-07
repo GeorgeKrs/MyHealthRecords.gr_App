@@ -345,7 +345,6 @@ const VitalsHistoryForm = (props) => {
                     <th scope="col">Παλμοί (bpm)</th>
                     <th scope="col">Θερμοκρασία (&#176;C)</th>
                     <th scope="col">Οξυγόνο (%)</th>
-                    <th scope="col">Σάκχαρο (mg/dL)</th>
                     <th scope="col">Βάρος (Κιλά)</th>
                   </tr>
                 </thead>
@@ -357,7 +356,6 @@ const VitalsHistoryForm = (props) => {
                     <td>{i.pulses}</td>
                     <td>{i.temperature}</td>
                     <td>{i.oxygen}</td>
-                    <td>{i.sugar}</td>
                     <td>{i.weight}</td>
                   </tr>
                   <tr></tr>

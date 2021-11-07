@@ -13,7 +13,6 @@ const VitalsForm = (props) => {
   const [pulses, setPulses] = useState("");
   const [temperature, setTemperature] = useState("");
   const [oxygen, setOxygen] = useState("");
-  const [sugar, setSugar] = useState("");
   const [weight, setWeight] = useState("");
   const [comments, setComments] = useState("");
 
@@ -22,7 +21,6 @@ const VitalsForm = (props) => {
   const [erPulses, setErPulses] = useState("");
   const [erTemperature, setErTemperature] = useState("");
   const [erOxygen, setErOxygen] = useState("");
-  const [erSugar, setErSugar] = useState("");
   const [erWeight, setErWeight] = useState("");
 
   const [loading, setLoading] = useState(false);
@@ -76,14 +74,6 @@ const VitalsForm = (props) => {
     }
   };
 
-  const ValidateSugar = (sugar) => {
-    if ((sugar < 85 || sugar > 350) && sugar !== "") {
-      setErSugar("Τιμή εκτός ορίων. 85 < Σάκχαρο < 350");
-    } else {
-      setErSugar("");
-    }
-  };
-
   const ValidateWeight = (weight) => {
     if ((weight < 30 || weight > 300) && weight !== "") {
       setErWeight("Τιμή εκτός ορίων. 30 < Κιλά < 300");
@@ -103,7 +93,6 @@ const VitalsForm = (props) => {
       pulses === "" &&
       temperature === "" &&
       oxygen === "" &&
-      sugar === "" &&
       weight === ""
     ) {
       isEmpty = true;
@@ -118,7 +107,6 @@ const VitalsForm = (props) => {
       erPulses === "" &&
       erTemperature === "" &&
       erOxygen === "" &&
-      erSugar === "" &&
       erWeight === ""
     ) {
       const userEmail = props.loggedInUser;
@@ -130,7 +118,6 @@ const VitalsForm = (props) => {
           temperature: temperature,
           pulses: pulses,
           oxygen: oxygen,
-          sugar: sugar,
           weight: weight,
           comments: comments,
           submitDate: Timestamp.fromDate(new Date()),
@@ -143,7 +130,6 @@ const VitalsForm = (props) => {
       setPulses("");
       setTemperature("");
       setOxygen("");
-      setSugar("");
       setWeight("");
       setComments("");
     } else {
@@ -226,21 +212,6 @@ const VitalsForm = (props) => {
               onInput={(e) => ValidateOxygen(e.target.value)}
             />
             {erOxygen ? <ErrorMsg ErrorMsg={erOxygen}></ErrorMsg> : null}
-          </div>
-          <div className="col-sm-12 col-lg-6 mt-4"></div>
-        </div>
-
-        <div className="row">
-          <div className="col-sm-12 col-lg-6 mt-4">
-            <label className="label">Σάκχαρο (mg/dL)</label>
-            <input
-              type="number"
-              className="inputValues"
-              value={sugar}
-              onChange={(e) => setSugar(e.target.value)}
-              onInput={(e) => ValidateSugar(e.target.value)}
-            />
-            {erSugar ? <ErrorMsg ErrorMsg={erSugar}></ErrorMsg> : null}
           </div>
           <div className="col-sm-12 col-lg-6 mt-4">
             <label className="label">Βάρος (Κιλά)</label>
