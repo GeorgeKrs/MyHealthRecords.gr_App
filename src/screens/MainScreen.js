@@ -8,6 +8,7 @@ import VitalsHistoryTab from "./tabs/VitalsHistoryTab";
 import PDFTab from "../screens/tabs/PDFTab";
 import PDFHistoryTab from "./tabs/PDFHistoryTab";
 import AllergiesTab from "./tabs/AllergiesTab";
+import MetricsTab from "./tabs/MetricsTab";
 import UserSettingsTab from "./tabs/UserSettingsTab";
 // font icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -101,6 +102,7 @@ const MainScreen = (props) => {
         (tab === "3" && <PDFTab loggedInUser={props.loggedInUser} />) ||
         (tab === "4" && <PDFHistoryTab loggedInUser={props.loggedInUser} />) ||
         (tab === "5" && <AllergiesTab loggedInUser={props.loggedInUser} />) ||
+        (tab === "6" && <MetricsTab loggedInUser={props.loggedInUser} />) ||
         (tab === "7" && <UserSettingsTab loggedInUser={props.loggedInUser} />)}
 
       {/* menu modal */}

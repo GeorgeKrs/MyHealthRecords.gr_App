@@ -40,6 +40,14 @@
   background-attachment: fixed;
 }
 
+/* metrics modals */
+.metrics-form-custom {
+  background-color: var(--bs-gray-200);
+  padding: 1rem;
+  margin-top: 20px;
+  border-radius: 1rem;
+}
+
 @media (max-width: 576px) {
   .outer-indexdiv {
     background-image: url("../assets/IndexScreen_resp_img.jpg");
