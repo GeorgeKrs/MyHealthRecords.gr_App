@@ -40,6 +40,7 @@ const PDFHistoryForm = (props) => {
   const [searchState, setSearchState] = useState(false);
 
   const [searchBtn, setSearchBtn] = useState(false);
+  // counter for cards row
 
   const [btnID, setBtnID] = useState("0");
 
@@ -384,46 +385,43 @@ const PDFHistoryForm = (props) => {
         <FullScreenLoader />
       ) : (
         userData.map((i, index) => (
-          <div
-            className="table-responsive container mt-5"
-            id={index}
-            key={index}
-          >
-            <h5>
-              {i.SubmitDate.toDate().getDate()} /{" "}
-              {i.SubmitDate.toDate().getMonth() + 1} /{" "}
-              {i.SubmitDate.toDate().getFullYear()}
-            </h5>
-            <h6>
-              {i.SubmitDate.toDate().getHours()} :{" "}
-              {i.SubmitDate.toDate().getMinutes()}
-            </h6>
-            <table className="table">
-              <thead>
-                <tr>
-                  <th scope="col"></th>
-                  <th scope="col"></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">Ειδικότητα:</th>
-                  <td>{i.doctorSpec}</td>
-                </tr>
-                <tr>
-                  <th scope="row">Αρχείο:</th>
-                  <td>
-                    <a href={i.pdfUrl} className="link-danger" target="_blank">
-                      {i.fileName}
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <th scope="row">Σχόλια:</th>
-                  <td>{i.comments}</td>
-                </tr>
-              </tbody>
-            </table>
+          <div className="container mt-5" id={index} key={index}>
+            <div className="card border-primary mb-3">
+              <div className="card-header">
+                {" "}
+                {i.SubmitDate.toDate().getDate()} /{" "}
+                {i.SubmitDate.toDate().getMonth() + 1} /{" "}
+                {i.SubmitDate.toDate().getFullYear()},{" "}
+                {i.SubmitDate.toDate().getHours()} :{" "}
+                {i.SubmitDate.toDate().getMinutes() < 10
+                  ? "0" + i.SubmitDate.toDate().getMinutes()
+                  : i.SubmitDate.toDate().getMinutes()}
+              </div>
+              <div className="card-body text-dark">
+                <p className="card-text">Ειδικότητα: {i.doctorSpec}</p>
+                <hr className="hr-custom" />
+                <p className="card-text">
+                  Αρχείο:
+                  <a
+                    href={i.pdfUrl}
+                    className="link-primary px-1"
+                    target="_blank"
+                  >
+                    {i.fileName}
+                  </a>
+                </p>
+                <hr className="hr-custom" />
+                <p> Σχόλια: </p>
+                <textarea
+                  rows="3"
+                  className="w-100"
+                  disabled={true}
+                  value={i.comments}
+                >
+                  {i.comments}
+                </textarea>
+              </div>
+            </div>
           </div>
         ))
       )}

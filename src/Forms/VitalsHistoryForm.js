@@ -320,51 +320,62 @@ const VitalsHistoryForm = (props) => {
           <FullScreenLoader setFullscreen={false} />
         ) : (
           userData.map((i, index) => (
-            <div
-              className="table-responsive container mt-5"
-              id={index}
-              key={index}
-            >
-              <div>
-                <h5>
+            <div className="container mt-5" id={index} key={index}>
+              <div className="card border-primary mb-3">
+                <div className="card-header">
+                  {" "}
                   {i.submitDate.toDate().getDate()} /{" "}
                   {i.submitDate.toDate().getMonth() + 1} /{" "}
-                  {i.submitDate.toDate().getFullYear()}
-                </h5>
-                <h6>
+                  {i.submitDate.toDate().getFullYear()},{" "}
                   {i.submitDate.toDate().getHours()} :{" "}
-                  {i.submitDate.toDate().getMinutes()}
-                </h6>
+                  {i.submitDate.toDate().getMinutes() < 10
+                    ? "0" + i.submitDate.toDate().getMinutes()
+                    : i.submitDate.toDate().getMinutes()}
+                </div>
+                <div className="card-body text-dark">
+                  <div className="row ">
+                    <div className="col-sm-12 col-md-6 col-lg-6">
+                      <p className="card-text  mt-3">
+                        Συστολική Πίεση (mmHg): <b>{i.systolic}</b>
+                      </p>
+                      <hr className="hr-custom" />
+                      <p className="card-text">
+                        Διαστολική Πίεση (mmHg): <b>{i.diastolic}</b>
+                      </p>
+                      <hr className="hr-custom" />
+                      <p className="card-text">
+                        Παλμοί (bpm): <b>{i.pulses}</b>
+                      </p>
+                      <hr className="hr-custom" />
+                    </div>
+                    <div className="col-sm-12 col-md-6 col-lg-6">
+                      <p className="card-text mt-3">
+                        Θερμοκρασία (&#176;C): <b>{i.temperature}</b>
+                      </p>
+                      <hr className="hr-custom" />
+                      <p className="card-text">
+                        Οξυγόνο (%): <b>{i.oxygen}</b>
+                      </p>
+                      <hr className="hr-custom" />
+                      <p className="card-text">
+                        Βάρος (Kg): <b>{i.weight}</b>
+                      </p>
+                      <hr className="hr-custom" />
+                    </div>
+                  </div>
+                  <div className="mt-3">
+                    <p> Σχόλια: </p>
+                    <textarea
+                      rows="3"
+                      className="w-100"
+                      disabled={true}
+                      value={i.comments}
+                    >
+                      <b>{i.comments}</b>
+                    </textarea>
+                  </div>
+                </div>
               </div>
-              <table className="table">
-                <thead>
-                  <tr>
-                    <th scope="col"></th>
-                    <th scope="col">Συστολική Πίεση (mmHg)</th>
-                    <th scope="col">Διαστολική Πίεση (mmHg)</th>
-                    <th scope="col">Παλμοί (bpm)</th>
-                    <th scope="col">Θερμοκρασία (&#176;C)</th>
-                    <th scope="col">Οξυγόνο (%)</th>
-                    <th scope="col">Βάρος (Κιλά)</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">Τιμές:</th>
-                    <td>{i.systolic}</td>
-                    <td>{i.diastolic}</td>
-                    <td>{i.pulses}</td>
-                    <td>{i.temperature}</td>
-                    <td>{i.oxygen}</td>
-                    <td>{i.weight}</td>
-                  </tr>
-                  <tr></tr>
-                  <tr>
-                    <th scope="row">Σχόλια:</th>
-                    <td colSpan="7">{i.comments}</td>
-                  </tr>
-                </tbody>
-              </table>
             </div>
           ))
         )}

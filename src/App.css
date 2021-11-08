@@ -132,3 +132,9 @@
 ::-webkit-scrollbar-thumb:hover {
   background: var(--bs-primary-700);
 }
+
+/* hr */
+.hr-custom {
+  color: var(--bs-success);
+  height: 1px !important;
+}
