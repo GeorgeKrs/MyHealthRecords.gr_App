@@ -1,3 +1,4 @@
+import { useState } from "react";
 import AverageComp from "../metricsModals/AverageComp";
 import { ICONS_METRICS_TAB } from "../../../icons/icons";
 
@@ -14,7 +15,7 @@ const AverageVitalsModal = (props) => {
       <div className="row">
         <div className="offset-lg-2 offset-md-1 col-lg-2 col-md-10 col-sm-12">
           <AverageComp
-            color={"primary"}
+            color={"dark"}
             text={"140"}
             header={"Συστολική Πίεση (mmHg)"}
             icon={ICONS_METRICS_TAB[0].icon}
@@ -22,7 +23,7 @@ const AverageVitalsModal = (props) => {
         </div>
         <div className="offset-lg-1 offset-md-1 col-lg-2 col-md-10 col-sm-12">
           <AverageComp
-            color={"success"}
+            color={"warning"}
             text={"100"}
             header={"Διαστολική Πίεση (mmHg)"}
             icon={ICONS_METRICS_TAB[0].icon}
@@ -30,7 +31,7 @@ const AverageVitalsModal = (props) => {
         </div>
         <div className="offset-lg-1 offset-md-1 col-lg-2 col-md-10 col-sm-12">
           <AverageComp
-            color={"dark"}
+            color={"danger"}
             text={"69.5"}
             header={"Παλμοί (bpm)"}
             icon={ICONS_METRICS_TAB[1].icon}
@@ -40,7 +41,7 @@ const AverageVitalsModal = (props) => {
       <div className="row">
         <div className="offset-lg-2 offset-md-1 col-lg-2 col-md-10 col-sm-12">
           <AverageComp
-            color={"danger"}
+            color={"primary"}
             text={"36.7"}
             header={"Θερμοκρασία"}
             icon={ICONS_METRICS_TAB[2].icon}
@@ -48,7 +49,7 @@ const AverageVitalsModal = (props) => {
         </div>
         <div className="offset-lg-1 offset-md-1 col-lg-2 col-md-10 col-sm-12">
           <AverageComp
-            color={"warning"}
+            color={"success"}
             text={"98.5"}
             header={"Οξυγόνο (%)"}
             icon={ICONS_METRICS_TAB[3].icon}

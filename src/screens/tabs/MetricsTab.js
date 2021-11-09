@@ -6,7 +6,10 @@ const MetricsTab = (props) => {
   const loggedInUser = props.loggedInUser;
 
   return (
-    <div className="p-2 w-100 d-flex flex-column align-items-md-center">
+    <div
+      className="p-2 w-100 h-100 d-flex flex-column align-items-md-center"
+      style={{ overflowX: "hidden" }}
+    >
       <TabTitles title={"Στατιστικά Μετρήσεων Ζωτικών Λειτουργιών"} />
       <div className="mt-5 mb-5 w-100">
         <AverageVitalsModal />
