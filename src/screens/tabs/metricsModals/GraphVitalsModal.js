@@ -18,7 +18,28 @@ const GraphVitalsModal = (props) => {
   const [monthGraph, setMonthGraph] = useState(0);
   const [yearGraph, setYearGraph] = useState("2022");
 
-  // const
+  const filtersHandler = () => {
+    console.log(categoryGraph);
+
+    let monthDays = 0;
+    if (
+      monthGraph == "3" ||
+      monthGraph == "5" ||
+      monthGraph == "8" ||
+      monthGraph == "10"
+    ) {
+      monthDays = 30;
+    } else if (monthGraph == "1") {
+      monthDays = 28;
+    } else {
+      monthDays = 31;
+    }
+
+    const startDate = new Date(yearGraph, monthGraph, 1);
+    const endDate = new Date(yearGraph, monthGraph, monthDays);
+    console.log(startDate);
+    console.log(endDate);
+  };
 
   return (
     <div
@@ -93,7 +114,13 @@ const GraphVitalsModal = (props) => {
         </div>
         <div className="col-xl-3 col-lg-4 col-md-4 col-sm-12">
           <div className="p-1">
-            <button className="btn btn-secondary">Εφαρμογή Φίλτρων</button>
+            <button
+              className="btn btn-secondary"
+              type="button"
+              onClick={filtersHandler}
+            >
+              Εφαρμογή Φίλτρων
+            </button>
           </div>
         </div>
       </div>
