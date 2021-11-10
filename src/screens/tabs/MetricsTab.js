@@ -5,8 +5,8 @@ import AverageVitalsModal from "./metricsModals/AverageVitalsModal";
 const MetricsTab = (props) => {
   return (
     <div
-      className="p-2 w-100 h-100 d-flex flex-column align-items-md-center"
-      style={{ overflowX: "hidden" }}
+      className="p-2 w-100 h-100 d-flex flex-column"
+      style={{ overflow: "hidden", maxWidth: "100vw" }}
     >
       <TabTitles title={"Στατιστικά Μετρήσεων Ζωτικών Λειτουργιών"} />
       <div className="mt-5 mb-5 w-100">
