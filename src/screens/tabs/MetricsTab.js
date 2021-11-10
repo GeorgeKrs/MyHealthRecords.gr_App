@@ -3,8 +3,6 @@ import GraphVitalsModal from "./metricsModals/GraphVitalsModal";
 import AverageVitalsModal from "./metricsModals/AverageVitalsModal";
 
 const MetricsTab = (props) => {
-  const loggedInUser = props.loggedInUser;
-
   return (
     <div
       className="p-2 w-100 h-100 d-flex flex-column align-items-md-center"
@@ -15,7 +13,7 @@ const MetricsTab = (props) => {
         <AverageVitalsModal />
       </div>
       <div className="mx-auto mt-5 mb-5 w-100">
-        <GraphVitalsModal />
+        <GraphVitalsModal loggedInUser={props.loggedInUser} />
       </div>
     </div>
   );

@@ -75,8 +75,8 @@ const VitalsForm = (props) => {
   };
 
   const ValidateWeight = (weight) => {
-    if ((weight < 30 || weight > 300) && weight !== "") {
-      setErWeight("Τιμή εκτός ορίων. 30 < Κιλά < 300");
+    if ((weight < 30 || weight > 210) && weight !== "") {
+      setErWeight("Τιμή εκτός ορίων. 30 < Κιλά < 210");
     } else {
       setErWeight("");
     }
