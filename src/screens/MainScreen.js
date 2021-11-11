@@ -18,6 +18,7 @@ import { auth, signOut } from "../utils/firebase";
 // modals
 import { Modal } from "react-bootstrap";
 import { faCaretSquareDown } from "@fortawesome/free-solid-svg-icons";
+import DiabetesTab from "./tabs/DiabetesTab";
 
 const MainScreen = (props) => {
   const [tab, setTab] = useState("1");
@@ -33,7 +34,7 @@ const MainScreen = (props) => {
   const handleOpenMenu = () => setDropMenuState(true);
 
   const tabSelectorHandler = (tabId) => {
-    if (tabId === "8") {
+    if (tabId === "9") {
       handleOpenSignOut();
     } else {
       setTab(tabId);
@@ -102,8 +103,9 @@ const MainScreen = (props) => {
         (tab === "3" && <PDFTab loggedInUser={props.loggedInUser} />) ||
         (tab === "4" && <PDFHistoryTab loggedInUser={props.loggedInUser} />) ||
         (tab === "5" && <AllergiesTab loggedInUser={props.loggedInUser} />) ||
-        (tab === "6" && <MetricsTab loggedInUser={props.loggedInUser} />) ||
-        (tab === "7" && <UserSettingsTab loggedInUser={props.loggedInUser} />)}
+        (tab === "6" && <DiabetesTab loggedInUser={props.loggedInUser} />) ||
+        (tab === "7" && <MetricsTab loggedInUser={props.loggedInUser} />) ||
+        (tab === "8" && <UserSettingsTab loggedInUser={props.loggedInUser} />)}
 
       {/* menu modal */}
       <Modal show={dropMenuState} onHide={handleCloseMenu}>

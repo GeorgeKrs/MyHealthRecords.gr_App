@@ -17,6 +17,7 @@ import {
   faWeight,
   faLungs,
   faThermometer,
+  faSyringe,
 } from "@fortawesome/free-solid-svg-icons";
 
 const ICONS = [
@@ -47,16 +48,21 @@ const ICONS = [
   },
   {
     id: "6",
+    icon: faSyringe,
+    description: "Καταχώρηση Μέτρησης Σακχάρου",
+  },
+  {
+    id: "7",
     icon: faChartBar,
     description: "Στατιστικά Μετρήσεων Ζωτικών Λειτουργιών",
   },
   {
-    id: "7",
+    id: "8",
     icon: faCog,
     description: "Ρυθμίσεις Χρήστη",
   },
   {
-    id: "8",
+    id: "9",
     icon: faSignOutAlt,
     description: "Έξοδος",
   },
