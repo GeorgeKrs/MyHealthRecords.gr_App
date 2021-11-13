@@ -214,7 +214,7 @@ const VitalsForm = (props) => {
             {erOxygen ? <ErrorMsg ErrorMsg={erOxygen}></ErrorMsg> : null}
           </div>
           <div className="col-sm-12 col-lg-6 mt-4">
-            <label className="label">Βάρος (Κιλά)</label>
+            <label className="label">Βάρος (Kg)</label>
             <input
               type="number"
               step="0.1"

@@ -12,6 +12,7 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
+  Label,
 } from "recharts";
 // font icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -321,13 +322,13 @@ const GraphVitalsModal = (props) => {
               onChange={(e) => setCategoryGraph(e.target.value)}
             >
               <option defaultValue value="systolicValues">
-                Συστολική Πίεση
+                Συστολική Πίεση (mmHg)
               </option>
-              <option value="diastolicValues">Διαστολική Πίεση</option>
-              <option value="pulsesValues">Παλμοί</option>
-              <option value="temperatureValues">Θερμοκρασία</option>
-              <option value="oxygenValues">Οξυγόνο</option>
-              <option value="weightValues">Βάρος</option>
+              <option value="diastolicValues">Διαστολική Πίεση (mmHg)</option>
+              <option value="pulsesValues">Παλμοί (bpm)</option>
+              <option value="temperatureValues">Θερμοκρασία (&#176;C)</option>
+              <option value="oxygenValues">Οξυγόνο (%)</option>
+              <option value="weightValues">Βάρος (Kg)</option>
             </select>
           </div>
           <div className="px-2">
@@ -399,7 +400,7 @@ const GraphVitalsModal = (props) => {
                   : null
               }
             />
-            <YAxis />
+            <YAxis></YAxis>
             <Tooltip />
             <Legend />
             <Line
