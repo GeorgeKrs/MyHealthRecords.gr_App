@@ -54,7 +54,7 @@ const ICONS = [
   {
     id: "7",
     icon: faChartBar,
-    description: "Στατιστικά Μετρήσεων Ζωτικών Λειτουργιών",
+    description: "Στατιστικά Όλων των Μετρήσεων",
   },
   {
     id: "8",

@@ -388,7 +388,6 @@ const PDFHistoryForm = (props) => {
           <div className="container mt-5" id={index} key={index}>
             <div className="card border-primary mb-3">
               <div className="card-header">
-                {" "}
                 {i.SubmitDate.toDate().getDate()} /{" "}
                 {i.SubmitDate.toDate().getMonth() + 1} /{" "}
                 {i.SubmitDate.toDate().getFullYear()},{" "}

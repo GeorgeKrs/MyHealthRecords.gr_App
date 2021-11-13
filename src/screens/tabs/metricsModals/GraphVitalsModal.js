@@ -137,6 +137,7 @@ const GraphVitalsModal = (props) => {
     for (let i = 0; i < systolicArray.length; ++i) {
       let tempDateDay = submitDateArray[i].toDate().getDate() + "/";
       let tempDateMonth = submitDateArray[i].toDate().getMonth() + 1;
+
       let tempDate = tempDateDay.concat(tempDateMonth);
 
       // dealing with empty values
@@ -474,17 +475,20 @@ const GraphVitalsModal = (props) => {
             gutterTitle={"Συστολική Πίεση (mmHg)"}
             gutterMax={maxSystolic === maxSystolic / 0 ? "-" : maxSystolic}
             gutterMin={minSystolic === minSystolic / 0 ? "-" : minSystolic}
+            gutterBorderColor={"border-primary"}
           />
           <Gutters
             gutterTitle={"Διαστολική Πίεση (mmHg)"}
             gutterMax={maxDiastolic === maxDiastolic / 0 ? "-" : maxDiastolic}
             gutterMin={minDiastolic === minDiastolic / 0 ? "-" : minDiastolic}
+            gutterBorderColor={"border-primary"}
           />
           {console.log(typeof maxSystolic)}
           <Gutters
             gutterTitle={"Παλμοί (bpm)"}
             gutterMax={maxPulses === maxPulses / 0 ? "-" : maxPulses}
             gutterMin={minPulses === minPulses / 0 ? "-" : minPulses}
+            gutterBorderColor={"border-primary"}
           />
           <Gutters
             gutterTitle={"Θερμοκρασία (" + String.fromCharCode(176) + "C)"}
@@ -494,16 +498,19 @@ const GraphVitalsModal = (props) => {
             gutterMin={
               minTemperature === minTemperature / 0 ? "-" : minTemperature
             }
+            gutterBorderColor={"border-primary"}
           />
           <Gutters
             gutterTitle={"Οξυγόνο (%)"}
             gutterMax={maxOxygen === maxOxygen / 0 ? "-" : maxOxygen}
             gutterMin={minOxygen === minOxygen / 0 ? "-" : minOxygen}
+            gutterBorderColor={"border-primary"}
           />
           <Gutters
             gutterTitle={"Βάρος (Kg)"}
             gutterMax={maxWeight === maxWeight / 0 ? "-" : maxWeight}
             gutterMin={minWeight === minWeight / 0 ? "-" : minWeight}
+            gutterBorderColor={"border-primary"}
           />
         </div>
       </div>
