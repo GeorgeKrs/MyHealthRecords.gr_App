@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+//
+import Gutters from "../../../general/Gutters";
 // firestore
 import { collection, query, where, getDocs, orderBy } from "firebase/firestore";
 import { db } from "../../../utils/firebase";
@@ -12,7 +14,6 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
-  Label,
 } from "recharts";
 // font icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -160,32 +161,32 @@ const GraphVitalsModal = (props) => {
 
       gdSystolic.push({
         date: tempDate,
-        Μέτρηση: systolicArray[i],
+        Συστολική: systolicArray[i],
       });
 
       gdDiastolic.push({
         date: tempDate,
-        Μέτρηση: diastolicArray[i],
+        Διαστολική: diastolicArray[i],
       });
 
       gdPulses.push({
         date: tempDate,
-        Μέτρηση: pulsesArray[i],
+        Παλμοί: pulsesArray[i],
       });
 
       gdTemperature.push({
         date: tempDate,
-        Μέτρηση: temperatureArray[i],
+        Θερμοκρασία: temperatureArray[i],
       });
 
       gdOxygen.push({
         date: tempDate,
-        Μέτρηση: oxygenArray[i],
+        Οξυγόνο: oxygenArray[i],
       });
 
       gdWeight.push({
         date: tempDate,
-        Μέτρηση: weightArray[i],
+        Βάρος: weightArray[i],
       });
     }
 
@@ -381,7 +382,9 @@ const GraphVitalsModal = (props) => {
             }
           >
             <CartesianGrid strokeDasharray="3 3" />
+
             <XAxis dataKey={"date"} />
+
             <YAxis
               type="number"
               domain={
@@ -400,7 +403,7 @@ const GraphVitalsModal = (props) => {
                   : null
               }
             />
-            <YAxis></YAxis>
+            <YAxis />
             <Tooltip />
             <Legend />
             <Line
@@ -408,7 +411,19 @@ const GraphVitalsModal = (props) => {
               dataKey={
                 noDataStatus === true
                   ? "Δεν υπάρχουν δεδομένα για τη συγκεκριμένη περίοδο επιλογής."
-                  : "Μέτρηση"
+                  : categoryGraph === "systolicValues"
+                  ? "Συστολική"
+                  : categoryGraph === "diastolicValues"
+                  ? "Διαστολική"
+                  : categoryGraph === "pulsesValues"
+                  ? "Παλμοί"
+                  : categoryGraph === "temperatureValues"
+                  ? "Θερμοκρασία"
+                  : categoryGraph === "oxygenValues"
+                  ? "Οξυγόνο"
+                  : categoryGraph === "weightValues"
+                  ? "Βάρος"
+                  : null
               }
               stroke={
                 categoryGraph === "systolicValues"
@@ -428,6 +443,69 @@ const GraphVitalsModal = (props) => {
             />
           </LineChart>
         </ResponsiveContainer>
+      </div>
+      <hr
+        style={{
+          color:
+            categoryGraph === "systolicValues"
+              ? "var(--bs-dark)"
+              : categoryGraph === "diastolicValues"
+              ? "var(--bs-warning)"
+              : categoryGraph === "pulsesValues"
+              ? "var(--bs-danger)"
+              : categoryGraph === "temperatureValues"
+              ? "var(--bs-primary)"
+              : categoryGraph === "oxygenValues"
+              ? "var(--bs-success)"
+              : categoryGraph === "weightValues"
+              ? "var(--bs-info)"
+              : "var(--bs-dark)",
+        }}
+      />
+      <div className="mt-4">
+        <h6>
+          <b>
+            Μέγιστες και ελάχιστες τιμές ζωτικών λειτουργιών της επιλεγμένης
+            ημερομηνίας.
+          </b>
+        </h6>
+        <div className="mt-1 row row-cols-2 row-cols-lg-3 g-2 g-lg-3">
+          <Gutters
+            gutterTitle={"Συστολική Πίεση (mmHg)"}
+            gutterMax={maxSystolic === maxSystolic / 0 ? "-" : maxSystolic}
+            gutterMin={minSystolic === minSystolic / 0 ? "-" : minSystolic}
+          />
+          <Gutters
+            gutterTitle={"Διαστολική Πίεση (mmHg)"}
+            gutterMax={maxDiastolic === maxDiastolic / 0 ? "-" : maxDiastolic}
+            gutterMin={minDiastolic === minDiastolic / 0 ? "-" : minDiastolic}
+          />
+          {console.log(typeof maxSystolic)}
+          <Gutters
+            gutterTitle={"Παλμοί (bpm)"}
+            gutterMax={maxPulses === maxPulses / 0 ? "-" : maxPulses}
+            gutterMin={minPulses === minPulses / 0 ? "-" : minPulses}
+          />
+          <Gutters
+            gutterTitle={"Θερμοκρασία (" + String.fromCharCode(176) + "C)"}
+            gutterMax={
+              maxTemperature === maxTemperature / 0 ? "-" : maxTemperature
+            }
+            gutterMin={
+              minTemperature === minTemperature / 0 ? "-" : minTemperature
+            }
+          />
+          <Gutters
+            gutterTitle={"Οξυγόνο (%)"}
+            gutterMax={maxOxygen === maxOxygen / 0 ? "-" : maxOxygen}
+            gutterMin={minOxygen === minOxygen / 0 ? "-" : minOxygen}
+          />
+          <Gutters
+            gutterTitle={"Βάρος (Kg)"}
+            gutterMax={maxWeight === maxWeight / 0 ? "-" : maxWeight}
+            gutterMin={minWeight === minWeight / 0 ? "-" : minWeight}
+          />
+        </div>
       </div>
 
       {/* more info modal */}
