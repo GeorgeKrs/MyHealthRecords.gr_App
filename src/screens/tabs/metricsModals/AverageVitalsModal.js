@@ -8,7 +8,7 @@ const AverageVitalsModal = (props) => {
       <div className="row">
         <div className="offset-lg-2 offset-md-1 col-lg-6 col-md-10 col-sm-12">
           <h6>
-            <u>Μέσος Όρος Μετρήσεων Ζωτικών Λειτουργιών (Όλων των μετρήσεων)</u>
+            <b>Μέσος Όρος Μετρήσεων Ζωτικών Λειτουργιών (Όλων των μετρήσεων)</b>
           </h6>
         </div>
       </div>

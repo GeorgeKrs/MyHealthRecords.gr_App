@@ -1,6 +1,7 @@
 import TabTitles from "../../general/TabTitles";
 import GraphVitalsModal from "./metricsModals/GraphVitalsModal";
 import AverageVitalsModal from "./metricsModals/AverageVitalsModal";
+import SugarGraphModal from "./metricsModals/SugarGraphModal";
 
 const MetricsTab = (props) => {
   return (
@@ -14,6 +15,9 @@ const MetricsTab = (props) => {
       </div>
       <div className="mx-auto mt-5 mb-5 w-100">
         <GraphVitalsModal loggedInUser={props.loggedInUser} />
+      </div>
+      <div className="mx-auto mt-5 mb-5 w-100">
+        <SugarGraphModal />
       </div>
     </div>
   );

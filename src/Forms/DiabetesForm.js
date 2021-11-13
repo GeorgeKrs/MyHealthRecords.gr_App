@@ -12,7 +12,7 @@ const DiabetesForm = (props) => {
   const [loading, setLoading] = useState(false);
 
   const [sugar, setSugar] = useState("");
-  const [category, setCategory] = useState("beforeMeal");
+  const [category, setCategory] = useState("beforeBreakfast");
   const [comments, setComments] = useState("");
   const [errSugar, setErrSugar] = useState("");
 
@@ -48,7 +48,7 @@ const DiabetesForm = (props) => {
         });
       })().finally(handleOpenSuccess());
       setSugar("");
-      setCategory("beforeMeal");
+      setCategory("rise");
       setComments("");
     }
     setLoading(false);
@@ -78,10 +78,14 @@ const DiabetesForm = (props) => {
               value={category}
               disabled={loading ? true : false}
             >
-              <option defaultValue value="beforeMeal">
-                Πριν το φαγητό
+              <option defaultValue value="beforeBreakfast">
+                Πριν το πρωινό
               </option>
-              <option value="afterMeal">Μετά το φαγητό</option>
+              <option value="afterBreakfast">2 Ώρες μετά το πρωινό</option>
+              <option value="beforeLunch">Πριν το μεσημεριανό</option>
+              <option value="afterLunch">2 Ώρες μετά το μεσημεριανό</option>
+              <option value="beforeDinner">Πριν το βραδινό</option>
+              <option value="afterDinner">2 Ώρες μετά το βραδινό</option>
               <option value="beforeBed">Πριν τον ύπνο</option>
               <option value="other">Άλλο</option>
             </select>

@@ -22,10 +22,6 @@ import { faInfo } from "@fortawesome/free-solid-svg-icons";
 import { Modal } from "react-bootstrap";
 
 const GraphVitalsModal = (props) => {
-  const [searchState, setSearchState] = useState(true);
-
-  const [loadingGraphData, setLoadingGraphData] = useState(false);
-
   const [categoryGraph, setCategoryGraph] = useState("systolicValues");
   const [monthGraph, setMonthGraph] = useState(
     new Date().getMonth().toString()
@@ -34,6 +30,8 @@ const GraphVitalsModal = (props) => {
     new Date().getFullYear().toString()
   );
 
+  const [searchState, setSearchState] = useState(true);
+  const [loadingGraphData, setLoadingGraphData] = useState(false);
   const [noDataStatus, setNoDataStatus] = useState(false);
   const [graphSystolic, setGraphSystolic] = useState([]);
   const [graphDiastolic, setGraphDiastolic] = useState([]);
@@ -465,8 +463,8 @@ const GraphVitalsModal = (props) => {
       <div className="mt-4">
         <h6>
           <b>
-            Μέγιστες και ελάχιστες τιμές ζωτικών λειτουργιών της επιλεγμένης
-            ημερομηνίας.
+            Μέγιστες και ελάχιστες τιμές ζωτικών λειτουργιών του επιλεγμένου
+            μήνα.
           </b>
         </h6>
         <div className="mt-1 row row-cols-2 row-cols-lg-3 g-2 g-lg-3">
