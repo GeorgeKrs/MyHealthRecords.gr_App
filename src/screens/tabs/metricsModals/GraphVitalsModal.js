@@ -446,22 +446,21 @@ const GraphVitalsModal = (props) => {
         </ResponsiveContainer>
       </div>
       <hr
-        style={{
-          color:
-            categoryGraph === "systolicValues"
-              ? "var(--bs-dark)"
-              : categoryGraph === "diastolicValues"
-              ? "var(--bs-warning)"
-              : categoryGraph === "pulsesValues"
-              ? "var(--bs-danger)"
-              : categoryGraph === "temperatureValues"
-              ? "var(--bs-primary)"
-              : categoryGraph === "oxygenValues"
-              ? "var(--bs-success)"
-              : categoryGraph === "weightValues"
-              ? "var(--bs-info)"
-              : "var(--bs-dark)",
-        }}
+        className={
+          categoryGraph === "systolicValues"
+            ? "border border-1 border-dark"
+            : categoryGraph === "diastolicValues"
+            ? "border border-1 border-warning"
+            : categoryGraph === "pulsesValues"
+            ? "border border-1 border-danger"
+            : categoryGraph === "temperatureValues"
+            ? "border border-1 border-primary"
+            : categoryGraph === "oxygenValues"
+            ? "border border-1 border-success"
+            : categoryGraph === "weightValues"
+            ? "border border-1 border-info"
+            : "border border-1 border-dark"
+        }
       />
       <div className="mt-4">
         <h6>
