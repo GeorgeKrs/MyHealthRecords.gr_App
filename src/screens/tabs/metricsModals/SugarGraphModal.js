@@ -33,23 +33,23 @@ const SugarGraphModal = (props) => {
   const [loadingGraphData, setLoadingGraphData] = useState(false);
   const [searchState, setSearchState] = useState(true);
   const [noDataStatus, setNoDataStatus] = useState(false);
-  const [graphBeforeMeal, setGraphBeforeMeal] = useState([]);
-  const [graphAfterMeal, setGraphAfterMeal] = useState([]);
+
+  const [singleDay, setSingleDay] = useState(
+    new Date().getDate().toString() +
+      "/" +
+      new Date().getMonth().toString() +
+      "/" +
+      new Date().getFullYear().toString()
+  );
+
+  const [graphBeforeBreakfast, setGraphBeforeBreakfast] = useState([]);
+  const [graphAfterBreakfast, setGraphAfterBreakfast] = useState([]);
+  const [graphBeforeLunch, setGraphBeforeLunch] = useState([]);
+  const [graphAfterLunch, setGraphAfterLunch] = useState([]);
+  const [graphBeforeDinner, setGraphBeforeDinner] = useState([]);
+  const [graphAfterDinner, setGraphAfterDinner] = useState([]);
   const [graphBeforeBed, setGraphBeforeBed] = useState([]);
   const [graphOther, setGraphOther] = useState([]);
-
-  // min and max values
-  const [maxBeforeMeal, setMaxBeforeMeal] = useState(0);
-  const [minBeforeMeal, setMinBeforeMeal] = useState(0);
-
-  const [maxAfterMeal, setMaxAfterMeal] = useState(0);
-  const [minAfterMeal, setMinAfterMeal] = useState(0);
-
-  const [maxBeforeBed, setMaxBeforeBed] = useState(0);
-  const [minBeforeBed, setMinBeforeBed] = useState(0);
-
-  const [maxOther, setMaxOther] = useState(0);
-  const [minOther, setMinOther] = useState(0);
 
   const [filterMode, setFilterMode] = useState(true);
   /*  two available filter modes
@@ -64,13 +64,28 @@ const SugarGraphModal = (props) => {
 
   const fetchData = async () => {
     let beforeBreakfastArray = [];
+    let beforeBreakfastDates = [];
+
     let afterBreakfastArray = [];
+    let afterBreakfastDates = [];
+
     let beforeLunchArray = [];
+    let beforeLunchDates = [];
+
     let afterLunchArray = [];
+    let afterLunchDates = [];
+
     let beforeDinnerArray = [];
+    let beforeDinnerDates = [];
+
     let afterDinnerArray = [];
+    let afterDinnerDates = [];
+
     let beforeBedArray = [];
+    let beforeBedDates = [];
+
     let otherArray = [];
+    let otherDates = [];
 
     let categoryArray = [];
     let bloodSugarArray = [];
@@ -114,11 +129,49 @@ const SugarGraphModal = (props) => {
       categoryArray.push(doc.data().category);
       bloodSugarArray.push(doc.data().bloodSugar);
       submitDateArray.push(doc.data().submitDate);
+
+      if (doc.data().category === "beforeBreakfast") {
+        beforeBreakfastArray.push(doc.data().bloodSugar);
+        beforeBreakfastDates.push(doc.data().submitDate);
+      } else if (doc.data().category === "afterBreakfast") {
+        afterBreakfastArray.push(doc.data.bloodSugar);
+        afterBreakfastDates.push(doc.data().submitDate);
+      } else if (doc.data().category === "beforeLunch") {
+        beforeLunchArray.push(doc.data().bloodSugar);
+        beforeLunchDates.push(doc.data().submitDate);
+      } else if (doc.data().category === "afterLunch") {
+        afterLunchArray.push(doc.data().bloodSugar);
+        afterLunchDates.push(doc.data().submitDate);
+      } else if (doc.data().category === "beforeDinner") {
+        beforeDinnerArray.push(doc.data().bloodSugar);
+        beforeDinnerDates.push(doc.data().submitDate);
+      } else if (doc.data().category === "afterDinner") {
+        afterDinnerArray.push(doc.data().bloodSugar);
+        afterDinnerDates.push(doc.data().submitDate);
+      } else if (doc.data().category === "beforeBed") {
+        beforeBedArray.push(doc.data().bloodSugar);
+        beforeBedDates.push(doc.data().submitDate);
+      } else if (doc.data().category === "other") {
+        otherArray.push(doc.data().bloodSugar);
+        otherDates.push(doc.data().submitDate);
+      } else {
+        console.log(
+          "Παρουσιάστηκε άγνωστο σφάλμα. Παρακαλώ προσπαθήστε αργότερα."
+        );
+      }
     });
 
-    console.log(categoryArray);
-    console.log(bloodSugarArray);
-    console.log(submitDateArray);
+    setSingleDay(dayGraph + "/" + monthGraph + "/" + yearGraph);
+
+    // console.log(beforeBreakfastArray);
+    // console.log(afterBreakfastArray);
+    // console.log(afterBreakfastArray);
+    // console.log(beforeLunchArray);
+    // console.log(afterLunchArray);
+    // console.log(beforeDinnerArray);
+    // console.log(afterDinnerArray);
+    // console.log(beforeBedArray);
+    // console.log(otherArray);
   };
 
   useEffect(() => {
