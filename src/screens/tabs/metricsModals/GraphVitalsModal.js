@@ -480,7 +480,6 @@ const GraphVitalsModal = (props) => {
             gutterMin={minDiastolic === minDiastolic / 0 ? "-" : minDiastolic}
             gutterBorderColor={"border-primary"}
           />
-          {console.log(typeof maxSystolic)}
           <Gutters
             gutterTitle={"Παλμοί (bpm)"}
             gutterMax={maxPulses === maxPulses / 0 ? "-" : maxPulses}

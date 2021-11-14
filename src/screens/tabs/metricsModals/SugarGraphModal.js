@@ -20,6 +20,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckSquare, faSquare } from "@fortawesome/free-solid-svg-icons";
 
 const SugarGraphModal = (props) => {
+  const [dayGraph, setDayGraph] = useState(new Date().getDate().toString());
+
   const [monthGraph, setMonthGraph] = useState(
     new Date().getMonth().toString()
   );
@@ -60,7 +62,64 @@ const SugarGraphModal = (props) => {
     setSearchState(true);
   };
 
-  const fetchData = async () => {};
+  const fetchData = async () => {
+    let beforeBreakfastArray = [];
+    let afterBreakfastArray = [];
+    let beforeLunchArray = [];
+    let afterLunchArray = [];
+    let beforeDinnerArray = [];
+    let afterDinnerArray = [];
+    let beforeBedArray = [];
+    let otherArray = [];
+
+    let categoryArray = [];
+    let bloodSugarArray = [];
+    let submitDateArray = [];
+
+    let monthDays = 0;
+
+    if (
+      monthGraph == "3" ||
+      monthGraph == "5" ||
+      monthGraph == "8" ||
+      monthGraph == "10"
+    ) {
+      monthDays = 30;
+    } else if (monthGraph == "1") {
+      monthDays = 28;
+    } else {
+      monthDays = 31;
+    }
+
+    const startDate = new Date(yearGraph, monthGraph, 1, "00", "00", "01");
+    const endDate = new Date(
+      yearGraph,
+      monthGraph,
+      monthDays,
+      "23",
+      "59",
+      "59"
+    );
+
+    const graphSugarQuery = query(
+      collection(db, "bloodSugarRecords"),
+      where("userEmail", "==", loggedInUser),
+      where("submitDate", ">=", startDate),
+      where("submitDate", "<=", endDate),
+      orderBy("submitDate", "asc")
+    );
+
+    const querySugarSnapshot = await getDocs(graphSugarQuery);
+    querySugarSnapshot.forEach((doc) => {
+      categoryArray.push(doc.data().category);
+      bloodSugarArray.push(doc.data().bloodSugar);
+      submitDateArray.push(doc.data().submitDate);
+    });
+
+    console.log(categoryArray);
+    console.log(bloodSugarArray);
+    console.log(submitDateArray);
+  };
 
   useEffect(() => {
     if (searchState === true) fetchData().finally(setSearchState(false));
@@ -87,6 +146,7 @@ const SugarGraphModal = (props) => {
               size="lg"
               icon={faSquare}
               style={{ color: "var(--bs-dark)" }}
+              onClick={(e) => setFilterMode(true)}
             />
           )}
         </div>
@@ -110,6 +170,7 @@ const SugarGraphModal = (props) => {
               size="lg"
               icon={faSquare}
               style={{ color: "var(--bs-dark)" }}
+              onClick={(e) => setFilterMode(false)}
             />
           )}
         </div>
@@ -121,7 +182,49 @@ const SugarGraphModal = (props) => {
       </div>
 
       <div className="row mt-4">
-        <div className="mt-4 px-3">
+        {filterMode === true ? null : (
+          <div className="mt-4 px-3">
+            <select
+              className="btn btn-light"
+              id="metricsSelect2"
+              onChange={(e) => setDayGraph(e.target.value)}
+              value={dayGraph}
+            >
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+              <option value="11">11</option>
+              <option value="12">12</option>
+              <option value="13">13</option>
+              <option value="14">14</option>
+              <option value="15">15</option>
+              <option value="16">16</option>
+              <option value="17">17</option>
+              <option value="18">18</option>
+              <option value="19">19</option>
+              <option value="20">20</option>
+              <option value="21">21</option>
+              <option value="22">22</option>
+              <option value="23">23</option>
+              <option value="24">24</option>
+              <option value="25">25</option>
+              <option value="26">26</option>
+              <option value="27">27</option>
+              <option value="28">28</option>
+              <option value="29">29</option>
+              <option value="30">30</option>
+              <option value="31">31</option>
+            </select>
+          </div>
+        )}
+        <div className="mt-2 px-3">
           <select
             className="btn btn-light"
             id="metricsSelect2"
@@ -177,25 +280,35 @@ const SugarGraphModal = (props) => {
           </button>
         </div>
 
-        <div className="mt-4 px-3 d-flex flex-wrap">
-          <div className="mb-2">
-            <select
-              className="btn btn-light"
-              id="metricsSelect1"
-              //   onChange={(e) => setCategoryGraph(e.target.value)}
-            >
-              <option defaultValue value="beforeBreakfast">
-                Πριν το πρωινό
-              </option>
-              <option value="afterBreakfast">2 Ώρες μετά το πρωινό</option>
-              <option value="beforeLunch">Πριν το μεσημεριανό</option>
-              <option value="afterLunch">2 Ώρες μετά το μεσημεριανό</option>
-              <option value="beforeDinner">Πριν το βραδινό</option>
-              <option value="afterDinner">2 Ώρες μετά το βραδινό</option>
-              <option value="beforeBed">Πριν τον ύπνο</option>
-              <option value="other">Άλλο</option>
-            </select>
+        {filterMode === true ? (
+          <div className="mt-4 px-3 d-flex flex-wrap">
+            <div className="mb-2">
+              <select
+                className="btn btn-light"
+                id="metricsSelect1"
+                //   onChange={(e) => setCategoryGraph(e.target.value)}
+              >
+                <option defaultValue value="beforeBreakfast">
+                  Πριν το πρωινό
+                </option>
+                <option value="afterBreakfast">2 Ώρες μετά το πρωινό</option>
+                <option value="beforeLunch">Πριν το μεσημεριανό</option>
+                <option value="afterLunch">2 Ώρες μετά το μεσημεριανό</option>
+                <option value="beforeDinner">Πριν το βραδινό</option>
+                <option value="afterDinner">2 Ώρες μετά το βραδινό</option>
+                <option value="beforeBed">Πριν τον ύπνο</option>
+                <option value="other">Άλλο</option>
+              </select>
+            </div>
           </div>
+        ) : null}
+        <div className="px-3 text-danger">
+          <b>
+            Περίοδος Δεδομένων:
+            <span className="px-1">
+              {/* {dateSearched === null ? null : dateSearched.toString()} */}
+            </span>
+          </b>
         </div>
       </div>
     </div>

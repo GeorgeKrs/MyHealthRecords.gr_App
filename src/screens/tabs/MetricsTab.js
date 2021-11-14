@@ -17,7 +17,7 @@ const MetricsTab = (props) => {
         <GraphVitalsModal loggedInUser={props.loggedInUser} />
       </div>
       <div className="mx-auto mt-5 mb-5 w-100">
-        <SugarGraphModal />
+        <SugarGraphModal loggedInUser={props.loggedInUser} />
       </div>
     </div>
   );
