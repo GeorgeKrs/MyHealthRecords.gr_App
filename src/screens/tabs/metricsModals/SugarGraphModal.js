@@ -15,6 +15,9 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+// font icons
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheckSquare, faSquare } from "@fortawesome/free-solid-svg-icons";
 
 const SugarGraphModal = (props) => {
   const [monthGraph, setMonthGraph] = useState(
@@ -46,6 +49,11 @@ const SugarGraphModal = (props) => {
   const [maxOther, setMaxOther] = useState(0);
   const [minOther, setMinOther] = useState(0);
 
+  const [filterMode, setFilterMode] = useState(true);
+  /*  two available filter modes
+      first mode (Status: False): Filter by month, year & category
+      second mode (Status: True): Filter by day, month, year (all categories) */
+
   const loggedInUser = props.loggedInUser;
 
   const filtersHandler = () => {
@@ -63,12 +71,57 @@ const SugarGraphModal = (props) => {
       className="offset-lg-2 col-lg-8 col-md-12 col-sm-12"
       style={{ overflow: "hidden" }}
     >
-      <h6>
-        <b>Γραφική παράσταση με βάση τις τιμές των μετρήσεων ανά μήνα.</b>
-      </h6>
+      <b>
+        <h5>Μέθοδος χάραξης γραφικής παράστασης σακχάρου:</h5>
+      </b>
+      <div className="mt-4 d-flex d-inline-flex">
+        <div className="px-2">
+          {filterMode === true ? (
+            <FontAwesomeIcon
+              size="lg"
+              icon={faCheckSquare}
+              style={{ color: "var(--bs-dark)" }}
+            />
+          ) : (
+            <FontAwesomeIcon
+              size="lg"
+              icon={faSquare}
+              style={{ color: "var(--bs-dark)" }}
+            />
+          )}
+        </div>
+        <div>
+          <h6>
+            Γραφική παράσταση με βάση τις τιμές όλων των μετρήσεων ανά μήνα, ανά
+            κατηγορία.
+          </h6>
+        </div>
+      </div>
+      <div className="d-flex">
+        <div className="px-2">
+          {filterMode === false ? (
+            <FontAwesomeIcon
+              size="lg"
+              icon={faCheckSquare}
+              style={{ color: "var(--bs-dark)" }}
+            />
+          ) : (
+            <FontAwesomeIcon
+              size="lg"
+              icon={faSquare}
+              style={{ color: "var(--bs-dark)" }}
+            />
+          )}
+        </div>
+        <div>
+          <h6>
+            Γραφική παράσταση με βάση τις τιμές όλων των μετρήσεων ανά ημέρα.
+          </h6>
+        </div>
+      </div>
 
-      <div className="row">
-        <div className="mt-2 px-3">
+      <div className="row mt-4">
+        <div className="mt-4 px-3">
           <select
             className="btn btn-light"
             id="metricsSelect2"
