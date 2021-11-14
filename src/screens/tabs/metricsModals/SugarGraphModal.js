@@ -32,15 +32,23 @@ const SugarGraphModal = (props) => {
 
   const [loadingGraphData, setLoadingGraphData] = useState(false);
   const [searchState, setSearchState] = useState(true);
-  const [noDataStatus, setNoDataStatus] = useState(false);
+  const [noSingleDayDataStatus, setNoSingleDayDataStatus] = useState(false);
 
-  const [singleDay, setSingleDay] = useState(
+  const [singleDayResults, setSingleDayResults] = useState(
     new Date().getDate().toString() +
       "/" +
       new Date().getMonth().toString() +
       "/" +
       new Date().getFullYear().toString()
   );
+
+  const [monthDaysResults, setMonthDaysResults] = useState(
+    new Date().getMonth().toString() + "/" + new Date().getFullYear().toString()
+  );
+
+  const [categoryGraph, setCategoryGraph] = useState("beforeBreakfast");
+
+  const [graphSingleDay, setGraphSingleDay] = useState([]);
 
   const [graphBeforeBreakfast, setGraphBeforeBreakfast] = useState([]);
   const [graphAfterBreakfast, setGraphAfterBreakfast] = useState([]);
@@ -63,6 +71,8 @@ const SugarGraphModal = (props) => {
   };
 
   const fetchData = async () => {
+    let gdSingleDay = [];
+
     let beforeBreakfastArray = [];
     let beforeBreakfastDates = [];
 
@@ -116,6 +126,7 @@ const SugarGraphModal = (props) => {
       "59"
     );
 
+    // filter mode true
     const graphSugarQuery = query(
       collection(db, "bloodSugarRecords"),
       where("userEmail", "==", loggedInUser),
@@ -161,17 +172,65 @@ const SugarGraphModal = (props) => {
       }
     });
 
-    setSingleDay(dayGraph + "/" + monthGraph + "/" + yearGraph);
+    setMonthDaysResults(parseInt(monthGraph) + 1 + "/" + yearGraph);
+    setSingleDayResults(
+      dayGraph + "/" + (parseInt(monthGraph) + 1) + "/" + yearGraph
+    );
 
-    // console.log(beforeBreakfastArray);
-    // console.log(afterBreakfastArray);
-    // console.log(afterBreakfastArray);
-    // console.log(beforeLunchArray);
-    // console.log(afterLunchArray);
-    // console.log(beforeDinnerArray);
-    // console.log(afterDinnerArray);
-    // console.log(beforeBedArray);
-    // console.log(otherArray);
+    // filter mode false
+    const startSingleDay = new Date(
+      yearGraph,
+      monthGraph,
+      dayGraph,
+      "00",
+      "00",
+      "01"
+    );
+    const endSingleDate = new Date(
+      yearGraph,
+      monthGraph,
+      dayGraph,
+      "23",
+      "59",
+      "59"
+    );
+
+    const graphSugarSingleQuery = query(
+      collection(db, "bloodSugarRecords"),
+      where("userEmail", "==", loggedInUser),
+      where("submitDate", ">=", startSingleDay),
+      where("submitDate", "<=", endSingleDate),
+      orderBy("submitDate", "asc")
+    );
+
+    const querySugarSingleSnapshot = await getDocs(graphSugarSingleQuery);
+    querySugarSingleSnapshot.forEach((doc) => {
+      let hours = doc.data().submitDate.toDate().getHours();
+      let minutes = doc.data().submitDate.toDate().getMinutes();
+
+      if (hours < 10) {
+        hours = "0" + hours;
+      }
+
+      if (minutes < 10) {
+        minutes = "0" + minutes;
+      }
+
+      const tempHours = hours + ":";
+      const tempMinutes = minutes;
+
+      const finalTime = tempHours.concat(tempMinutes);
+
+      gdSingleDay.push({ dates: finalTime, Μέτρηση: doc.data().bloodSugar });
+
+      if (gdSingleDay.length === 0) {
+        setNoSingleDayDataStatus(true);
+      } else {
+        setNoSingleDayDataStatus(false);
+      }
+    });
+
+    setGraphSingleDay(gdSingleDay);
   };
 
   useEffect(() => {
@@ -238,7 +297,7 @@ const SugarGraphModal = (props) => {
         {filterMode === true ? null : (
           <div className="mt-4 px-3">
             <select
-              className="btn btn-light"
+              className="btn btn-light border border-dark"
               id="metricsSelect2"
               onChange={(e) => setDayGraph(e.target.value)}
               value={dayGraph}
@@ -279,7 +338,7 @@ const SugarGraphModal = (props) => {
         )}
         <div className="mt-2 px-3">
           <select
-            className="btn btn-light"
+            className="btn btn-light border border-dark"
             id="metricsSelect2"
             onChange={(e) => setMonthGraph(e.target.value)}
             value={monthGraph}
@@ -301,7 +360,7 @@ const SugarGraphModal = (props) => {
 
         <div className="mt-2 px-3">
           <select
-            className="btn btn-light"
+            className="btn btn-light border border-dark"
             id="metricsSelect3"
             onChange={(e) => setYearGraph(e.target.value)}
             value={yearGraph}
@@ -325,7 +384,7 @@ const SugarGraphModal = (props) => {
         <div className="mt-2 px-3 mb-4">
           <button
             id="metricsSelect1"
-            className="btn btn-secondary"
+            className="btn btn-secondary "
             type="button"
             onClick={filtersHandler}
           >
@@ -337,9 +396,9 @@ const SugarGraphModal = (props) => {
           <div className="mt-4 px-3 d-flex flex-wrap">
             <div className="mb-2">
               <select
-                className="btn btn-light"
+                className="btn btn-light border border-dark"
                 id="metricsSelect1"
-                //   onChange={(e) => setCategoryGraph(e.target.value)}
+                onChange={(e) => setCategoryGraph(e.target.value)}
               >
                 <option defaultValue value="beforeBreakfast">
                   Πριν το πρωινό
@@ -357,13 +416,45 @@ const SugarGraphModal = (props) => {
         ) : null}
         <div className="px-3 text-danger">
           <b>
-            Περίοδος Δεδομένων:
+            {filterMode === true ? "Περίοδος Δεδομένων: " : "Ημέρα Δεδομένων: "}
             <span className="px-1">
-              {/* {dateSearched === null ? null : dateSearched.toString()} */}
+              {filterMode === true ? monthDaysResults : singleDayResults}
             </span>
           </b>
         </div>
       </div>
+
+      {filterMode === true ? null : (
+        <div
+          className="metrics-form-custom mt-2"
+          style={{ height: 300, overflow: "hidden" }}
+        >
+          <ResponsiveContainer
+            width="95%"
+            className=""
+            style={{ overflow: "hidden" }}
+          >
+            <LineChart data={graphSingleDay}>
+              <CartesianGrid strokeDasharray="3 3" />
+
+              <XAxis dataKey={"dates"} />
+
+              <YAxis type="number" domain={[50, 160]} />
+              <Tooltip />
+              <Legend />
+              <Line
+                type="monotone"
+                dataKey={
+                  noSingleDayDataStatus === true
+                    ? "Δεν υπάρχουν δεδομένα για τη συγκεκριμένη ημέρα επιλογής."
+                    : "Μέτρηση"
+                }
+                stroke={"var(--bs-primary)"}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+      )}
     </div>
   );
 };

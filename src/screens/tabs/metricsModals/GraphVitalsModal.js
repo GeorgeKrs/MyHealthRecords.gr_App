@@ -260,7 +260,7 @@ const GraphVitalsModal = (props) => {
       <div className="row">
         <div className="mt-2 px-3">
           <select
-            className="btn btn-light"
+            className="btn btn-light border border-dark"
             id="metricsSelect2"
             onChange={(e) => setMonthGraph(e.target.value)}
             value={monthGraph}
@@ -282,7 +282,7 @@ const GraphVitalsModal = (props) => {
 
         <div className="mt-2 px-3">
           <select
-            className="btn btn-light"
+            className="btn btn-light border border-dark"
             id="metricsSelect3"
             onChange={(e) => setYearGraph(e.target.value)}
             value={yearGraph}
@@ -317,7 +317,7 @@ const GraphVitalsModal = (props) => {
         <div className="mt-4 px-3 d-flex flex-wrap">
           <div className="mb-2">
             <select
-              className="btn btn-light"
+              className="btn btn-light border border-dark"
               id="metricsSelect1"
               onChange={(e) => setCategoryGraph(e.target.value)}
             >
@@ -402,8 +402,6 @@ const GraphVitalsModal = (props) => {
                   : null
               }
             />
-            <YAxis />
-            <Tooltip />
             <Legend />
             <Line
               type="monotone"
