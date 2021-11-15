@@ -26,8 +26,8 @@ const DiabetesForm = (props) => {
   const handleOpenSuccess = () => setShowSuccess(true);
 
   const ValidateSugar = (sugar) => {
-    if ((sugar < 50 || sugar > 220) && sugar !== "") {
-      setErrSugar("Τιμή εκτός ορίων. 50 < Σάκχαρο < 160.");
+    if ((sugar < 50 || sugar > 200) && sugar !== "") {
+      setErrSugar("Τιμή εκτός ορίων. 50 < Σάκχαρο < 200.");
     } else {
       setErrSugar("");
     }

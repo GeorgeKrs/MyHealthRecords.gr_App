@@ -133,10 +133,7 @@ const GraphVitalsModal = (props) => {
     });
 
     for (let i = 0; i < systolicArray.length; ++i) {
-      let tempDateDay = submitDateArray[i].toDate().getDate() + "/";
-      let tempDateMonth = submitDateArray[i].toDate().getMonth() + 1;
-
-      let tempDate = tempDateDay.concat(tempDateMonth);
+      let tempDate = submitDateArray[i].toDate().getDate();
 
       // dealing with empty values
       if (systolicArray[i] === "") {
@@ -257,6 +254,9 @@ const GraphVitalsModal = (props) => {
       className="offset-lg-2 col-lg-8 col-md-12 col-sm-12"
       style={{ overflow: "hidden" }}
     >
+      <b>
+        <h5 className="text-bolder">Γραφική παράσταση ζωτικών λειτουργιών:</h5>
+      </b>
       <div className="row">
         <div className="mt-2 px-3">
           <select

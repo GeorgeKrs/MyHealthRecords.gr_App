@@ -32,6 +32,7 @@ const SugarGraphModal = (props) => {
 
   const [loadingGraphData, setLoadingGraphData] = useState(false);
   const [searchState, setSearchState] = useState(true);
+  const [noDataStatus, setNoDataStatus] = useState(false);
   const [noSingleDayDataStatus, setNoSingleDayDataStatus] = useState(false);
 
   const [singleDayResults, setSingleDayResults] = useState(
@@ -74,29 +75,13 @@ const SugarGraphModal = (props) => {
     let gdSingleDay = [];
 
     let beforeBreakfastArray = [];
-    let beforeBreakfastDates = [];
-
     let afterBreakfastArray = [];
-    let afterBreakfastDates = [];
-
     let beforeLunchArray = [];
-    let beforeLunchDates = [];
-
     let afterLunchArray = [];
-    let afterLunchDates = [];
-
     let beforeDinnerArray = [];
-    let beforeDinnerDates = [];
-
     let afterDinnerArray = [];
-    let afterDinnerDates = [];
-
     let beforeBedArray = [];
-    let beforeBedDates = [];
-
     let otherArray = [];
-    let otherDates = [];
-
     let categoryArray = [];
     let bloodSugarArray = [];
     let submitDateArray = [];
@@ -139,38 +124,94 @@ const SugarGraphModal = (props) => {
     querySugarSnapshot.forEach((doc) => {
       categoryArray.push(doc.data().category);
       bloodSugarArray.push(doc.data().bloodSugar);
-      submitDateArray.push(doc.data().submitDate);
+
+      const day = doc.data().submitDate.toDate().getDate();
+      // let hours = doc.data().submitDate.toDate().getHours();
+      // let minutes = doc.data().submitDate.toDate().getMinutes();
+
+      // if (hours < 10) {
+      //   hours = "0" + hours;
+      // }
+
+      // if (minutes < 10) {
+      //   minutes = "0" + minutes;
+      // }
+      // const tempHours = hours + ":";
+      // const tempMinutes = minutes;
+
+      // const finalDateShow = tempHours.concat(tempMinutes);
+      const finalDateShow = day;
 
       if (doc.data().category === "beforeBreakfast") {
-        beforeBreakfastArray.push(doc.data().bloodSugar);
-        beforeBreakfastDates.push(doc.data().submitDate);
+        beforeBreakfastArray.push({
+          Μέτρηση: doc.data().bloodSugar,
+          date: finalDateShow,
+        });
       } else if (doc.data().category === "afterBreakfast") {
-        afterBreakfastArray.push(doc.data.bloodSugar);
-        afterBreakfastDates.push(doc.data().submitDate);
+        afterBreakfastArray.push({
+          Μέτρηση: doc.data().bloodSugar,
+          date: finalDateShow,
+        });
       } else if (doc.data().category === "beforeLunch") {
-        beforeLunchArray.push(doc.data().bloodSugar);
-        beforeLunchDates.push(doc.data().submitDate);
+        beforeLunchArray.push({
+          Μέτρηση: doc.data().bloodSugar,
+          date: finalDateShow,
+        });
       } else if (doc.data().category === "afterLunch") {
-        afterLunchArray.push(doc.data().bloodSugar);
-        afterLunchDates.push(doc.data().submitDate);
+        afterLunchArray.push({
+          Μέτρηση: doc.data().bloodSugar,
+          date: finalDateShow,
+        });
       } else if (doc.data().category === "beforeDinner") {
-        beforeDinnerArray.push(doc.data().bloodSugar);
-        beforeDinnerDates.push(doc.data().submitDate);
+        beforeDinnerArray.push({
+          Μέτρηση: doc.data().bloodSugar,
+          date: finalDateShow,
+        });
       } else if (doc.data().category === "afterDinner") {
-        afterDinnerArray.push(doc.data().bloodSugar);
-        afterDinnerDates.push(doc.data().submitDate);
+        afterDinnerArray.push({
+          Μέτρηση: doc.data().bloodSugar,
+          date: finalDateShow,
+        });
       } else if (doc.data().category === "beforeBed") {
-        beforeBedArray.push(doc.data().bloodSugar);
-        beforeBedDates.push(doc.data().submitDate);
+        beforeBedArray.push({
+          Μέτρηση: doc.data().bloodSugar,
+          date: finalDateShow,
+        });
       } else if (doc.data().category === "other") {
-        otherArray.push(doc.data().bloodSugar);
-        otherDates.push(doc.data().submitDate);
+        otherArray.push({
+          Μέτρηση: doc.data().bloodSugar,
+          date: finalDateShow,
+        });
       } else {
         console.log(
           "Παρουσιάστηκε άγνωστο σφάλμα. Παρακαλώ προσπαθήστε αργότερα."
         );
       }
     });
+
+    if (
+      beforeBreakfastArray.length === 0 &&
+      afterBreakfastArray.length === 0 &&
+      beforeLunchArray.length === 0 &&
+      afterLunchArray.length === 0 &&
+      beforeDinnerArray.length === 0 &&
+      afterDinnerArray.length === 0 &&
+      beforeBedArray.length === 0 &&
+      otherArray.length === 0
+    ) {
+      setNoDataStatus(true);
+    } else {
+      setNoDataStatus(false);
+
+      setGraphBeforeBreakfast(beforeBreakfastArray);
+      setGraphAfterBreakfast(afterBreakfastArray);
+      setGraphBeforeLunch(beforeLunchArray);
+      setGraphAfterLunch(afterLunchArray);
+      setGraphBeforeDinner(beforeDinnerArray);
+      setGraphAfterDinner(afterDinnerArray);
+      setGraphBeforeBed(beforeBedArray);
+      setGraphOther(otherArray);
+    }
 
     setMonthDaysResults(parseInt(monthGraph) + 1 + "/" + yearGraph);
     setSingleDayResults(
@@ -424,7 +465,57 @@ const SugarGraphModal = (props) => {
         </div>
       </div>
 
-      {filterMode === true ? null : (
+      {filterMode === true ? (
+        <div
+          className="metrics-form-custom mt-2"
+          style={{ height: 300, overflow: "hidden" }}
+        >
+          <ResponsiveContainer
+            width="95%"
+            className=""
+            style={{ overflow: "hidden" }}
+          >
+            <LineChart
+              data={
+                categoryGraph === "beforeBreakfast"
+                  ? graphBeforeBreakfast
+                  : categoryGraph === "afterBreakfast"
+                  ? graphAfterBreakfast
+                  : categoryGraph === "beforeLunch"
+                  ? graphBeforeLunch
+                  : categoryGraph === "afterLunch"
+                  ? graphAfterLunch
+                  : categoryGraph === "beforeDinner"
+                  ? graphBeforeDinner
+                  : categoryGraph === "afterDinner"
+                  ? graphAfterDinner
+                  : categoryGraph === "beforeBed"
+                  ? graphBeforeBed
+                  : categoryGraph === "other"
+                  ? graphOther
+                  : null
+              }
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+
+              <XAxis dataKey={noDataStatus === true ? null : "date"} />
+
+              <YAxis type="number" domain={[0, 200]} />
+              <Tooltip />
+              <Legend />
+              <Line
+                type="monotone"
+                dataKey={
+                  noDataStatus === true
+                    ? "Δεν υπάρχουν δεδομένα για τoν συγκεκριμένo μήνα επιλογής."
+                    : "Μέτρηση"
+                }
+                stroke={"var(--bs-primary)"}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+      ) : (
         <div
           className="metrics-form-custom mt-2"
           style={{ height: 300, overflow: "hidden" }}
@@ -439,7 +530,7 @@ const SugarGraphModal = (props) => {
 
               <XAxis dataKey={"dates"} />
 
-              <YAxis type="number" domain={[50, 160]} />
+              <YAxis type="number" domain={[0, 200]} />
               <Tooltip />
               <Legend />
               <Line
