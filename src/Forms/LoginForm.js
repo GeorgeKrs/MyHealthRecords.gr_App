@@ -30,6 +30,12 @@ const LoginForm = () => {
       });
   };
 
+  const handleKeypress = (e) => {
+    if (e.key === "Enter") {
+      FormHandler();
+    }
+  };
+
   return (
     <div className="pt-5 mt-5 form-cumstom-tab">
       <label className="label">Email</label>
@@ -38,6 +44,7 @@ const LoginForm = () => {
         className="inputValues"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
+        onKeyPress={handleKeypress}
       />
 
       <label className="label mt-4">Κωδικός</label>
@@ -45,6 +52,7 @@ const LoginForm = () => {
         type="password"
         className="inputValues"
         onChange={(e) => setPassword(e.target.value)}
+        onKeyPress={handleKeypress}
       />
 
       <div className="mt-5 mb-2">

@@ -2,22 +2,45 @@ const ContactTab = () => {
   return (
     <div className="pt-5 mt-5 form-cumstom-tab">
       <ul className="list-unstyled">
-        <li>Lorem ipsum dolor sit amet</li>
-        <li>Consectetur adipiscing elit</li>
-        <li>Integer molestie lorem at massa</li>
-        <li>Facilisis in pretium nisl aliquet</li>
         <li>
-          Nulla volutpat aliquam velit
-          <ul>
-            <li>Phasellus iaculis neque</li>
-            <li>Purus sodales ultricies</li>
-            <li>Vestibulum laoreet porttitor sem</li>
-            <li>Ac tristique libero volutpat at</li>
-          </ul>
+          <h5>
+            Αν έχετε οποιαδήποτε απορία, ή χρειάζεστε κάποια διευκρίνηση για
+          </h5>
         </li>
-        <li>Faucibus porta lacus fringilla vel</li>
-        <li>Aenean sit amet erat nunc</li>
-        <li>Eget porttitor lorem</li>
+        <li>
+          <h5>
+            τη λειτουργία της εφαρμογής ή τη χρήση των cookies μη διστάσετε να
+          </h5>
+        </li>
+        <li>
+          <h5>
+            επικοινωνήσετε μαζί μας στο email: <b>myHealthRecords@gmail.com</b>.
+          </h5>
+        </li>
+
+        <li>
+          <br></br>
+        </li>
+        <li>
+          <h5>
+            Εναλλακτικά, εάν έχετε δημιουργήσει ηδη λογαριασμό, μπορείτε να μας
+          </h5>
+        </li>
+        <li>
+          <h5>στείλετε μήνυμα μέσω της εφαρμογής ακολουθώντας τα παρακάτω</h5>
+        </li>
+        <li>
+          <h5>βήματα και εμείς θα σας απαντήσουμε το συντομότερο δυνατόν.</h5>
+        </li>
+        <li>
+          <br></br>
+        </li>
+        <li>
+          <h5>
+            Ρυθμίσεις &rarr; Επικοινωνία &rarr; Σύνταξη μηνύματος &rarr;
+            Αποστολή
+          </h5>
+        </li>
       </ul>
     </div>
   );

@@ -1,5 +1,5 @@
 .form-cumstom-tab {
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.6);
   padding: 1rem;
   margin: 1.5rem;
   border-radius: 1rem;
@@ -41,11 +41,51 @@
   transition: background-color 200ms ease;
 }
 
+/* metrics modals */
+.metrics-form-custom {
+  background-color: var(--bs-gray-200);
+  padding: 1rem;
+  border-radius: 1rem;
+}
+
+.metrics-average {
+  background-color: var(--bs-gray-200);
+  border-radius: 6px;
+}
+
 @media (max-width: 576px) {
   #deleteUserDataBtn {
     display: inline-block !important;
   }
   #TermsInfoUserDataBtn {
     display: inline-block !important;
+  }
+
+  .outer-indexdiv {
+    background-image: url("../assets/IndexScreen_resp_img.jpg");
+  }
+
+  #outerMainDiv {
+    display: inline-block !important;
+  }
+
+  .inner-maindiv {
+    min-height: 0vh;
+    min-width: 100vw;
+  }
+  #IndexTabsForLargeScreen {
+    display: none !important;
+  }
+  #firstButtonMargin {
+    margin-top: 30px;
+  }
+  #metricsSelect1 {
+    min-width: 93vw;
+  }
+  #metricsSelect2 {
+    min-width: 93vw;
+  }
+  #metricsSelect3 {
+    min-width: 93vw;
   }
 }

@@ -57,7 +57,7 @@ const MainScreen = (props) => {
       <div className="inner-maindiv d-none d-sm-block">
         <div className="p-3 d-flex flex-shrink-1 flex-column text-center mb-3 h-100">
           {/* <h6>{props.loggedInUser}</h6> */}
-          <h6>App Logo</h6>
+          {/* <h6>App Logo</h6> */}
           {ICONS.map((menu_icon, index, arr) => (
             <div
               key={menu_icon.id}
