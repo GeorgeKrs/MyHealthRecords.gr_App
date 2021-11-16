@@ -1,5 +1,6 @@
 import { useState } from "react";
 // screens
+import AppPresentation from "./IndexScreen_tabs/AppPresentation";
 import ContactTab from "./IndexScreen_tabs/ContactTab";
 import InfoTab from "./IndexScreen_tabs/InfoTab";
 import LoginForm from "../Forms/LoginForm";
@@ -17,10 +18,16 @@ const IndexScreen = () => {
   return (
     <div className="outer-indexdiv">
       <div className="p-3 bd-highlight d-sm-block d-md-none d-lg-none">
-        APP LOGO
+        <span
+          style={{ cursor: "pointer" }}
+          onClick={tabSelectorHandler.bind(this, "0")}
+        >
+          APP LOGO
+        </span>
       </div>
       <div className="pt-4 d-flex flex-column align-items-center d-sm-block d-md-none d-lg-none">
-        {(tab === "1" && <ContactTab />) ||
+        {(tab === "0" && <AppPresentation />) ||
+          (tab === "1" && <ContactTab />) ||
           (tab === "2" && <InfoTab />) ||
           (tab === "3" && <LoginForm />) ||
           (tab === "4" && <SignUpForm />)}
@@ -28,7 +35,12 @@ const IndexScreen = () => {
       <div className="container">
         <div className="d-lg-flex d-md-flex bd-highlight mb-3">
           <div className="me-auto p-3 bd-highlight d-none d-sm-none d-md-block d-lg-block">
-            APP LOGO
+            <span
+              style={{ cursor: "pointer" }}
+              onClick={tabSelectorHandler.bind(this, "0")}
+            >
+              APP LOGO
+            </span>
           </div>
 
           <div className="p-3 bd-highlight" id="firstButtonMargin">
@@ -95,7 +107,8 @@ const IndexScreen = () => {
         className="mt-5 pt-5 d-flex flex-column align-items-center"
         id="IndexTabsForLargeScreen"
       >
-        {(tab === "1" && <ContactTab />) ||
+        {(tab === "0" && <AppPresentation />) ||
+          (tab === "1" && <ContactTab />) ||
           (tab === "2" && <InfoTab />) ||
           (tab === "3" && <LoginForm />) ||
           (tab === "4" && <SignUpForm />)}
