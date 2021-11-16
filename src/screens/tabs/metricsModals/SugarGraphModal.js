@@ -1,6 +1,4 @@
 import { useState, useEffect } from "react";
-//
-import Gutters from "../../../general/Gutters";
 // firestore
 import { collection, query, where, getDocs, orderBy } from "firebase/firestore";
 import { db } from "../../../utils/firebase";
@@ -84,7 +82,6 @@ const SugarGraphModal = (props) => {
     let otherArray = [];
     let categoryArray = [];
     let bloodSugarArray = [];
-    let submitDateArray = [];
 
     let monthDays = 0;
 

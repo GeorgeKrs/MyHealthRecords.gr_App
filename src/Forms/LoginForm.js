@@ -1,10 +1,17 @@
 import { useState } from "react";
 import { auth, signInWithEmailAndPassword } from "../utils/firebase";
+// modals
+import { Modal } from "react-bootstrap";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+
+  // modals
+  const [ErrorModal, setErrorModal] = useState(false);
+  const handleCloseError = () => setErrorModal(false);
+  const handleOpenError = () => setErrorModal(true);
 
   const FormHandler = () => {
     setLoading(true);
@@ -18,9 +25,8 @@ const LoginForm = () => {
         setLoading(false);
         const errorCode = error.code;
         const errorMessage = error.message;
-        console.log(errorCode);
-        console.log(errorMessage);
         setLoading(false);
+        handleOpenError();
       });
   };
 
@@ -58,6 +64,24 @@ const LoginForm = () => {
           <span>{loading ? "Περιμένετε..." : "Είσοδος"}</span>
         </button>
       </div>
+      {/* error modal */}
+      <Modal show={ErrorModal} onHide={handleOpenError}>
+        <Modal.Header>
+          <Modal.Title>Αποτυχία Σύνδεσης</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Ο κωδικός χρήστη ή το email σας είναι λάθος.</Modal.Body>
+
+        <Modal.Footer>
+          <button
+            type="button"
+            className="btn btn-danger"
+            onClick={handleCloseError}
+          >
+            Κλείσιμο
+          </button>
+        </Modal.Footer>
+      </Modal>
+      {/* end of error modal */}
     </div>
   );
 };

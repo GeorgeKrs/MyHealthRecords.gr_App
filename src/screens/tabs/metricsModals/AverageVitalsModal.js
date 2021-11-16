@@ -43,7 +43,7 @@ const AverageVitalsModal = (props) => {
           <AverageComp
             color={"primary"}
             text={"36.7"}
-            header={"Θερμοκρασία"}
+            header={"Θερμοκρασία (" + String.fromCharCode(176) + "C)"}
             icon={ICONS_METRICS_TAB[2].icon}
           />
         </div>

@@ -162,6 +162,7 @@ const SignUpForm = () => {
               phone: form.phone,
               conditions: true,
               validAcc: false,
+              userLevel: "patient",
               signUpDate: Timestamp.fromDate(new Date()),
               accModifications: Timestamp.fromDate(new Date()),
             });
