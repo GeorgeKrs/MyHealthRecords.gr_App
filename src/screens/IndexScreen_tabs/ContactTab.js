@@ -1,6 +1,8 @@
 const ContactTab = () => {
   return (
-    <div className="pt-5 mt-5 form-cumstom-tab">
+    <div className="p-2 form-cumstom-tab" style={{ overflow: "hidden" }}>
+      <h3 style={{ fontWeight: "bolder" }}>Επικοινωνήστε μαζί μας!</h3>
+      <br />
       <ul className="list-unstyled">
         <li>
           <h5>

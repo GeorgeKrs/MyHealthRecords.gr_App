@@ -16,7 +16,7 @@ const IndexScreen = () => {
   };
 
   return (
-    <div className="outer-indexdiv">
+    <div className="outer-indexdiv" style={{ overflow: "hidden" }}>
       <div className="p-3 bd-highlight d-sm-block d-md-none d-lg-none">
         <span
           style={{ cursor: "pointer" }}
