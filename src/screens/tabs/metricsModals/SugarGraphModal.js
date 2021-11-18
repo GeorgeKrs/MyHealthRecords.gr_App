@@ -67,6 +67,7 @@ const SugarGraphModal = (props) => {
 
   const filtersHandler = () => {
     setSearchState(true);
+    setLoadingGraphData(true);
   };
 
   const fetchData = async () => {
@@ -269,6 +270,7 @@ const SugarGraphModal = (props) => {
     });
 
     setGraphSingleDay(gdSingleDay);
+    setLoadingGraphData(false);
   };
 
   useEffect(() => {
@@ -455,9 +457,15 @@ const SugarGraphModal = (props) => {
         <div className="px-3 text-danger">
           <b>
             {filterMode === true ? "Περίοδος Δεδομένων: " : "Ημέρα Δεδομένων: "}
-            <span className="px-1">
-              {filterMode === true ? monthDaysResults : singleDayResults}
-            </span>
+            {loadingGraphData ? (
+              <div className="mx-2 spinner-border spinner-border-sm text-danger">
+                <span className="sr-only"></span>
+              </div>
+            ) : (
+              <span className="px-1">
+                {filterMode === true ? monthDaysResults : singleDayResults}
+              </span>
+            )}
           </b>
         </div>
       </div>

@@ -65,7 +65,10 @@ const AppPresentation = () => {
         </li>
       </ul>
 
-      <div className="p-4 mt-4 bg-secondary" style={{ borderRadius: "1rem" }}>
+      <div
+        className="p-3 py-5 mt-4 bg-secondary"
+        style={{ borderRadius: "1rem" }}
+      >
         <h4 className="text-light" style={{ fontWeight: "bolder" }}>
           Για περισσότερες πληροφορίες διαβάστε τον οδηγό της εφαρμογής μας
           online:
@@ -76,15 +79,15 @@ const AppPresentation = () => {
             <a
               href="https://firebasestorage.googleapis.com/v0/b/myhealthrecords-1b568.appspot.com/o/My%20Health%20Records%20-%20Web%20App.pdf?alt=media&token=f4103c2f-3b1d-48cb-9adf-3a8501974350"
               target="_blank"
-              className="link-light px-5 appGuideLink"
+              className="link-light appGuideLink"
             >
               <div className="round ">
                 <div id="cta">
                   <span className="arrow primera next "></span>
                   <span className="arrow segunda next "></span>
+                  <span className="px-5">Εδώ</span>
                 </div>
               </div>
-              Εδώ
             </a>
           </h4>
         </div>

@@ -3,6 +3,8 @@ import AverageComp from "../metricsModals/AverageComp";
 import { ICONS_METRICS_TAB } from "../../../icons/icons";
 
 const AverageVitalsModal = (props) => {
+  const [loading, setLoading] = useState(false);
+
   return (
     <div className="">
       <div className="row">
@@ -19,6 +21,7 @@ const AverageVitalsModal = (props) => {
             text={"140"}
             header={"Συστολική Πίεση (mmHg)"}
             icon={ICONS_METRICS_TAB[0].icon}
+            loadingState={false}
           />
         </div>
         <div className="offset-lg-1 offset-md-1 col-lg-2 col-md-10 col-sm-12">
@@ -27,6 +30,7 @@ const AverageVitalsModal = (props) => {
             text={"100"}
             header={"Διαστολική Πίεση (mmHg)"}
             icon={ICONS_METRICS_TAB[0].icon}
+            loadingState={false}
           />
         </div>
         <div className="offset-lg-1 offset-md-1 col-lg-2 col-md-10 col-sm-12">
@@ -35,6 +39,7 @@ const AverageVitalsModal = (props) => {
             text={"69.5"}
             header={"Παλμοί (bpm)"}
             icon={ICONS_METRICS_TAB[1].icon}
+            loadingState={false}
           />
         </div>
       </div>
@@ -45,6 +50,7 @@ const AverageVitalsModal = (props) => {
             text={"36.7"}
             header={"Θερμοκρασία (" + String.fromCharCode(176) + "C)"}
             icon={ICONS_METRICS_TAB[2].icon}
+            loadingState={false}
           />
         </div>
         <div className="offset-lg-1 offset-md-1 col-lg-2 col-md-10 col-sm-12">
@@ -53,6 +59,7 @@ const AverageVitalsModal = (props) => {
             text={"98.5"}
             header={"Οξυγόνο (%)"}
             icon={ICONS_METRICS_TAB[3].icon}
+            loadingState={false}
           />
         </div>
         <div className="offset-lg-1 offset-md-1 col-lg-2 col-md-10 col-sm-12">
@@ -61,6 +68,7 @@ const AverageVitalsModal = (props) => {
             text={"88.5"}
             header={"Βάρος (kg)"}
             icon={ICONS_METRICS_TAB[4].icon}
+            loadingState={false}
           />
         </div>
       </div>

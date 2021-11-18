@@ -31,7 +31,7 @@ const GraphVitalsModal = (props) => {
   );
 
   const [searchState, setSearchState] = useState(true);
-  const [loadingGraphData, setLoadingGraphData] = useState(false);
+  const [loadingGraphData, setLoadingGraphData] = useState(true);
   const [noDataStatus, setNoDataStatus] = useState(false);
   const [graphSystolic, setGraphSystolic] = useState([]);
   const [graphDiastolic, setGraphDiastolic] = useState([]);
@@ -70,6 +70,7 @@ const GraphVitalsModal = (props) => {
 
   const filtersHandler = () => {
     setSearchState(true);
+    setLoadingGraphData(true);
   };
 
   const fetchData = async () => {
@@ -241,6 +242,7 @@ const GraphVitalsModal = (props) => {
     setMinOxygen(minOxygen);
     setMaxWeight(maxWeight);
     setMinWeight(minWeight);
+    setLoadingGraphData(false);
   };
 
   useEffect(() => {
@@ -345,12 +347,19 @@ const GraphVitalsModal = (props) => {
           </div>
         </div>
       </div>
+
       <div className="px-3 text-danger">
         <b>
           Περίοδος Δεδομένων:
-          <span className="px-1">
-            {dateSearched === null ? null : dateSearched.toString()}
-          </span>
+          {loadingGraphData ? (
+            <div className="mx-2 spinner-border spinner-border-sm text-danger">
+              <span className="sr-only"></span>
+            </div>
+          ) : (
+            <span className="px-1">
+              {dateSearched === null ? null : dateSearched.toString()}
+            </span>
+          )}
         </b>
       </div>
 
@@ -402,7 +411,9 @@ const GraphVitalsModal = (props) => {
                   : null
               }
             />
+
             <Legend />
+
             <Line
               type="monotone"
               dataKey={
@@ -465,24 +476,30 @@ const GraphVitalsModal = (props) => {
             μήνα.
           </b>
         </h6>
-        <div className="mt-1 row row-cols-2 row-cols-lg-3 g-2 g-lg-3">
+        <div
+          className="mt-1 row row-cols-2 row-cols-l
+        g-3 g-2 g-lg-3"
+        >
           <Gutters
             gutterTitle={"Συστολική Πίεση (mmHg)"}
             gutterMax={maxSystolic === maxSystolic / 0 ? "-" : maxSystolic}
             gutterMin={minSystolic === minSystolic / 0 ? "-" : minSystolic}
             gutterBorderColor={"border-primary"}
+            loadingState={loadingGraphData}
           />
           <Gutters
             gutterTitle={"Διαστολική Πίεση (mmHg)"}
             gutterMax={maxDiastolic === maxDiastolic / 0 ? "-" : maxDiastolic}
             gutterMin={minDiastolic === minDiastolic / 0 ? "-" : minDiastolic}
             gutterBorderColor={"border-primary"}
+            loadingState={loadingGraphData}
           />
           <Gutters
             gutterTitle={"Παλμοί (bpm)"}
             gutterMax={maxPulses === maxPulses / 0 ? "-" : maxPulses}
             gutterMin={minPulses === minPulses / 0 ? "-" : minPulses}
             gutterBorderColor={"border-primary"}
+            loadingState={loadingGraphData}
           />
           <Gutters
             gutterTitle={"Θερμοκρασία (" + String.fromCharCode(176) + "C)"}
@@ -493,18 +510,21 @@ const GraphVitalsModal = (props) => {
               minTemperature === minTemperature / 0 ? "-" : minTemperature
             }
             gutterBorderColor={"border-primary"}
+            loadingState={loadingGraphData}
           />
           <Gutters
             gutterTitle={"Οξυγόνο (%)"}
             gutterMax={maxOxygen === maxOxygen / 0 ? "-" : maxOxygen}
             gutterMin={minOxygen === minOxygen / 0 ? "-" : minOxygen}
             gutterBorderColor={"border-primary"}
+            loadingState={loadingGraphData}
           />
           <Gutters
             gutterTitle={"Βάρος (Kg)"}
             gutterMax={maxWeight === maxWeight / 0 ? "-" : maxWeight}
             gutterMin={minWeight === minWeight / 0 ? "-" : minWeight}
             gutterBorderColor={"border-primary"}
+            loadingState={loadingGraphData}
           />
         </div>
       </div>
