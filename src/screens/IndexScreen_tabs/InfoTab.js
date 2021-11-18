@@ -1,23 +1,29 @@
 const InfoTab = () => {
   return (
-    <div className="pt-5 mt-5 form-cumstom-tab">
+    <div className="mt-5 form-cumstom-tab">
+      <h3 style={{ fontWeight: "bolder" }}>Σχετικά με εμάς</h3>
+      <br />
       <ul className="list-unstyled">
-        <li>Lorem ipsum dolor sit amet</li>
-        <li>Consectetur adipiscing elit</li>
-        <li>Integer molestie lorem at massa</li>
-        <li>Facilisis in pretium nisl aliquet</li>
         <li>
-          Nulla volutpat aliquam velit
-          <ul>
-            <li>Phasellus iaculis neque</li>
-            <li>Purus sodales ultricies</li>
-            <li>Vestibulum laoreet porttitor sem</li>
-            <li>Ac tristique libero volutpat at</li>
-          </ul>
+          <h5>
+            H Εφαρμογή <b>My Health Records</b> είναι ένα όνειρο που ξεκίνησε
+          </h5>
         </li>
-        <li>Faucibus porta lacus fringilla vel</li>
-        <li>Aenean sit amet erat nunc</li>
-        <li>Eget porttitor lorem</li>
+        <li>
+          <h5>από ένα άτομο και με έναν απλό στόχο, να διευκολύνει τις ζωές</h5>
+        </li>
+        <li>
+          <h5>των ανθρώπων. Ο σχεδιασμός των απαιτήσεων της εφαρμογής,</h5>
+        </li>
+        <li>
+          <h5> ο προγραμματισμός και η υλοποίησή της έγιναν με γνώμονα την</h5>
+        </li>
+        <li>
+          <h5>ασφάλεια των δεδομένων, καθώς και την εμπειρία των χρηστών </h5>
+        </li>
+        <li>
+          <h5>κατά τη χρήση της εφαρμογής.</h5>
+        </li>
       </ul>
     </div>
   );
