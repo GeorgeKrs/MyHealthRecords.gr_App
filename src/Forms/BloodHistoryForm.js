@@ -1,7 +1,6 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { MONTHS, DAYS, YEARS } from "../general/DateFile";
 import FullScreenLoader from "../general/FullScreenLoader";
-import DoctorsSpecs from "../general/DoctorsSpecs";
 // firestore
 import {
   collection,
@@ -17,9 +16,9 @@ import { db } from "../utils/firebase";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
 
-const PDFHistoryForm = (props) => {
+const BloodHistoryForm = (props) => {
   const PageView_Ref = useRef(null);
-  const [doctorSpec, setDoctorSpec] = useState("");
+  const [categoryType, setCategoryType] = useState("beforeBreakfast");
 
   const [fromYear, setFromYear] = useState(new Date().getFullYear().toString());
   const [fromMonth, setFromMonth] = useState(
@@ -70,21 +69,21 @@ const PDFHistoryForm = (props) => {
     const DateTo = new Date(toYear, toMonth - 1, toDay, "23", "59", "59");
 
     if (
-      doctorSpec === null ||
-      doctorSpec === undefined ||
-      doctorSpec === "" ||
-      doctorSpec === "allSpecs"
+      categoryType === null ||
+      categoryType === undefined ||
+      categoryType === "" ||
+      categoryType === "allCategories"
     ) {
-      const pdfQuery = query(
-        collection(db, "pdfRecords"),
+      const bloodSugarHistoryQuery = query(
+        collection(db, "bloodSugarRecords"),
         where("userEmail", "==", loggedInUser),
-        where("SubmitDate", ">=", DateFrom),
-        where("SubmitDate", "<=", DateTo),
-        orderBy("SubmitDate", "desc"),
+        where("submitDate", ">=", DateFrom),
+        where("submitDate", "<=", DateTo),
+        orderBy("submitDate", "desc"),
         limit(queryLimit)
       );
 
-      const querySnapshot = await getDocs(pdfQuery);
+      const querySnapshot = await getDocs(bloodSugarHistoryQuery);
       querySnapshot.forEach((doc) => {
         userDataArray.push(doc.data());
       });
@@ -93,11 +92,11 @@ const PDFHistoryForm = (props) => {
       setSearchState(true);
 
       const docCounterRef = query(
-        collection(db, "pdfRecords"),
+        collection(db, "bloodSugarRecords"),
         where("userEmail", "==", loggedInUser),
-        where("SubmitDate", ">=", DateFrom),
-        where("SubmitDate", "<=", DateTo),
-        orderBy("SubmitDate", "desc")
+        where("submitDate", ">=", DateFrom),
+        where("submitDate", "<=", DateTo),
+        orderBy("submitDate", "desc")
       );
       const docSnap = await getDocs(docCounterRef);
       docSnap.forEach((doc) => {
@@ -115,17 +114,17 @@ const PDFHistoryForm = (props) => {
 
       setPaginationBtnsArray(paginationArray);
     } else {
-      const pdfQuery = query(
-        collection(db, "pdfRecords"),
+      const bloodSugarHistoryQuery = query(
+        collection(db, "bloodSugarRecords"),
         where("userEmail", "==", loggedInUser),
-        where("doctorSpec", "==", doctorSpec),
-        where("SubmitDate", ">=", DateFrom),
-        where("SubmitDate", "<=", DateTo),
-        orderBy("SubmitDate", "desc"),
+        where("category", "==", categoryType),
+        where("submitDate", ">=", DateFrom),
+        where("submitDate", "<=", DateTo),
+        orderBy("submitDate", "desc"),
         limit(queryLimit)
       );
 
-      const querySnapshot = await getDocs(pdfQuery);
+      const querySnapshot = await getDocs(bloodSugarHistoryQuery);
       querySnapshot.forEach((doc) => {
         userDataArray.push(doc.data());
       });
@@ -134,12 +133,12 @@ const PDFHistoryForm = (props) => {
       setSearchState(true);
 
       const docCounterRef = query(
-        collection(db, "pdfRecords"),
+        collection(db, "bloodSugarRecords"),
         where("userEmail", "==", loggedInUser),
-        where("doctorSpec", "==", doctorSpec),
-        where("SubmitDate", ">=", DateFrom),
-        where("SubmitDate", "<=", DateTo),
-        orderBy("SubmitDate", "desc")
+        where("category", "==", categoryType),
+        where("submitDate", ">=", DateFrom),
+        where("submitDate", "<=", DateTo),
+        orderBy("submitDate", "desc")
       );
       const docSnap = await getDocs(docCounterRef);
       docSnap.forEach((doc) => {
@@ -199,21 +198,21 @@ const PDFHistoryForm = (props) => {
       firstItemIndex = 0;
     }
 
-    const firstItemRef = userAllRecords[firstItemIndex].SubmitDate;
+    const firstItemRef = userAllRecords[firstItemIndex].submitDate;
 
-    const pdfQueryPagination = query(
-      collection(db, "pdfRecords"),
+    const bloodHistoryQueryPagination = query(
+      collection(db, "bloodSugarRecords"),
       where("userEmail", "==", loggedInUser),
-      where("SubmitDate", ">=", DateFrom),
-      where("SubmitDate", "<=", DateTo),
-      orderBy("SubmitDate", "desc"),
+      where("submitDate", ">=", DateFrom),
+      where("submitDate", "<=", DateTo),
+      orderBy("submitDate", "desc"),
       startAt(firstItemRef),
       limit(queryLimit)
     );
 
     userDataArray.length = 0;
 
-    const querySnapshotPagination = await getDocs(pdfQueryPagination);
+    const querySnapshotPagination = await getDocs(bloodHistoryQueryPagination);
     querySnapshotPagination.forEach((doc) => {
       userDataArray.push(doc.data());
     });
@@ -239,7 +238,7 @@ const PDFHistoryForm = (props) => {
     ) {
       fetchPaginationData();
     }
-  }, [btnID, userData]);
+  }, [btnID]);
 
   const scrollTo = () => {
     if (!PageView_Ref.current) return;
@@ -332,18 +331,23 @@ const PDFHistoryForm = (props) => {
         </div>
 
         <div className="mt-5">
-          <h5>Επιλέξτε ειδικότητα Ιατρού:</h5>
+          <h5>Κατηγορία Μέτρησης:</h5>
           <div className="col-lg-4 col-sm-12 mt-3">
             <select
               className="inputValues"
-              onChange={(e) => setDoctorSpec(e.target.value)}
+              onChange={(e) => setCategoryType(e.target.value)}
             >
-              <option value="allSpecs">Όλες οι ειδικότητες</option>
-              {DoctorsSpecs.map((doctor, index) => (
-                <option key={index} value={doctor}>
-                  {doctor}
-                </option>
-              ))}
+              <option defaultValue value="beforeBreakfast">
+                Πριν το πρωινό
+              </option>
+              <option value="afterBreakfast">2 Ώρες μετά το πρωινό</option>
+              <option value="beforeLunch">Πριν το μεσημεριανό</option>
+              <option value="afterLunch">2 Ώρες μετά το μεσημεριανό</option>
+              <option value="beforeDinner">Πριν το βραδινό</option>
+              <option value="afterDinner">2 Ώρες μετά το βραδινό</option>
+              <option value="beforeBed">Πριν τον ύπνο</option>
+              <option value="other">Άλλο</option>
+              <option value="allCategories">Όλες</option>
             </select>
           </div>
         </div>
@@ -365,6 +369,7 @@ const PDFHistoryForm = (props) => {
           </button>
         </div>
       </div>
+
       <div className="mt-5">
         <p className="mb-4 blockquote-footer">
           <b>Αποτελέσματα Αναζήτησης:</b>
@@ -405,26 +410,36 @@ const PDFHistoryForm = (props) => {
               <div className="col" id={index} key={index}>
                 <div className="card border-primary mb-3">
                   <div className="card-header">
-                    {i.SubmitDate.toDate().getDate()} /{" "}
-                    {i.SubmitDate.toDate().getMonth() + 1} /{" "}
-                    {i.SubmitDate.toDate().getFullYear()},{" "}
-                    {i.SubmitDate.toDate().getHours()} :{" "}
-                    {i.SubmitDate.toDate().getMinutes() < 10
-                      ? "0" + i.SubmitDate.toDate().getMinutes()
-                      : i.SubmitDate.toDate().getMinutes()}
+                    {i.submitDate.toDate().getDate()} /{" "}
+                    {i.submitDate.toDate().getMonth() + 1} /{" "}
+                    {i.submitDate.toDate().getFullYear()},{" "}
+                    {i.submitDate.toDate().getHours()} :{" "}
+                    {i.submitDate.toDate().getMinutes() < 10
+                      ? "0" + i.submitDate.toDate().getMinutes()
+                      : i.submitDate.toDate().getMinutes()}
                   </div>
                   <div className="card-body text-dark">
-                    <p className="card-text">Ειδικότητα: {i.doctorSpec}</p>
+                    <p className="card-text">Σάκχαρο (mg/dl): {i.bloodSugar}</p>
                     <hr className="hr-custom" />
                     <p className="card-text">
-                      Αρχείο:
-                      <a
-                        href={i.pdfUrl}
-                        className="link-primary px-1"
-                        target="_blank"
-                      >
-                        {i.fileName}
-                      </a>
+                      Κατηγορία:{" "}
+                      {i.category === "beforeBreakfast"
+                        ? "Πριν το πρωινό"
+                        : i.category === "afterBreakfast"
+                        ? "2 Ώρες μετά το πρωινό"
+                        : i.category === "beforeLunch"
+                        ? "Πριν το μεσημεριανό"
+                        : i.category === "afterLunch"
+                        ? "2 Ώρες μετά το μεσημεριανό"
+                        : i.category === "beforeDinner"
+                        ? "Πριν το βραδινό"
+                        : i.category === "afterDinner"
+                        ? "2 Ώρες μετά το βραδινό"
+                        : i.category === "beforeBed"
+                        ? "Πριν τον ύπνο"
+                        : i.category === "other"
+                        ? "Άλλο"
+                        : null}
                     </p>
                     <hr className="hr-custom" />
                     <p> Σχόλια: </p>
@@ -443,6 +458,7 @@ const PDFHistoryForm = (props) => {
           )}
         </div>
       </div>
+
       <div className="container d-flex">
         <div className="ms-auto">
           {userDocCounter === 0 ? null : (
@@ -475,5 +491,4 @@ const PDFHistoryForm = (props) => {
     </div>
   );
 };
-
-export default PDFHistoryForm;
+export default BloodHistoryForm;

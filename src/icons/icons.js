@@ -18,6 +18,8 @@ import {
   faLungs,
   faThermometer,
   faSyringe,
+  faInfoCircle,
+  faLaptopMedical,
 } from "@fortawesome/free-solid-svg-icons";
 
 const ICONS = [
@@ -53,16 +55,26 @@ const ICONS = [
   },
   {
     id: "7",
+    icon: faLaptopMedical,
+    description: "Ιστορικό Μετρήσεων Σακχάρου",
+  },
+  {
+    id: "8",
+    icon: faInfoCircle,
+    description: "Γενικές Πληροφορίες",
+  },
+  {
+    id: "9",
     icon: faChartBar,
     description: "Στατιστικά Όλων των Μετρήσεων",
   },
   {
-    id: "8",
+    id: "10",
     icon: faCog,
     description: "Ρυθμίσεις Χρήστη",
   },
   {
-    id: "9",
+    id: "11",
     icon: faSignOutAlt,
     description: "Έξοδος",
   },

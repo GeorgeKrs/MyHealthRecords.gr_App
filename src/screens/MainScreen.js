@@ -19,6 +19,8 @@ import { auth, signOut } from "../utils/firebase";
 import { Modal } from "react-bootstrap";
 import { faCaretSquareDown } from "@fortawesome/free-solid-svg-icons";
 import DiabetesTab from "./tabs/DiabetesTab";
+import BloodSugarHistoryTab from "./tabs/BloodSugarHistoryTab";
+import GeneralInfo from "./tabs/GeneralInfo";
 
 const MainScreen = (props) => {
   const [tab, setTab] = useState("1");
@@ -34,7 +36,7 @@ const MainScreen = (props) => {
   const handleOpenMenu = () => setDropMenuState(true);
 
   const tabSelectorHandler = (tabId) => {
-    if (tabId === "9") {
+    if (tabId === "11") {
       handleOpenSignOut();
     } else {
       setTab(tabId);
@@ -57,7 +59,7 @@ const MainScreen = (props) => {
       <div className="inner-maindiv d-none d-sm-block">
         <div className="p-3 d-flex flex-shrink-1 flex-column text-center mb-3 h-100">
           {/* <h6>{props.loggedInUser}</h6> */}
-          {/* <h6>App Logo</h6> */}
+          <h6>App Logo</h6>
           {ICONS.map((menu_icon, index, arr) => (
             <div
               key={menu_icon.id}
@@ -104,8 +106,12 @@ const MainScreen = (props) => {
         (tab === "4" && <PDFHistoryTab loggedInUser={props.loggedInUser} />) ||
         (tab === "5" && <AllergiesTab loggedInUser={props.loggedInUser} />) ||
         (tab === "6" && <DiabetesTab loggedInUser={props.loggedInUser} />) ||
-        (tab === "7" && <MetricsTab loggedInUser={props.loggedInUser} />) ||
-        (tab === "8" && <UserSettingsTab loggedInUser={props.loggedInUser} />)}
+        (tab === "7" && (
+          <BloodSugarHistoryTab loggedInUser={props.loggedInUser} />
+        )) ||
+        (tab === "8" && <GeneralInfo loggedInUser={props.loggedInUser} />) ||
+        (tab === "9" && <MetricsTab loggedInUser={props.loggedInUser} />) ||
+        (tab === "10" && <UserSettingsTab loggedInUser={props.loggedInUser} />)}
 
       {/* menu modal */}
       <Modal show={dropMenuState} onHide={handleCloseMenu}>

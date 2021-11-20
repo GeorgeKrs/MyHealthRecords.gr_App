@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { MONTHS, DAYS, YEARS } from "../general/DateFile";
 import FullScreenLoader from "../general/FullScreenLoader";
 // firestore
@@ -17,6 +17,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
 
 const VitalsHistoryForm = (props) => {
+  const PageView_Ref = useRef(null);
   const [fromYear, setFromYear] = useState(new Date().getFullYear().toString());
   const [fromMonth, setFromMonth] = useState(
     (new Date().getMonth() + 1).toString()
@@ -49,7 +50,7 @@ const VitalsHistoryForm = (props) => {
   let userAllRecordsArray = [];
   let paginationArray = [];
 
-  const queryLimit = 10;
+  const queryLimit = 20;
 
   const fetchRecordData = async () => {
     setLoading(true);
@@ -106,6 +107,7 @@ const VitalsHistoryForm = (props) => {
     setBtnID("1");
     setLoading(false);
     setSearchBtn(false);
+    scrollTo();
   };
 
   const FormHandler = () => {
@@ -166,6 +168,7 @@ const VitalsHistoryForm = (props) => {
 
     setSearchState(true);
     setLoading(false);
+    scrollTo();
   };
 
   useEffect(() => {
@@ -187,6 +190,11 @@ const VitalsHistoryForm = (props) => {
       );
     }
   }, [btnID, userData]);
+
+  const scrollTo = () => {
+    if (!PageView_Ref.current) return;
+    PageView_Ref.current.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
     <div>
@@ -292,93 +300,104 @@ const VitalsHistoryForm = (props) => {
             </button>
           </div>
         </div>
-        <div className=" mt-5">
+        <div className="mt-5" ref={PageView_Ref}>
           <p className="mb-4 blockquote-footer">
             <b>Αποτελέσματα Αναζήτησης:</b>
           </p>
         </div>
-        {userData.length === 0 ? (
-          searchState ? (
-            <div
-              className="form-custom"
-              style={{ backgroundColor: "var(--bs-danger)" }}
-            >
-              <p style={{ color: "var(--bs-dark)" }}>
-                <b>
-                  <FontAwesomeIcon
-                    size="lg"
-                    icon={faExclamationTriangle}
-                    style={{ color: "var(--bs-dark)" }}
-                  />
-                  Δε βρέθηκαν καταχωρήσεις για τις συγκεκριμένες ημερομηνίες
-                  υποβολής.
-                </b>
-              </p>
-            </div>
-          ) : null
-        ) : loading ? (
-          <FullScreenLoader setFullscreen={false} />
-        ) : (
-          userData.map((i, index) => (
-            <div className="container mt-5" id={index} key={index}>
-              <div className="card border-primary mb-3">
-                <div className="card-header">
-                  {" "}
-                  {i.submitDate.toDate().getDate()} /{" "}
-                  {i.submitDate.toDate().getMonth() + 1} /{" "}
-                  {i.submitDate.toDate().getFullYear()},{" "}
-                  {i.submitDate.toDate().getHours()} :{" "}
-                  {i.submitDate.toDate().getMinutes() < 10
-                    ? "0" + i.submitDate.toDate().getMinutes()
-                    : i.submitDate.toDate().getMinutes()}
+        <div
+          ref={PageView_Ref}
+          className={userData.length === 0 ? null : "container mt-5"}
+        >
+          <div
+            className={
+              userData.length === 0
+                ? null
+                : "row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-2"
+            }
+          >
+            {userData.length === 0 ? (
+              searchState ? (
+                <div
+                  className="form-custom"
+                  style={{ backgroundColor: "var(--bs-danger)" }}
+                >
+                  <p style={{ color: "var(--bs-dark)" }}>
+                    <b>
+                      <FontAwesomeIcon
+                        size="lg"
+                        icon={faExclamationTriangle}
+                        style={{ color: "var(--bs-dark)" }}
+                      />
+                      Δε βρέθηκαν καταχωρήσεις για τις συγκεκριμένες ημερομηνίες
+                      υποβολής.
+                    </b>
+                  </p>
                 </div>
-                <div className="card-body text-dark">
-                  <div className="row ">
-                    <div className="col-sm-12 col-md-6 col-lg-6">
-                      <p className="card-text  mt-3">
-                        Συστολική Πίεση (mmHg): <b>{i.systolic}</b>
-                      </p>
-                      <hr className="hr-custom" />
-                      <p className="card-text">
-                        Διαστολική Πίεση (mmHg): <b>{i.diastolic}</b>
-                      </p>
-                      <hr className="hr-custom" />
-                      <p className="card-text">
-                        Παλμοί (bpm): <b>{i.pulses}</b>
-                      </p>
-                      <hr className="hr-custom" />
+              ) : null
+            ) : (
+              userData.map((i, index) => (
+                <div className="col" id={index} key={index}>
+                  <div className="card border-primary mb-3">
+                    <div className="card-header">
+                      {" "}
+                      {i.submitDate.toDate().getDate()} /{" "}
+                      {i.submitDate.toDate().getMonth() + 1} /{" "}
+                      {i.submitDate.toDate().getFullYear()},{" "}
+                      {i.submitDate.toDate().getHours()} :{" "}
+                      {i.submitDate.toDate().getMinutes() < 10
+                        ? "0" + i.submitDate.toDate().getMinutes()
+                        : i.submitDate.toDate().getMinutes()}
                     </div>
-                    <div className="col-sm-12 col-md-6 col-lg-6">
-                      <p className="card-text mt-3">
-                        Θερμοκρασία (&#176;C): <b>{i.temperature}</b>
-                      </p>
-                      <hr className="hr-custom" />
-                      <p className="card-text">
-                        Οξυγόνο (%): <b>{i.oxygen}</b>
-                      </p>
-                      <hr className="hr-custom" />
-                      <p className="card-text">
-                        Βάρος (Kg): <b>{i.weight}</b>
-                      </p>
-                      <hr className="hr-custom" />
+                    <div className="card-body text-dark">
+                      <div className="row ">
+                        <div className="col-sm-12 col-md-6 col-lg-6">
+                          <p className="card-text  mt-3">
+                            Συστολική Πίεση (mmHg): <b>{i.systolic}</b>
+                          </p>
+                          <hr className="hr-custom" />
+                          <p className="card-text">
+                            Διαστολική Πίεση (mmHg): <b>{i.diastolic}</b>
+                          </p>
+                          <hr className="hr-custom" />
+                          <p className="card-text">
+                            Παλμοί (bpm): <b>{i.pulses}</b>
+                          </p>
+                          <hr className="hr-custom" />
+                        </div>
+                        <div className="col-sm-12 col-md-6 col-lg-6">
+                          <p className="card-text mt-3">
+                            Θερμοκρασία (&#176;C): <b>{i.temperature}</b>
+                          </p>
+                          <hr className="hr-custom" />
+                          <p className="card-text">
+                            Οξυγόνο (%): <b>{i.oxygen}</b>
+                          </p>
+                          <hr className="hr-custom" />
+                          <p className="card-text">
+                            Βάρος (Kg): <b>{i.weight}</b>
+                          </p>
+                          <hr className="hr-custom" />
+                        </div>
+                      </div>
+                      <div className="mt-3">
+                        <p> Σχόλια: </p>
+                        <textarea
+                          rows="3"
+                          className="w-100"
+                          disabled={true}
+                          value={i.comments}
+                        >
+                          <b>{i.comments}</b>
+                        </textarea>
+                      </div>
                     </div>
                   </div>
-                  <div className="mt-3">
-                    <p> Σχόλια: </p>
-                    <textarea
-                      rows="3"
-                      className="w-100"
-                      disabled={true}
-                      value={i.comments}
-                    >
-                      <b>{i.comments}</b>
-                    </textarea>
-                  </div>
                 </div>
-              </div>
-            </div>
-          ))
-        )}
+              ))
+            )}
+          </div>
+        </div>
       </div>
       <div className="container d-flex">
         <div className="ms-auto">
