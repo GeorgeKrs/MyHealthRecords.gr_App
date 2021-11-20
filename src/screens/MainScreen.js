@@ -55,7 +55,11 @@ const MainScreen = (props) => {
   };
 
   return (
-    <div className="d-flex outer-maindiv" id="outerMainDiv">
+    <div
+      className="d-flex outer-maindiv"
+      id="outerMainDiv"
+      style={{ overflow: "hidden" }}
+    >
       <div className="inner-maindiv d-none d-sm-block">
         <div className="p-3 d-flex flex-shrink-1 flex-column text-center mb-3 h-100">
           {/* <h6>{props.loggedInUser}</h6> */}
@@ -87,7 +91,10 @@ const MainScreen = (props) => {
 
       {/* mobile version */}
 
-      <div className="p-3 inner-maindiv d-sm-block d-md-none d-flex justify-content-center">
+      <div
+        className="p-3 inner-maindiv d-sm-block d-md-none d-flex justify-content-center"
+        style={{ overflow: "hidden" }}
+      >
         <FontAwesomeIcon
           style={{ fontSize: "25px", color: "var(--bs-light)" }}
           icon={faCaretSquareDown}
@@ -121,7 +128,7 @@ const MainScreen = (props) => {
         <Modal.Body>
           <div
             className="d-flex justify-content-center flex-wrap p-3 text-center mb-3"
-            style={{ backgroundColor: "var(--bs-primary" }}
+            style={{ backgroundColor: "var(--bs-primary", overflow: "hidden" }}
           >
             {ICONS.map((menu_icon) => (
               <div key={menu_icon.id} className="p-2 mt-2">

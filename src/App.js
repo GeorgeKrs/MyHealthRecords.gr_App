@@ -21,7 +21,7 @@ function App() {
   });
 
   return (
-    <div style={{ minHeight: "100vh" }}>
+    <div style={{ minHeight: "100vh", overflowX: "hidden" }}>
       {loader ? (
         <FullScreenLoader setFullscreen={true} />
       ) : userLoggedIn ? (

@@ -505,7 +505,7 @@ const SugarGraphModal = (props) => {
 
               <XAxis dataKey={noDataStatus === true ? null : "date"} />
 
-              <YAxis type="number" domain={[0, 200]} />
+              <YAxis type="number" domain={[0, 300]} />
               <Tooltip />
               <Legend />
               <Line
