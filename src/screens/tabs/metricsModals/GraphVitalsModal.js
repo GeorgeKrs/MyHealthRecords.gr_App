@@ -412,6 +412,7 @@ const GraphVitalsModal = (props) => {
               }
             />
 
+            <Tooltip />
             <Legend />
 
             <Line

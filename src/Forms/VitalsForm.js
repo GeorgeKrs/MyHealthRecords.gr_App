@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ErrorMsg from "../general/ErrorMsg";
 import ModalInfo from "../general/ModalInfo";
 // font ICONS
@@ -8,6 +8,7 @@ import { db } from "../utils/firebase";
 import { addDoc, Timestamp, collection } from "firebase/firestore";
 
 const VitalsForm = (props) => {
+  const userEmail = props.loggedInUser;
   const [systolic, setSystolic] = useState("");
   const [diastolic, setDiastolic] = useState("");
   const [pulses, setPulses] = useState("");
@@ -30,7 +31,8 @@ const VitalsForm = (props) => {
   const [apiState, setApiState] = useState(false);
   // const [errorAPI, setErrorAPI] = useState(false);
   // function to get data from child to parent
-  const modalState = (state) => {
+
+  const modalState = () => {
     setShow(!show);
   };
 
@@ -109,7 +111,6 @@ const VitalsForm = (props) => {
       erOxygen === "" &&
       erWeight === ""
     ) {
-      const userEmail = props.loggedInUser;
       (async () => {
         await addDoc(collection(db, "vitalsRecords"), {
           userEmail: userEmail,

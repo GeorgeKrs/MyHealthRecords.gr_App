@@ -11,7 +11,7 @@ const MetricsTab = (props) => {
     >
       <TabTitles title={"Στατιστικά Όλων των Μετρήσεων"} />
       <div className="mt-5 mb-5 w-100">
-        <AverageVitalsModal />
+        <AverageVitalsModal loggedInUser={props.loggedInUser} />
       </div>
       <div className="mx-auto mt-5 mb-5 w-100">
         <GraphVitalsModal loggedInUser={props.loggedInUser} />

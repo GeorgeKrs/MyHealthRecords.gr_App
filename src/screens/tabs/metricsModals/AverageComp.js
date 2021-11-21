@@ -2,7 +2,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const AverageComp = (props) => {
-  const loadingState = props.loadingState;
   return (
     <div className={`card text-center border-${props.color} mt-5`}>
       <div className="card-header">{props.header}</div>
