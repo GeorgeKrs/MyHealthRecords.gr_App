@@ -65,7 +65,7 @@ const MainScreen = (props) => {
       <div className="inner-maindiv d-none d-sm-block">
         <div className="p-3 d-flex flex-shrink-1 flex-column text-center mb-3 h-100">
           <img
-            className="mx-auto mb-3"
+            className="mx-auto mb-2 mt-2"
             style={{ height: "40px", width: "40px" }}
             src={AppLogo}
           ></img>
