@@ -89,3 +89,9 @@
     min-width: 93vw;
   }
 }
+
+@media (max-width: 760px) {
+  #IndexTabsForLargeScreen {
+    display: none !important;
+  }
+}

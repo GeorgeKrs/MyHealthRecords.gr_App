@@ -21,6 +21,8 @@ import { faCaretSquareDown } from "@fortawesome/free-solid-svg-icons";
 import DiabetesTab from "./tabs/DiabetesTab";
 import BloodSugarHistoryTab from "./tabs/BloodSugarHistoryTab";
 import GeneralInfo from "./tabs/GeneralInfo";
+// logo
+import AppLogo from "../assets/logo.png";
 
 const MainScreen = (props) => {
   const [tab, setTab] = useState("1");
@@ -62,8 +64,11 @@ const MainScreen = (props) => {
     >
       <div className="inner-maindiv d-none d-sm-block">
         <div className="p-3 d-flex flex-shrink-1 flex-column text-center mb-3 h-100">
-          {/* <h6>{props.loggedInUser}</h6> */}
-          <h6>App Logo</h6>
+          <img
+            className="mx-auto mb-3"
+            style={{ height: "40px", width: "40px" }}
+            src={AppLogo}
+          ></img>
           {ICONS.map((menu_icon, index, arr) => (
             <div
               key={menu_icon.id}
@@ -93,6 +98,7 @@ const MainScreen = (props) => {
 
       <div
         className="p-3 inner-maindiv d-sm-block d-md-none d-flex justify-content-center"
+        id="mobMenu"
         style={{ overflow: "hidden" }}
       >
         <FontAwesomeIcon

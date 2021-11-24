@@ -5,6 +5,8 @@ import ContactTab from "./IndexScreen_tabs/ContactTab";
 import InfoTab from "./IndexScreen_tabs/InfoTab";
 import LoginForm from "../Forms/LoginForm";
 import SignUpForm from "../Forms/SignUpForm";
+// logo
+import AppLogo from "../assets/logo.png";
 
 const IndexScreen = () => {
   const [tab, setTab] = useState("0");
@@ -22,7 +24,25 @@ const IndexScreen = () => {
           style={{ cursor: "pointer" }}
           onClick={tabSelectorHandler.bind(this, "0")}
         >
-          APP LOGO
+          <span className="">
+            <div className="d-flex">
+              <div>
+                <img
+                  style={{
+                    height: "70px",
+                    width: "70px",
+                  }}
+                  src={AppLogo}
+                ></img>
+              </div>
+
+              <div className="text-center">
+                <h3 className="p-3 align-items-center text-light">
+                  <b>MediData</b>
+                </h3>
+              </div>
+            </div>
+          </span>
         </span>
       </div>
       <div className="pt-4 d-flex flex-column align-items-center d-sm-block d-md-none d-lg-none">
@@ -32,14 +52,34 @@ const IndexScreen = () => {
           (tab === "3" && <LoginForm />) ||
           (tab === "4" && <SignUpForm />)}
       </div>
+
+      {/* web large screens */}
       <div className="container">
         <div className="d-lg-flex d-md-flex bd-highlight mb-3">
-          <div className="me-auto p-3 bd-highlight d-none d-sm-none d-md-block d-lg-block">
+          <div className="me-auto px-5 bd-highlight d-none d-sm-none d-md-block d-lg-block">
             <span
               style={{ cursor: "pointer" }}
               onClick={tabSelectorHandler.bind(this, "0")}
             >
-              APP LOGO
+              <span>
+                <div className="d-flex">
+                  <div>
+                    <img
+                      style={{
+                        height: "70px",
+                        width: "70px",
+                      }}
+                      src={AppLogo}
+                    ></img>
+                  </div>
+
+                  <div>
+                    <h3 className="p-3 align-items-center text-light">
+                      <b>MediData</b>
+                    </h3>
+                  </div>
+                </div>
+              </span>
             </span>
           </div>
 
@@ -49,8 +89,8 @@ const IndexScreen = () => {
               style={{ fontWeight: "bolder" }}
               className={
                 activeTab === "3"
-                  ? "btn btn-primary w-100"
-                  : "btn btn-outline-primary w-100"
+                  ? "btn btn-primary w-100 mt-1"
+                  : "btn btn-outline-primary w-100 mt-1"
               }
               onClick={tabSelectorHandler.bind(this, "3")}
             >
@@ -63,8 +103,8 @@ const IndexScreen = () => {
               style={{ fontWeight: "bolder" }}
               className={
                 activeTab === "4"
-                  ? "btn btn-dark w-100"
-                  : "btn btn-outline-dark w-100"
+                  ? "btn btn-dark w-100 mt-1"
+                  : "btn btn-outline-dark w-100 mt-1"
               }
               onClick={tabSelectorHandler.bind(this, "4")}
             >
@@ -77,8 +117,8 @@ const IndexScreen = () => {
               style={{ fontWeight: "bolder" }}
               className={
                 activeTab === "2"
-                  ? "btn btn-success w-100"
-                  : "btn btn-outline-success w-100"
+                  ? "btn btn-success w-100 mt-1"
+                  : "btn btn-outline-success w-100 mt-1"
               }
               onClick={tabSelectorHandler.bind(this, "2")}
             >
@@ -93,8 +133,8 @@ const IndexScreen = () => {
               }}
               className={
                 activeTab === "1"
-                  ? "btn btn-danger w-100"
-                  : "btn btn-outline-danger w-100"
+                  ? "btn btn-danger w-100 mt-1"
+                  : "btn btn-outline-danger w-100 mt-1"
               }
               onClick={tabSelectorHandler.bind(this, "1")}
             >
