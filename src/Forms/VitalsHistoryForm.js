@@ -1,6 +1,5 @@
 import { useEffect, useState, useRef } from "react";
 import { MONTHS, DAYS, YEARS } from "../general/DateFile";
-import FullScreenLoader from "../general/FullScreenLoader";
 // firestore
 import {
   collection,

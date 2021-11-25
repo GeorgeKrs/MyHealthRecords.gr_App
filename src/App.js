@@ -17,7 +17,7 @@ function App() {
 
     setTimeout(function () {
       setLoader(false);
-    }, 1000);
+    }, 0);
   });
 
   return (
