@@ -88,6 +88,9 @@
   #metricsSelect3 {
     min-width: 93vw;
   }
+  #cookiesBtn {
+    width: 100vw;
+  }
 }
 
 @media (max-width: 760px) {

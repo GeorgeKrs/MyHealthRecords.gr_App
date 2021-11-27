@@ -32,6 +32,7 @@ const UserSettingsForm = (props) => {
   const [btnLoading, setBtnLoading] = useState(false);
   const [errFirstName, setErrFirstName] = useState("");
   const [errLastName, setErrLastName] = useState("");
+  const [errPhone, setErrPhone] = useState("");
 
   const loggedInUser = props.loggedInUser;
   let deleteReqArray = [];
@@ -43,6 +44,7 @@ const UserSettingsForm = (props) => {
 
   const [deleteTimestamp, setDeleteTimestamp] = useState([]);
 
+  const [btnStatus, setBtnStatus] = useState(false);
   // modals
   const [SaveChanges, setSaveChanges] = useState(false);
   const handleCloseChanges = () => setSaveChanges(false);
@@ -130,8 +132,10 @@ const UserSettingsForm = (props) => {
       setErrFirstName(
         "Το όνομα δε μπορεί να έχει λιγότερους από 4 χαρακτήρες."
       );
+      setBtnStatus(true);
     } else {
       setErrFirstName("");
+      setBtnStatus(false);
     }
   };
 
@@ -140,8 +144,41 @@ const UserSettingsForm = (props) => {
       setErrLastName(
         "Το επώνυμο δε μπορεί να έχει λιγότερους από 4 χαρακτήρες."
       );
+      setBtnStatus(true);
     } else {
       setErrLastName("");
+      setBtnStatus(false);
+    }
+  };
+
+  const ValidatePhone = (phone) => {
+    let validPhone = /^\d+$/.test(phone);
+
+    if (phone.length > 0) {
+      if (phone.length < 10 || phone.length > 10) {
+        if (validPhone) {
+          setErrPhone("Το κινητό σας τηλέφωνο θα πρέπει να έχει 10 ψηφία.");
+          setBtnStatus(true);
+        } else {
+          setErrPhone(
+            "Το κινητό σας τηλέφωνο δε μπορεί να περιέχει χαρακτήρες."
+          );
+          setBtnStatus(true);
+        }
+      } else {
+        if (validPhone) {
+          setErrPhone("");
+          setBtnStatus(false);
+        } else {
+          setErrPhone(
+            "Το κινητό σας τηλέφωνο δε μπορεί να περιέχει χαρακτήρες."
+          );
+          setBtnStatus(true);
+        }
+      }
+    } else {
+      setErrPhone("");
+      setBtnStatus(false);
     }
   };
 
@@ -164,8 +201,6 @@ const UserSettingsForm = (props) => {
       const UserSettingsRef = doc(db, "users", loggedInUser);
       setDoc(UserSettingsRef, userData, { merge: true });
       setSaveChanges(true);
-    } else {
-      alert("Προέκυψε σφάλμα, παρακαλώ προσπαθήστε αργότερα.");
     }
 
     setTimeout(function () {
@@ -271,6 +306,7 @@ const UserSettingsForm = (props) => {
                   type="text"
                   className="inputValues"
                   value={userData.phone}
+                  onInput={(e) => ValidatePhone(e.target.value)}
                   onChange={(e) =>
                     setUserData((userData) => ({
                       ...userData,
@@ -278,6 +314,7 @@ const UserSettingsForm = (props) => {
                     }))
                   }
                 />
+                {errPhone ? <ErrorMsg ErrorMsg={errPhone} /> : null}
               </div>
             </div>
             <div className="d-flex">
@@ -286,7 +323,9 @@ const UserSettingsForm = (props) => {
                   type="button"
                   className="btn btn-outline-primary"
                   onClick={FormHandler}
-                  disabled={btnLoading ? true : false}
+                  disabled={
+                    btnLoading ? true : false || btnStatus ? true : false
+                  }
                 >
                   {btnLoading && (
                     <span
@@ -446,7 +485,7 @@ const UserSettingsForm = (props) => {
                   την αναγνώριση του χρήστη και τη διευκόλυνσή του όσο αναφορά
                   την είσοδό του στην εφαρογή, καθώς και για την ασφαλή
                   αποθήκευση των δεδομένων του. (Διάρκεια &rarr; Άπειρη, Δεν
-                  λήγει ποτέ,ανανεώνεται κάθε φορά που ο χρήστης κάνει Σύνδεση
+                  λήγει ποτέ, ανανεώνεται κάθε φορά που ο χρήστης κάνει Σύνδεση
                   στην εφαρμογή.) Περισσότερες πληροφορίες:
                   <a
                     className="px-2"
