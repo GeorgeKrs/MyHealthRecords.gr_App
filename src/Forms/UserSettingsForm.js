@@ -34,6 +34,9 @@ const UserSettingsForm = (props) => {
   const [errLastName, setErrLastName] = useState("");
   const [errPhone, setErrPhone] = useState("");
 
+  const [errAMKA, setErrAMKA] = useState("");
+  const [errAFM, setErrAFM] = useState("");
+
   const loggedInUser = props.loggedInUser;
   let deleteReqArray = [];
 
@@ -44,7 +47,6 @@ const UserSettingsForm = (props) => {
 
   const [deleteTimestamp, setDeleteTimestamp] = useState([]);
 
-  const [btnStatus, setBtnStatus] = useState(false);
   // modals
   const [SaveChanges, setSaveChanges] = useState(false);
   const handleCloseChanges = () => setSaveChanges(false);
@@ -132,10 +134,8 @@ const UserSettingsForm = (props) => {
       setErrFirstName(
         "Το όνομα δε μπορεί να έχει λιγότερους από 4 χαρακτήρες."
       );
-      setBtnStatus(true);
     } else {
       setErrFirstName("");
-      setBtnStatus(false);
     }
   };
 
@@ -144,10 +144,8 @@ const UserSettingsForm = (props) => {
       setErrLastName(
         "Το επώνυμο δε μπορεί να έχει λιγότερους από 4 χαρακτήρες."
       );
-      setBtnStatus(true);
     } else {
       setErrLastName("");
-      setBtnStatus(false);
     }
   };
 
@@ -158,27 +156,66 @@ const UserSettingsForm = (props) => {
       if (phone.length < 10 || phone.length > 10) {
         if (validPhone) {
           setErrPhone("Το κινητό σας τηλέφωνο θα πρέπει να έχει 10 ψηφία.");
-          setBtnStatus(true);
         } else {
           setErrPhone(
             "Το κινητό σας τηλέφωνο δε μπορεί να περιέχει χαρακτήρες."
           );
-          setBtnStatus(true);
         }
       } else {
         if (validPhone) {
           setErrPhone("");
-          setBtnStatus(false);
         } else {
           setErrPhone(
             "Το κινητό σας τηλέφωνο δε μπορεί να περιέχει χαρακτήρες."
           );
-          setBtnStatus(true);
         }
       }
     } else {
       setErrPhone("");
-      setBtnStatus(false);
+    }
+  };
+
+  const ValidateAMKA = (amka) => {
+    let validAmka = /^\d+$/.test(amka);
+
+    if (amka.length > 0) {
+      if (amka.length < 11 || amka.length > 11) {
+        if (validAmka) {
+          setErrAMKA("Το ΑΜΚΑ σας θα πρέπει να έχει 11 ψηφία.");
+        } else {
+          setErrAMKA("Το ΑΜΚΑ σας δε μπορεί να περιέχει χαρακτήρες.");
+        }
+      } else {
+        if (validAmka) {
+          setErrAMKA("");
+        } else {
+          setErrAMKA("Το ΑΜΚΑ σας δε μπορεί να περιέχει χαρακτήρες.");
+        }
+      }
+    } else {
+      setErrAMKA("");
+    }
+  };
+
+  const ValidateAFM = (afm) => {
+    let validafm = /^\d+$/.test(afm);
+
+    if (afm.length > 0) {
+      if (afm.length < 9 || afm.length > 9) {
+        if (validafm) {
+          setErrAFM("Το ΑΦΜ σας θα πρέπει να έχει 9 ψηφία.");
+        } else {
+          setErrAFM("Το ΑΦΜ σας δε μπορεί να περιέχει χαρακτήρες.");
+        }
+      } else {
+        if (validafm) {
+          setErrAFM("");
+        } else {
+          setErrAFM("Το ΑΦΜ σας δε μπορεί να περιέχει χαρακτήρες.");
+        }
+      }
+    } else {
+      setErrAFM("");
     }
   };
 
@@ -278,6 +315,7 @@ const UserSettingsForm = (props) => {
                   type="text"
                   className="inputValues"
                   value={userData.AMKA}
+                  onInput={(e) => ValidateAMKA(e.target.value)}
                   onChange={(e) =>
                     setUserData((userData) => ({
                       ...userData,
@@ -285,6 +323,7 @@ const UserSettingsForm = (props) => {
                     }))
                   }
                 />
+                {errAMKA ? <ErrorMsg ErrorMsg={errAMKA} /> : null}
               </div>
               <div className="col-sm-12 col-lg-4 mt-4">
                 <label className="label">ΑΦΜ</label>
@@ -292,6 +331,7 @@ const UserSettingsForm = (props) => {
                   type="text"
                   className="inputValues"
                   value={userData.AFM}
+                  onInput={(e) => ValidateAFM(e.target.value)}
                   onChange={(e) =>
                     setUserData((userData) => ({
                       ...userData,
@@ -299,6 +339,7 @@ const UserSettingsForm = (props) => {
                     }))
                   }
                 />
+                {errAFM ? <ErrorMsg ErrorMsg={errAFM} /> : null}
               </div>
               <div className="col-sm-12 col-lg-4 mt-4">
                 <label className="label">Κινητό</label>
@@ -324,7 +365,21 @@ const UserSettingsForm = (props) => {
                   className="btn btn-outline-primary"
                   onClick={FormHandler}
                   disabled={
-                    btnLoading ? true : false || btnStatus ? true : false
+                    btnLoading
+                      ? true
+                      : false || errPhone !== ""
+                      ? true
+                      : false || errAMKA !== ""
+                      ? true
+                      : false || errAFM !== ""
+                      ? true
+                      : false || errFirstName !== ""
+                      ? true
+                      : false || errLastName !== ""
+                      ? true
+                      : false || loggedInUser === "test@gmail.com"
+                      ? true
+                      : false
                   }
                 >
                   {btnLoading && (
@@ -560,7 +615,13 @@ const UserSettingsForm = (props) => {
                 type="button"
                 className={emailStatus ? "btn btn-success" : "btn btn-danger"}
                 onClick={sendEmailHandler}
-                disabled={emailStatus ? true : false}
+                disabled={
+                  emailStatus
+                    ? true
+                    : false || loggedInUser === "test@gmail.com"
+                    ? true
+                    : false
+                }
               >
                 {emailStatus ? "Στάλθηκε" : "Αποστολή"}
               </button>
@@ -607,7 +668,13 @@ const UserSettingsForm = (props) => {
                   deleteReqStatus ? "btn btn-success" : "btn btn-danger"
                 }
                 onClick={DeleteDataHandler}
-                disabled={deleteReqStatus ? true : false}
+                disabled={
+                  deleteReqStatus
+                    ? true
+                    : false || loggedInUser === "test@gmail.com"
+                    ? true
+                    : false
+                }
               >
                 {deleteReqStatus ? "Στάλθηκε" : "Διαγραφή"}
               </button>

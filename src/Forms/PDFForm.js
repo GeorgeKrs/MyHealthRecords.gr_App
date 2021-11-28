@@ -225,7 +225,15 @@ const PDFForm = (props) => {
             type="button"
             className="btn btn-outline-primary"
             onClick={FormHandler}
-            disabled={loading ? true : justUpload ? true : false}
+            disabled={
+              loading
+                ? true
+                : justUpload
+                ? true
+                : false || userEmail === "test@gmail.com"
+                ? true
+                : false
+            }
           >
             {loading && (
               <span

@@ -124,20 +124,6 @@ const SugarGraphModal = (props) => {
       bloodSugarArray.push(doc.data().bloodSugar);
 
       const day = doc.data().submitDate.toDate().getDate();
-      // let hours = doc.data().submitDate.toDate().getHours();
-      // let minutes = doc.data().submitDate.toDate().getMinutes();
-
-      // if (hours < 10) {
-      //   hours = "0" + hours;
-      // }
-
-      // if (minutes < 10) {
-      //   minutes = "0" + minutes;
-      // }
-      // const tempHours = hours + ":";
-      // const tempMinutes = minutes;
-
-      // const finalDateShow = tempHours.concat(tempMinutes);
       const finalDateShow = day;
 
       if (doc.data().category === "beforeBreakfast") {
@@ -181,9 +167,7 @@ const SugarGraphModal = (props) => {
           date: finalDateShow,
         });
       } else {
-        console.log(
-          "Παρουσιάστηκε άγνωστο σφάλμα. Παρακαλώ προσπαθήστε αργότερα."
-        );
+        console.log("Error, Try later.");
       }
     });
 

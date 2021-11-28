@@ -109,7 +109,13 @@ const DiabetesForm = (props) => {
             type="button"
             className="btn btn-outline-primary"
             onClick={FormHandler}
-            disabled={loading ? true : false}
+            disabled={
+              loading
+                ? true
+                : false || userEmail === "test@gmail.com"
+                ? true
+                : false
+            }
           >
             {loading ? "Περιμένετε" : "Καταχώρηση"}
           </button>
