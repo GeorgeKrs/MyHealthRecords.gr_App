@@ -193,7 +193,7 @@ const CheckBoxes = (props) => {
             <Tooltip content={ICONS_ALLERGIES_TAB[1].description}>
               <button
                 type="button"
-                className="btn btn-sm btn-secondary"
+                className="btn btn-sm btn-dark"
                 disabled={isChecked ? (isSaved ? false : true) : true}
                 onClick={infoHandler.bind(this, ICONS_ALLERGIES_TAB[1].id)}
               >

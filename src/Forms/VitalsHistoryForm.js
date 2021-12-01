@@ -285,7 +285,7 @@ const VitalsHistoryForm = (props) => {
             <button
               id="0"
               type="button"
-              className="btn btn-outline-primary"
+              className="btn btn-primary"
               onClick={FormHandler}
               disabled={loading ? true : false}
             >
@@ -411,11 +411,7 @@ const VitalsHistoryForm = (props) => {
                 <div className="p-1" key={index + 1}>
                   <button
                     id={index + 1}
-                    className={
-                      index + 1 == btnID
-                        ? "btn btn-primary"
-                        : "btn btn-outline-primary"
-                    }
+                    className="btn btn-primary"
                     disabled={index + 1 == btnID ? true : false}
                     onClick={idHandler}
                   >

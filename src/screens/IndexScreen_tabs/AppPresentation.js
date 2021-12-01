@@ -1,18 +1,3 @@
-import { useState } from "react";
-import Card from "../../general/Card";
-// importing images
-import allergies from "../../assets/App Images/allergies.png";
-import AverageMetrics from "../../assets/App Images/AverageMetrics.png";
-import BloodSugar from "../../assets/App Images/BloodSugar.png";
-import PDF from "../../assets/App Images/PDF.png";
-import PDFHistory from "../../assets/App Images/PDFHistory.png";
-import Settings from "../../assets/App Images/Settings.png";
-import SugarGraphDaily from "../../assets/App Images/SugarGraphDaily.png";
-import SugarGraphMonth from "../../assets/App Images/SugarGraphMonth.png";
-import Vitals from "../../assets/App Images/Vitals.png";
-import VitalsGraph from "../../assets/App Images/VitalsGraph.png";
-import VitalsHistory from "../../assets/App Images/VitalsHistory.png";
-
 const AppPresentation = () => {
   return (
     <div className="form-cumstom-tab p-3">

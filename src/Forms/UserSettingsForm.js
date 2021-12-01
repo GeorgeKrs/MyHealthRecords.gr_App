@@ -362,7 +362,7 @@ const UserSettingsForm = (props) => {
               <div className="mt-4">
                 <button
                   type="button"
-                  className="btn btn-outline-primary"
+                  className="btn btn-primary"
                   onClick={FormHandler}
                   disabled={
                     btnLoading

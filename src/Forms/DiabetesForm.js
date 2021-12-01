@@ -107,7 +107,7 @@ const DiabetesForm = (props) => {
         <div className="mt-5">
           <button
             type="button"
-            className="btn btn-outline-primary"
+            className="btn btn-primary"
             onClick={FormHandler}
             disabled={
               loading

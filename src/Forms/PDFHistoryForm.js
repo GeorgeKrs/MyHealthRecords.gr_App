@@ -351,7 +351,7 @@ const PDFHistoryForm = (props) => {
         <div className="mt-5">
           <button
             type="button"
-            className="btn btn-outline-primary"
+            className="btn btn-primary"
             onClick={FormHandler}
             disabled={loading ? true : false}
           >
@@ -456,11 +456,7 @@ const PDFHistoryForm = (props) => {
                 <div className="p-1" key={index + 1}>
                   <button
                     id={index + 1}
-                    className={
-                      index + 1 == btnID
-                        ? "btn btn-primary"
-                        : "btn btn-outline-primary"
-                    }
+                    className="btn btn-primary"
                     disabled={index + 1 == btnID ? true : false}
                     onClick={idHandler}
                   >
