@@ -38,7 +38,9 @@ const IndexScreen = () => {
         centered
       >
         <Modal.Header>
-          <Modal.Title id="contained-modal-title-vcenter">MediData</Modal.Title>
+          <Modal.Title id="contained-modal-title-vcenter">
+            <span className="appName-style">Medrchive</span>
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <h4>Ρυθμίσεις Cookies</h4>
@@ -200,9 +202,9 @@ const IndexScreen = () => {
     setTimeout(() => setShowCookiesModal(true), 1500);
   };
 
-  // useEffect(() => {
-  //   cookieObligation();
-  // }, []);
+  useEffect(() => {
+    cookieObligation();
+  }, []);
 
   return (
     <div className="outer-indexdiv" style={{ overflow: "hidden" }}>
@@ -224,7 +226,7 @@ const IndexScreen = () => {
               </div>
 
               <div className="text-center">
-                <h3 className="p-3 align-items-center text-light">
+                <h3 className="p-3 align-items-center text-light appName-style">
                   <b>Medrchive</b>
                 </h3>
               </div>
@@ -261,7 +263,7 @@ const IndexScreen = () => {
                   </div>
 
                   <div>
-                    <h3 className="p-3 align-items-center text-light">
+                    <h3 className="p-3 align-items-center text-light appName-style">
                       <b>Medrchive</b>
                     </h3>
                   </div>
