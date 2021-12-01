@@ -226,7 +226,7 @@ const IndexScreen = () => {
               </div>
 
               <div className="text-center">
-                <h3 className="p-3 align-items-center text-light appName-style">
+                <h3 className="p-3 align-items-center text-dark appName-style">
                   <b>Medrchive</b>
                 </h3>
               </div>
@@ -263,7 +263,7 @@ const IndexScreen = () => {
                   </div>
 
                   <div>
-                    <h3 className="p-3 align-items-center text-light appName-style">
+                    <h3 className="p-3 align-items-center text-dark appName-style">
                       <b>Medrchive</b>
                     </h3>
                   </div>
