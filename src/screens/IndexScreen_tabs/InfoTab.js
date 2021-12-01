@@ -6,7 +6,7 @@ const InfoTab = () => {
       <ul className="list-unstyled">
         <li>
           <h5>
-            H Εφαρμογή <b>My Health Records</b> είναι ένα όνειρο που ξεκίνησε
+            H Εφαρμογή <b>Medrchive</b> είναι ένα όνειρο που ξεκίνησε
           </h5>
         </li>
         <li>

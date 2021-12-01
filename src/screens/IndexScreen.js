@@ -200,9 +200,9 @@ const IndexScreen = () => {
     setTimeout(() => setShowCookiesModal(true), 1500);
   };
 
-  useEffect(() => {
-    cookieObligation();
-  }, []);
+  // useEffect(() => {
+  //   cookieObligation();
+  // }, []);
 
   return (
     <div className="outer-indexdiv" style={{ overflow: "hidden" }}>
@@ -225,7 +225,7 @@ const IndexScreen = () => {
 
               <div className="text-center">
                 <h3 className="p-3 align-items-center text-light">
-                  <b>MediData</b>
+                  <b>Medrchive</b>
                 </h3>
               </div>
             </div>
@@ -262,7 +262,7 @@ const IndexScreen = () => {
 
                   <div>
                     <h3 className="p-3 align-items-center text-light">
-                      <b>MediData</b>
+                      <b>Medrchive</b>
                     </h3>
                   </div>
                 </div>

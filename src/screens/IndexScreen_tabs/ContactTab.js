@@ -16,7 +16,7 @@ const ContactTab = () => {
         </li>
         <li>
           <h5>
-            επικοινωνήσετε μαζί μας στο email: <b>myHealthRecords@gmail.com</b>.
+            επικοινωνήσετε μαζί μας στο email: <b>medrchive@gmail.com</b>.
           </h5>
         </li>
 

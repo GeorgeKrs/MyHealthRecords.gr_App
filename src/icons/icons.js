@@ -5,8 +5,6 @@ import {
   faBookMedical,
   faAllergies,
   faChartBar,
-  faPaw,
-  faCalendarAlt,
   faSignOutAlt,
   faSave,
   faUserEdit,

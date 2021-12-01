@@ -17,7 +17,7 @@ const AppPresentation = () => {
   return (
     <div className="form-cumstom-tab p-3">
       <h3 style={{ fontWeight: "bolder" }}>
-        Καλώς Ήρθατε στην εφαρμογή MyHealthRecords!
+        Καλώς Ήρθατε στην εφαρμογή Medrchive!
       </h3>
       <br />
       <ul className="list-unstyled">
@@ -77,7 +77,7 @@ const AppPresentation = () => {
         <div className="appGuideLink">
           <h4 style={{ fontWeight: "bolder" }}>
             <a
-              href="https://firebasestorage.googleapis.com/v0/b/myhealthrecords-1b568.appspot.com/o/My%20Health%20Records%20-%20Web%20App.pdf?alt=media&token=f4103c2f-3b1d-48cb-9adf-3a8501974350"
+              href="https://firebasestorage.googleapis.com/v0/b/myhealthrecords-1b568.appspot.com/o/Medrchive%20-%20Web%20App.pdf?alt=media&token=86fe1991-5d40-4068-865d-953a1bb45918"
               target="_blank"
               className="link-light appGuideLink"
             >
