@@ -385,7 +385,17 @@ const SignUpForm = () => {
           <Modal.Title>Αποτυχία Εγγραφής</Modal.Title>
         </Modal.Header>
 
-        <Modal.Body>Υπάρχει ήδη ένας λογαριασμός με αυτό το email.</Modal.Body>
+        <Modal.Body>
+          <ul className="list-group list-group-numbered">
+            Αποτυχία εγγραφής για έναν από τους παρακάτω λόγους:
+            <li className=" list-group-item mt-2">
+              Υπάρχει ήδη ένας λογαριασμός με αυτό το email.
+            </li>
+            <li className="list-group-item">
+              Ο κωδικός που επιλέξατε είναι μικρότερος από 6 ψηφία.
+            </li>
+          </ul>
+        </Modal.Body>
 
         <Modal.Footer>
           <button
