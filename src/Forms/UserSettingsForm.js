@@ -125,7 +125,7 @@ const UserSettingsForm = (props) => {
     fetchUserData().finally(
       setTimeout(function () {
         setLoading(false);
-      }, 0)
+      }, 300)
     );
   }, []);
 

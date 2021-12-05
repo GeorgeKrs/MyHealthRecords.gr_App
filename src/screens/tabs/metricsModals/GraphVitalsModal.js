@@ -22,6 +22,14 @@ import { faInfo } from "@fortawesome/free-solid-svg-icons";
 import { Modal } from "react-bootstrap";
 
 const GraphVitalsModal = (props) => {
+  const loggedInUser = props.loggedInUser;
+  const systolicAv = props.systolicAv;
+  const diastolicAv = props.diastolicAv;
+  const pulsesAv = props.pulsesAv;
+  const temperatureAv = props.temperatureAv;
+  const oxygenAv = props.oxygenAv;
+  const weightAv = props.weightAv;
+
   const [categoryGraph, setCategoryGraph] = useState("systolicValues");
   const [monthGraph, setMonthGraph] = useState(
     new Date().getMonth().toString()
@@ -66,14 +74,13 @@ const GraphVitalsModal = (props) => {
   const handleCloseChartInfo = () => setChartInfo(false);
   const handleOpenChartInfo = () => setChartInfo(true);
 
-  const loggedInUser = props.loggedInUser;
-
   const filtersHandler = () => {
     setSearchState(true);
     setLoadingGraphData(true);
   };
 
   const fetchData = async () => {
+    console.log(props.systolicAv);
     let systolicArray = [];
     let diastolicArray = [];
     let pulsesArray = [];
@@ -138,22 +145,22 @@ const GraphVitalsModal = (props) => {
 
       // dealing with empty values
       if (systolicArray[i] === "") {
-        systolicArray[i] = 140;
+        systolicArray[i] = systolicAv;
       }
       if (diastolicArray[i] === "") {
-        diastolicArray[i] = 100;
+        diastolicArray[i] = diastolicAv;
       }
       if (pulsesArray[i] === "") {
-        pulsesArray[i] = 69.5;
+        pulsesArray[i] = pulsesAv;
       }
       if (temperatureArray[i] === "") {
-        temperatureArray[i] = 36.7;
+        temperatureArray[i] = temperatureAv;
       }
       if (oxygenArray[i] === "") {
-        oxygenArray[i] = 98.5;
+        oxygenArray[i] = oxygenAv;
       }
       if (weightArray[i] === "") {
-        weightArray[i] = 80;
+        weightArray[i] = weightAv;
       }
 
       gdSystolic.push({
@@ -248,8 +255,6 @@ const GraphVitalsModal = (props) => {
   useEffect(() => {
     if (searchState === true) fetchData().finally(setSearchState(false));
   }, [searchState]);
-
-  useEffect(() => {}, [categoryGraph]);
 
   return (
     <div

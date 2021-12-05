@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { MONTHS, DAYS, YEARS } from "../general/DateFile";
+import { Modal } from "react-bootstrap";
 // firestore
 import {
   collection,
@@ -9,6 +10,8 @@ import {
   orderBy,
   limit,
   startAt,
+  doc,
+  deleteDoc,
 } from "firebase/firestore";
 import { db } from "../utils/firebase";
 // font icons
@@ -36,6 +39,11 @@ const VitalsHistoryForm = (props) => {
   const [userAllRecords, setUserAllRecords] = useState(null);
   const [searchState, setSearchState] = useState(false);
 
+  const [docIDs, setDocIDs] = useState("");
+
+  const [deleteFileID, setDeleteFileID] = useState(null);
+  const [boolDeleteFile, setBoolDeleteFile] = useState(false);
+
   const [searchBtn, setSearchBtn] = useState(false);
 
   const [btnID, setBtnID] = useState("0");
@@ -43,14 +51,19 @@ const VitalsHistoryForm = (props) => {
   const [userDocCounter, setUserDocCounter] = useState(0);
   const [paginationBtnsArray, setPaginationBtnsArray] = useState([]);
 
+  // // modals
+  // const [showDelete, setShowDelete] = useState(false);
+  // const handeCloseDelete = () => setShowDelete(false);
+  // const handeOpenDelete = () => setShowDelete(true);
+
   const loggedInUser = props.loggedInUser;
 
   let userDataArray = [];
   let userAllRecordsArray = [];
   let paginationArray = [];
+  let docIDsArray = [];
 
   const queryLimit = 20;
-
   const fetchRecordData = async () => {
     setLoading(true);
 
@@ -90,8 +103,10 @@ const VitalsHistoryForm = (props) => {
     const docSnap = await getDocs(docCounterRef);
     docSnap.forEach((doc) => {
       userAllRecordsArray.push(doc.data());
+      docIDsArray.push(doc.id);
     });
 
+    setDocIDs(docIDsArray);
     setUserAllRecords(userAllRecordsArray);
     setUserDocCounter(userAllRecordsArray.length);
 
@@ -194,6 +209,31 @@ const VitalsHistoryForm = (props) => {
     if (!PageView_Ref.current) return;
     PageView_Ref.current.scrollIntoView({ behavior: "smooth" });
   };
+
+  // const deleteDataHandler = (event) => {
+  //   setDeleteFileID(event.target.id);
+  //   handeOpenDelete();
+  // };
+
+  // const DeleteConfirmation = async () => {
+  //   const deleteRef = docIDs[parseInt(deleteFileID)];
+  //   await deleteDoc(doc(db, "vitalsRecords", deleteRef));
+  //   setBoolDeleteFile(true);
+  // };
+
+  // useEffect(() => {
+  //   if (boolDeleteFile === true) {
+  //     setBoolDeleteFile(false);
+
+  //     var newResults = userData.filter(function (el) {
+  //       return el.submitDate !== userData[parseInt(deleteFileID)].submitDate;
+  //     });
+
+  //     setUserData(newResults);
+  //     setUserDocCounter(userDocCounter - 1);
+  //     handeCloseDelete();
+  //   }
+  // }, [boolDeleteFile]);
 
   return (
     <div>
@@ -339,7 +379,6 @@ const VitalsHistoryForm = (props) => {
                 <div className="col" id={index} key={index}>
                   <div className="card border-primary mb-3">
                     <div className="card-header">
-                      {" "}
                       {i.submitDate.toDate().getDate()} /{" "}
                       {i.submitDate.toDate().getMonth() + 1} /{" "}
                       {i.submitDate.toDate().getFullYear()},{" "}
@@ -389,6 +428,15 @@ const VitalsHistoryForm = (props) => {
                         >
                           <b>{i.comments}</b>
                         </textarea>
+                        {/* <div>
+                          <button
+                            id={index}
+                            className="btn btn-sm btn-danger"
+                            onClick={deleteDataHandler}
+                          >
+                            Διαγραφή
+                          </button>
+                        </div> */}
                       </div>
                     </div>
                   </div>
@@ -423,6 +471,34 @@ const VitalsHistoryForm = (props) => {
           )}
         </div>
       </div>
+
+      {/* delete modal */}
+      {/* <Modal show={showDelete} onHide={handeCloseDelete}>
+        <Modal.Header>
+          <Modal.Title>Διαγραφή</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Είστε σίγουροι ότι θέλετε να διαγράψετε τη συγκεκριμένη καταχώρηση;
+        </Modal.Body>
+
+        <Modal.Footer>
+          <button
+            type="button"
+            className="btn btn-danger"
+            onClick={DeleteConfirmation}
+          >
+            Διαγραφή
+          </button>
+          <button
+            type="button"
+            className="btn btn-secondary"
+            onClick={handeCloseDelete}
+          >
+            Άκυρο
+          </button>
+        </Modal.Footer>
+      </Modal> */}
+      {/*delete modal */}
     </div>
   );
 };
