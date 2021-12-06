@@ -37,8 +37,8 @@ const VitalsForm = (props) => {
   };
 
   const ValidateSystolic = (systolic) => {
-    if ((systolic < 50 || systolic > 220) && systolic !== "") {
-      setErSystolic("Τιμή εκτός ορίων. 50 < Συστολική Πίεση < 220.");
+    if ((systolic < 50 || systolic > 170) && systolic !== "") {
+      setErSystolic("Τιμή εκτός ορίων. 50 < Συστολική Πίεση < 170.");
     } else {
       setErSystolic("");
     }
@@ -53,24 +53,24 @@ const VitalsForm = (props) => {
   };
 
   const ValidatePulses = (pulses) => {
-    if ((pulses < 40 || pulses > 220) && pulses !== "") {
-      setErPulses("Τιμή εκτός ορίων. 40 < Παλμοί < 220.");
+    if ((pulses < 40 || pulses > 200) && pulses !== "") {
+      setErPulses("Τιμή εκτός ορίων. 40 < Παλμοί < 200.");
     } else {
       setErPulses("");
     }
   };
 
   const ValidateTemperature = (temperature) => {
-    if ((temperature < 34 || temperature > 43) && temperature !== "") {
-      setErTemperature("Τιμή εκτός ορίων. 34 < Θερμοκρασία < 43");
+    if ((temperature < 34 || temperature > 42) && temperature !== "") {
+      setErTemperature("Τιμή εκτός ορίων. 34 < Θερμοκρασία < 42");
     } else {
       setErTemperature("");
     }
   };
 
   const ValidateOxygen = (oxygen) => {
-    if ((oxygen < 70 || oxygen > 100) && oxygen !== "") {
-      setErOxygen("Τιμή εκτός ορίων. 70 < Οξυγόνο (%)< 100");
+    if ((oxygen < 80 || oxygen > 100) && oxygen !== "") {
+      setErOxygen("Τιμή εκτός ορίων. 80 < Οξυγόνο (%)< 100");
     } else {
       setErOxygen("");
     }

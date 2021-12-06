@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Tooltip from "../../../general/Tooltip";
 // firestore
 import { collection, query, where, getDocs, orderBy } from "firebase/firestore";
 import { db } from "../../../utils/firebase";
@@ -9,7 +10,6 @@ import {
   XAxis,
   YAxis,
   CartesianGrid,
-  Tooltip,
   Legend,
   ResponsiveContainer,
 } from "recharts";
@@ -20,16 +20,14 @@ import { faCheckSquare, faSquare } from "@fortawesome/free-solid-svg-icons";
 const SugarGraphModal = (props) => {
   const [dayGraph, setDayGraph] = useState(new Date().getDate().toString());
 
-  const [monthGraph, setMonthGraph] = useState(
-    new Date().getMonth().toString()
-  );
+  const [monthGraph, setMonthGraph] = useState("none");
 
   const [yearGraph, setYearGraph] = useState(
     new Date().getFullYear().toString()
   );
 
   const [loadingGraphData, setLoadingGraphData] = useState(false);
-  const [searchState, setSearchState] = useState(true);
+  const [searchState, setSearchState] = useState(false);
   const [noDataStatus, setNoDataStatus] = useState(false);
   const [noSingleDayDataStatus, setNoSingleDayDataStatus] = useState(false);
 
@@ -367,6 +365,9 @@ const SugarGraphModal = (props) => {
             onChange={(e) => setMonthGraph(e.target.value)}
             value={monthGraph}
           >
+            <option defaultValue value="none">
+              Επιλέξτε Μήνα
+            </option>
             <option value="0">Ιανουάριος</option>
             <option value="1">Φεβρουάριος</option>
             <option value="2">Μάρτιος</option>
@@ -406,14 +407,29 @@ const SugarGraphModal = (props) => {
           </select>
         </div>
         <div className="mt-2 px-3 mb-4">
-          <button
-            id="metricsSelect1"
-            className="btn btn-secondary "
-            type="button"
-            onClick={filtersHandler}
-          >
-            Εφαρμογή Φίλτρων
-          </button>
+          {monthGraph === "none" ? (
+            <Tooltip content={"Επιλέξτε μήνα και εφαρμόστε τα φίλτρα."}>
+              <button
+                id="metricsSelect1"
+                className="btn btn-secondary"
+                type="button"
+                onClick={filtersHandler}
+                disabled={monthGraph === "none" ? true : false}
+              >
+                Εφαρμογή Φίλτρων
+              </button>
+            </Tooltip>
+          ) : (
+            <button
+              id="metricsSelect1"
+              className="btn btn-secondary"
+              type="button"
+              onClick={filtersHandler}
+              disabled={monthGraph === "none" ? true : false}
+            >
+              Εφαρμογή Φίλτρων
+            </button>
+          )}
         </div>
 
         {filterMode === true ? (

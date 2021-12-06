@@ -140,7 +140,11 @@ const MetricsTab = (props) => {
   };
 
   useEffect(() => {
-    fetchAverages().finally(setLoading(false));
+    fetchAverages().then(
+      setTimeout(() => {
+        setLoading(false);
+      }, 300)
+    );
   }, []);
 
   return (

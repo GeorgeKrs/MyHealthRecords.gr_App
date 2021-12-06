@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 //
+import Tooltip from "../../../general/Tooltip";
 import Gutters from "../../../general/Gutters";
 // firestore
 import { collection, query, where, getDocs, orderBy } from "firebase/firestore";
@@ -11,7 +12,6 @@ import {
   XAxis,
   YAxis,
   CartesianGrid,
-  Tooltip,
   Legend,
   ResponsiveContainer,
 } from "recharts";
@@ -23,23 +23,15 @@ import { Modal } from "react-bootstrap";
 
 const GraphVitalsModal = (props) => {
   const loggedInUser = props.loggedInUser;
-  const systolicAv = props.systolicAv;
-  const diastolicAv = props.diastolicAv;
-  const pulsesAv = props.pulsesAv;
-  const temperatureAv = props.temperatureAv;
-  const oxygenAv = props.oxygenAv;
-  const weightAv = props.weightAv;
 
   const [categoryGraph, setCategoryGraph] = useState("systolicValues");
-  const [monthGraph, setMonthGraph] = useState(
-    new Date().getMonth().toString()
-  );
+  const [monthGraph, setMonthGraph] = useState("none");
   const [yearGraph, setYearGraph] = useState(
     new Date().getFullYear().toString()
   );
 
-  const [searchState, setSearchState] = useState(true);
-  const [loadingGraphData, setLoadingGraphData] = useState(true);
+  const [searchState, setSearchState] = useState(false);
+  const [loadingGraphData, setLoadingGraphData] = useState(false);
   const [noDataStatus, setNoDataStatus] = useState(false);
   const [graphSystolic, setGraphSystolic] = useState([]);
   const [graphDiastolic, setGraphDiastolic] = useState([]);
@@ -51,23 +43,23 @@ const GraphVitalsModal = (props) => {
   const [dateSearched, setDateSearched] = useState("");
 
   // min and max values
-  const [maxSystolic, setMaxSystolic] = useState(0);
-  const [minSystolic, setMinSystolic] = useState(0);
+  const [maxSystolic, setMaxSystolic] = useState("-");
+  const [minSystolic, setMinSystolic] = useState("-");
 
-  const [maxDiastolic, setMaxDiastolic] = useState(0);
-  const [minDiastolic, setMinDiastolic] = useState(0);
+  const [maxDiastolic, setMaxDiastolic] = useState("-");
+  const [minDiastolic, setMinDiastolic] = useState("-");
 
-  const [maxPulses, setMaxPulses] = useState(0);
-  const [minPulses, setMinPulses] = useState(0);
+  const [maxPulses, setMaxPulses] = useState("-");
+  const [minPulses, setMinPulses] = useState("-");
 
-  const [maxTemperature, setMaxTemperature] = useState(0);
-  const [minTemperature, setMinTemperature] = useState(0);
+  const [maxTemperature, setMaxTemperature] = useState("-");
+  const [minTemperature, setMinTemperature] = useState("-");
 
-  const [maxOxygen, setMaxOxygen] = useState(0);
-  const [minOxygen, setMinOxygen] = useState(0);
+  const [maxOxygen, setMaxOxygen] = useState("-");
+  const [minOxygen, setMinOxygen] = useState("-");
 
-  const [maxWeight, setMaxWeight] = useState(0);
-  const [minWeight, setMinWeight] = useState(0);
+  const [maxWeight, setMaxWeight] = useState("-");
+  const [minWeight, setMinWeight] = useState("-");
 
   // modals
   const [chartInfo, setChartInfo] = useState(false);
@@ -80,7 +72,6 @@ const GraphVitalsModal = (props) => {
   };
 
   const fetchData = async () => {
-    console.log(props.systolicAv);
     let systolicArray = [];
     let diastolicArray = [];
     let pulsesArray = [];
@@ -145,22 +136,22 @@ const GraphVitalsModal = (props) => {
 
       // dealing with empty values
       if (systolicArray[i] === "") {
-        systolicArray[i] = systolicAv;
+        systolicArray[i] = props.systolicAv;
       }
       if (diastolicArray[i] === "") {
-        diastolicArray[i] = diastolicAv;
+        diastolicArray[i] = props.diastolicAv;
       }
       if (pulsesArray[i] === "") {
-        pulsesArray[i] = pulsesAv;
+        pulsesArray[i] = props.pulsesAv;
       }
       if (temperatureArray[i] === "") {
-        temperatureArray[i] = temperatureAv;
+        temperatureArray[i] = props.temperatureAv;
       }
       if (oxygenArray[i] === "") {
-        oxygenArray[i] = oxygenAv;
+        oxygenArray[i] = props.oxygenAv;
       }
       if (weightArray[i] === "") {
-        weightArray[i] = weightAv;
+        weightArray[i] = props.weightAv;
       }
 
       gdSystolic.push({
@@ -272,6 +263,9 @@ const GraphVitalsModal = (props) => {
             onChange={(e) => setMonthGraph(e.target.value)}
             value={monthGraph}
           >
+            <option defaultValue value="none">
+              Επιλέξτε Μήνα
+            </option>
             <option value="0">Ιανουάριος</option>
             <option value="1">Φεβρουάριος</option>
             <option value="2">Μάρτιος</option>
@@ -310,15 +304,31 @@ const GraphVitalsModal = (props) => {
             <option value="2012">2012</option>
           </select>
         </div>
+
         <div className="mt-2 px-3 mb-4">
-          <button
-            id="metricsSelect1"
-            className="btn btn-secondary"
-            type="button"
-            onClick={filtersHandler}
-          >
-            Εφαρμογή Φίλτρων
-          </button>
+          {monthGraph === "none" ? (
+            <Tooltip content={"Επιλέξτε μήνα και εφαρμόστε τα φίλτρα."}>
+              <button
+                id="metricsSelect1"
+                className="btn btn-secondary"
+                type="button"
+                onClick={filtersHandler}
+                disabled={monthGraph === "none" ? true : false}
+              >
+                Εφαρμογή Φίλτρων
+              </button>
+            </Tooltip>
+          ) : (
+            <button
+              id="metricsSelect1"
+              className="btn btn-secondary"
+              type="button"
+              onClick={filtersHandler}
+              disabled={monthGraph === "none" ? true : false}
+            >
+              Εφαρμογή Φίλτρων
+            </button>
+          )}
         </div>
 
         <div className="mt-4 px-3 d-flex flex-wrap">
@@ -417,7 +427,6 @@ const GraphVitalsModal = (props) => {
               }
             />
 
-            <Tooltip />
             <Legend />
 
             <Line
