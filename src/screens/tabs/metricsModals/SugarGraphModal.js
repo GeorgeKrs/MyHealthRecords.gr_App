@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Tooltip from "../../../general/Tooltip";
+import CustomTooltip from "../../../general/CustomTooltip";
 // firestore
 import { collection, query, where, getDocs, orderBy } from "firebase/firestore";
 import { db } from "../../../utils/firebase";
@@ -12,6 +12,7 @@ import {
   CartesianGrid,
   Legend,
   ResponsiveContainer,
+  Tooltip,
 } from "recharts";
 // font icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -408,7 +409,7 @@ const SugarGraphModal = (props) => {
         </div>
         <div className="mt-2 px-3 mb-4">
           {monthGraph === "none" ? (
-            <Tooltip content={"Επιλέξτε μήνα και εφαρμόστε τα φίλτρα."}>
+            <CustomTooltip content={"Επιλέξτε μήνα και εφαρμόστε τα φίλτρα."}>
               <button
                 id="metricsSelect1"
                 className="btn btn-secondary"
@@ -418,7 +419,7 @@ const SugarGraphModal = (props) => {
               >
                 Εφαρμογή Φίλτρων
               </button>
-            </Tooltip>
+            </CustomTooltip>
           ) : (
             <button
               id="metricsSelect1"

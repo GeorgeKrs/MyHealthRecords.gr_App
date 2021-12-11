@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
-//
-import Tooltip from "../../../general/Tooltip";
 import Gutters from "../../../general/Gutters";
+import CustomTooltip from "../../../general/CustomTooltip";
 // firestore
 import { collection, query, where, getDocs, orderBy } from "firebase/firestore";
 import { db } from "../../../utils/firebase";
@@ -14,6 +13,7 @@ import {
   CartesianGrid,
   Legend,
   ResponsiveContainer,
+  Tooltip,
 } from "recharts";
 // font icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -307,7 +307,7 @@ const GraphVitalsModal = (props) => {
 
         <div className="mt-2 px-3 mb-4">
           {monthGraph === "none" ? (
-            <Tooltip content={"Επιλέξτε μήνα και εφαρμόστε τα φίλτρα."}>
+            <CustomTooltip content={"Επιλέξτε μήνα και εφαρμόστε τα φίλτρα."}>
               <button
                 id="metricsSelect1"
                 className="btn btn-secondary"
@@ -317,7 +317,7 @@ const GraphVitalsModal = (props) => {
               >
                 Εφαρμογή Φίλτρων
               </button>
-            </Tooltip>
+            </CustomTooltip>
           ) : (
             <button
               id="metricsSelect1"
@@ -407,6 +407,7 @@ const GraphVitalsModal = (props) => {
             <CartesianGrid strokeDasharray="3 3" />
 
             <XAxis dataKey={"date"} />
+            <Tooltip />
 
             <YAxis
               type="number"
@@ -497,47 +498,115 @@ const GraphVitalsModal = (props) => {
         >
           <Gutters
             gutterTitle={"Συστολική Πίεση (mmHg)"}
-            gutterMax={maxSystolic === maxSystolic / 0 ? "-" : maxSystolic}
-            gutterMin={minSystolic === minSystolic / 0 ? "-" : minSystolic}
+            gutterMax={
+              maxSystolic === maxSystolic / 0
+                ? "-"
+                : isNaN(maxSystolic)
+                ? "-"
+                : maxSystolic
+            }
+            gutterMin={
+              minSystolic === minSystolic / 0
+                ? "-"
+                : isNaN(maxSystolic)
+                ? "-"
+                : minSystolic
+            }
             gutterBorderColor={"border-primary"}
             loadingState={loadingGraphData}
           />
           <Gutters
             gutterTitle={"Διαστολική Πίεση (mmHg)"}
-            gutterMax={maxDiastolic === maxDiastolic / 0 ? "-" : maxDiastolic}
-            gutterMin={minDiastolic === minDiastolic / 0 ? "-" : minDiastolic}
+            gutterMax={
+              maxDiastolic === maxDiastolic / 0
+                ? "-"
+                : isNaN(maxSystolic)
+                ? "-"
+                : maxDiastolic
+            }
+            gutterMin={
+              minDiastolic === minDiastolic / 0
+                ? "-"
+                : isNaN(maxSystolic)
+                ? "-"
+                : minDiastolic
+            }
             gutterBorderColor={"border-primary"}
             loadingState={loadingGraphData}
           />
           <Gutters
             gutterTitle={"Παλμοί (bpm)"}
-            gutterMax={maxPulses === maxPulses / 0 ? "-" : maxPulses}
-            gutterMin={minPulses === minPulses / 0 ? "-" : minPulses}
+            gutterMax={
+              maxPulses === maxPulses / 0
+                ? "-"
+                : isNaN(maxPulses)
+                ? "-"
+                : maxPulses
+            }
+            gutterMin={
+              minPulses === minPulses / 0
+                ? "-"
+                : isNaN(minPulses)
+                ? "-"
+                : minPulses
+            }
             gutterBorderColor={"border-primary"}
             loadingState={loadingGraphData}
           />
           <Gutters
             gutterTitle={"Θερμοκρασία (" + String.fromCharCode(176) + "C)"}
             gutterMax={
-              maxTemperature === maxTemperature / 0 ? "-" : maxTemperature
+              maxTemperature === maxTemperature / 0
+                ? "-"
+                : isNaN(maxTemperature)
+                ? "-"
+                : maxTemperature
             }
             gutterMin={
-              minTemperature === minTemperature / 0 ? "-" : minTemperature
+              minTemperature === minTemperature / 0
+                ? "-"
+                : isNaN(minTemperature)
+                ? "-"
+                : minTemperature
             }
             gutterBorderColor={"border-primary"}
             loadingState={loadingGraphData}
           />
           <Gutters
             gutterTitle={"Οξυγόνο (%)"}
-            gutterMax={maxOxygen === maxOxygen / 0 ? "-" : maxOxygen}
-            gutterMin={minOxygen === minOxygen / 0 ? "-" : minOxygen}
+            gutterMax={
+              maxOxygen === maxOxygen / 0
+                ? "-"
+                : isNaN(maxOxygen)
+                ? "-"
+                : maxOxygen
+            }
+            gutterMin={
+              minOxygen === minOxygen / 0
+                ? "-"
+                : isNaN(minOxygen)
+                ? "-"
+                : minOxygen
+            }
             gutterBorderColor={"border-primary"}
             loadingState={loadingGraphData}
           />
           <Gutters
             gutterTitle={"Βάρος (Kg)"}
-            gutterMax={maxWeight === maxWeight / 0 ? "-" : maxWeight}
-            gutterMin={minWeight === minWeight / 0 ? "-" : minWeight}
+            gutterMax={
+              maxWeight === maxWeight / 0
+                ? "-"
+                : isNaN(maxWeight)
+                ? "-"
+                : maxWeight
+            }
+            gutterMin={
+              minWeight === minWeight / 0
+                ? "-"
+                : isNaN(minWeight)
+                ? "-"
+                : minWeight
+            }
             gutterBorderColor={"border-primary"}
             loadingState={loadingGraphData}
           />

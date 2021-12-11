@@ -1,6 +1,6 @@
 import { useState } from "react";
 // importing tooltip
-import Tooltip from "../general/Tooltip";
+import CustomTooltip from "../general/CustomTooltip";
 // importing screens & tabs
 import "./screens.css";
 import VitalsTab from "../screens/tabs/VitalsTab";
@@ -76,7 +76,7 @@ const MainScreen = (props) => {
                 arr.length - 2 === index ? "mt-auto p-3 mt-2 " : "p-3 mt-2"
               }
             >
-              <Tooltip content={menu_icon.description}>
+              <CustomTooltip content={menu_icon.description}>
                 <FontAwesomeIcon
                   id={menu_icon.id}
                   className={
@@ -88,7 +88,7 @@ const MainScreen = (props) => {
                   size="lg"
                   onClick={tabSelectorHandler.bind(this, menu_icon.id)}
                 />
-              </Tooltip>
+              </CustomTooltip>
             </div>
           ))}
         </div>

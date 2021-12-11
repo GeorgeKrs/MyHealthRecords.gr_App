@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Tooltip from "../general/Tooltip";
+import CustomTooltip from "../general/CustomTooltip";
 // font icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ICONS_ALLERGIES_TAB } from "../icons/icons";
@@ -170,7 +170,7 @@ const CheckBoxes = (props) => {
         ></textarea>
         <div className="pt-2 d-inline-flex text-center">
           <div className="">
-            <Tooltip
+            <CustomTooltip
               direction={"bottom"}
               content={ICONS_ALLERGIES_TAB[0].description}
             >
@@ -187,10 +187,10 @@ const CheckBoxes = (props) => {
                   size="lg"
                 />
               </button>
-            </Tooltip>
+            </CustomTooltip>
           </div>
           <div className="ms-2">
-            <Tooltip content={ICONS_ALLERGIES_TAB[1].description}>
+            <CustomTooltip content={ICONS_ALLERGIES_TAB[1].description}>
               <button
                 type="button"
                 className="btn btn-sm btn-dark"
@@ -204,7 +204,7 @@ const CheckBoxes = (props) => {
                   size="lg"
                 />
               </button>
-            </Tooltip>
+            </CustomTooltip>
           </div>
         </div>
       </div>
