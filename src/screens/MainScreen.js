@@ -64,11 +64,11 @@ const MainScreen = (props) => {
     >
       <div className="inner-maindiv d-none d-sm-block">
         <div className="p-3 d-flex flex-shrink-1 flex-column text-center mb-3 h-100">
-          <img
+          {/* <img
             className="mx-auto mb-2 mt-2"
-            style={{ height: "40px", width: "40px" }}
+            style={{ height: "60px", width: "60px" }}
             src={AppLogo}
-          ></img>
+          ></img> */}
           {ICONS.map((menu_icon, index, arr) => (
             <div
               key={menu_icon.id}

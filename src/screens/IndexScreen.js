@@ -218,7 +218,7 @@ const IndexScreen = () => {
               <div>
                 <img
                   style={{
-                    height: "70px",
+                    height: "55px",
                     width: "70px",
                   }}
                   src={AppLogo}
@@ -227,7 +227,7 @@ const IndexScreen = () => {
 
               <div className="text-center">
                 <h3 className="p-3 align-items-center text-dark appName-style">
-                  <b>Medrchive</b>
+                  Medrchive
                 </h3>
               </div>
             </div>
@@ -255,7 +255,7 @@ const IndexScreen = () => {
                   <div>
                     <img
                       style={{
-                        height: "70px",
+                        height: "60px",
                         width: "70px",
                       }}
                       src={AppLogo}
@@ -264,7 +264,7 @@ const IndexScreen = () => {
 
                   <div>
                     <h3 className="p-3 align-items-center text-dark appName-style">
-                      <b>Medrchive</b>
+                      Medrchive
                     </h3>
                   </div>
                 </div>
